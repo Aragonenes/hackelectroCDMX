@@ -3,9 +3,7 @@ import { useEffect, useSyncExternalStore } from "react";
 export const workspaceRoutes = {
   "/mapa": { area: "mapa", title: "Mapa" },
   "/configurar": { area: "configurar", title: "Configurar" },
-  "/economia/caja": { area: "economia", title: "Economía" },
   "/economia/costos": { area: "economia", title: "Economía" },
-  "/economia/pruebas": { area: "economia", title: "Economía" },
   "/economia/alternativas": { area: "economia", title: "Economía" },
   "/ambiente": { area: "ambiente", title: "Ambiente" },
   "/operacion/energia": { area: "operacion", title: "Operación" },
@@ -23,6 +21,9 @@ const legacy: Record<string, WorkspacePath> = {
   sensibilidad: "/operacion/pruebas",
   condiciones: "/economia/alternativas",
   ambiente: "/ambiente",
+  "/economia/caja": "/economia/costos",
+  "/economia/pruebas": "/economia/costos",
+  caja: "/economia/costos",
 };
 export function parseWorkspaceHash(hash: string) {
   const raw = hash.replace(/^#/, "");

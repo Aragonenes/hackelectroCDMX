@@ -26,7 +26,6 @@ import Controls, { focusParameter } from "./features/Controls";
 import Diagnostic from "./features/Diagnostic";
 import { withValue } from "./features/values";
 import { CostPanel, EnergyPanel, ResultMetrics } from "./features/ResultViews";
-import FinancePanel from "./features/FinancePanel";
 import Environment from "./features/Environment";
 import Sensitivity from "./features/Sensitivity";
 import WorkspacePanel, { useCompactWorkspace } from "./features/WorkspacePanel";
@@ -204,32 +203,11 @@ export default function App() {
         onRoutes={() => setRouteDialog(true)}
       />
     ),
-    "/economia/caja": engine.result && (
-      <FinancePanel
-        result={engine.result}
-        stale={!valid}
-        points={engine.revenuePoints}
-        error={engine.revenueError}
-      />
-    ),
     "/economia/costos": engine.result && (
       <>
         <ResultMetrics result={engine.result} />
         <CostPanel result={engine.result} />
       </>
-    ),
-    "/economia/pruebas": engine.result && (
-      <Sensitivity
-        progress={engine.sensitivityProgress}
-        onCancel={engine.cancelSensitivity}
-        id="pruebas-economia"
-        variables={["electricityPrice"]}
-        result={engine.result}
-        points={engine.points}
-        error={engine.sensitivityError}
-        disabled={!valid}
-        onApply={onExplore}
-      />
     ),
     "/economia/alternativas": (
       <Optimizer
@@ -309,9 +287,7 @@ export default function App() {
   };
   if (engine.result?.dynamic?.economicComplete === false) {
     for (const path of [
-      "/economia/caja",
       "/economia/costos",
-      "/economia/pruebas",
       "/economia/alternativas",
     ] as const)
       views[path] = (
@@ -329,9 +305,7 @@ export default function App() {
   const tabs =
     route.area === "economia"
       ? [
-          ["/economia/caja", "Caja"],
           ["/economia/costos", "Costos"],
-          ["/economia/pruebas", "Pruebas"],
           ["/economia/alternativas", "Alternativas"],
         ]
       : route.area === "operacion"
@@ -413,7 +387,7 @@ export default function App() {
                 icon: SlidersHorizontal,
               },
               {
-                path: "/economia/caja",
+                path: "/economia/costos",
                 area: "economia",
                 label: "Economía",
                 icon: Coins,
