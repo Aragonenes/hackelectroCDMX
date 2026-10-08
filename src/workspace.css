@@ -566,14 +566,6 @@
 .workspace-view .controls-panel .field small {
   font-size: 11px;
 }
-.workspace-view .diagnostic-panel {
-  width: auto;
-  height: auto;
-}
-.workspace-view .diagnostic-scroll {
-  max-height: none;
-  overflow: visible;
-}
 .workspace-view .metrics {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0 0 24px;
@@ -598,9 +590,6 @@
 }
 .workspace-view .section-heading h2 {
   font-size: 22px;
-}
-.workspace-view .diagnostic-panel > .eyebrow {
-  font-size: 11px;
 }
 .workspace-view .panel-title {
   flex-wrap: wrap;
@@ -987,9 +976,6 @@
   .simulation-map .journey-options {
     top: 68px;
   }
-}
-.workspace-view .diagnostic-checks {
-  display: block;
 }
 @media (max-width: 520px) {
   .workspace-navigation > a {
