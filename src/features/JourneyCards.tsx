@@ -27,13 +27,11 @@ export default function JourneyCards({
       >
         <div className="map-card-heading">
           <b>Batería</b>
-          <span className="map-simulation">
-            {stale
-              ? "Resultado anterior"
-              : isPitchScenario(r.scenario)
-                ? "Demo del pitch"
-                : "Escenario simulado"}
-          </span>
+          {(stale || isPitchScenario(r.scenario)) && (
+            <span className="map-simulation">
+              {stale ? "Resultado anterior" : "Demo del pitch"}
+            </span>
+          )}
         </div>
         <div className="journey-card-reading">
           <Battery
