@@ -36,6 +36,27 @@ function Input({
     </label>
   );
 }
+export function JourneyDemoAction({
+  scenario: s,
+  onChange,
+}: {
+  scenario: Scenario;
+  onChange: (s: Scenario) => void;
+}) {
+  if (s.route.id !== "M09-514") return null;
+  return (
+    <section className="control-group journey-demo-actions">
+      <button
+        className="secondary pitch-load"
+        onClick={() => onChange(createPitchScenario())}
+      >
+        {isPitchScenario(s)
+          ? "Reiniciar demo del pitch"
+          : "Cargar demo para el pitch"}
+      </button>
+    </section>
+  );
+}
 export default function JourneyControls({
   scenario: s,
   onChange,
@@ -47,14 +68,6 @@ export default function JourneyControls({
   if (s.schemaVersion === "1")
     return (
       <section className="control-group journey-settings">
-        {s.route.id === "M09-514" && (
-          <button
-            className="secondary pitch-load"
-            onClick={() => onChange(createPitchScenario())}
-          >
-            Cargar demo para el pitch
-          </button>
-        )}
         <h3>Jornada por hora y tramo</h3>
         <p className="journey-intro">
           El escenario original conserva su cálculo uniforme v1. La conversión
@@ -96,14 +109,6 @@ export default function JourneyControls({
   };
   return (
     <section className="control-group journey-settings">
-      <button
-        className="secondary pitch-load"
-        onClick={() => onChange(createPitchScenario())}
-      >
-        {isPitchScenario(s)
-          ? "Reiniciar demo del pitch"
-          : "Cargar demo para el pitch"}
-      </button>
       <h3>
         Perfiles de jornada{" "}
         <span className="journey-model-label">Modelo 2</span>

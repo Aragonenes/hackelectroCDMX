@@ -1153,8 +1153,8 @@
   font-size: 14px;
   line-height: 1.5;
 }
-.journey-settings .pitch-load {
-  margin-bottom: 16px;
+.journey-demo-actions .pitch-load {
+  width: 100%;
 }
 .journey-model-label {
   font: 600 10px var(--font-ui);

@@ -1,4 +1,4 @@
-import JourneyControls from "./JourneyControls";
+import JourneyControls, { JourneyDemoAction } from "./JourneyControls";
 import { journeyVehicles, selectJourneyVehicle } from "../data/journey";
 import { BusFront, SlidersHorizontal } from "lucide-react";
 import type { Scenario } from "../domain/schema";
@@ -201,6 +201,7 @@ export default function Controls({
           )}
         </section>
         <Editor scenario={s} onChange={onChange} />
+        <JourneyDemoAction scenario={s} onChange={onChange} />
       </div>
     </aside>
   );
