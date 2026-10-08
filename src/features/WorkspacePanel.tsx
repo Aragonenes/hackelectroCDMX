@@ -38,14 +38,18 @@ export default function WorkspacePanel({
   const ref = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
+  const wasOpen = useRef(false);
   const open = path !== "/mapa";
   const area = workspaceRoutes[path].area;
   useLayoutEffect(() => {
     if (!open) {
+      if (!wasOpen.current) return;
+      wasOpen.current = false;
       if (trigger.current?.isConnected) trigger.current.focus();
       else document.querySelector<HTMLElement>(".simulation-brand")?.focus();
       return;
     }
+    wasOpen.current = true;
     if (
       document.activeElement instanceof HTMLElement &&
       !ref.current?.contains(document.activeElement)
