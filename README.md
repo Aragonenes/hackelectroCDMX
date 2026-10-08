@@ -70,9 +70,3 @@ python scripts/extraer_documentos.py
 ```
 
 Requiere Python 3 y Poppler (`pdfinfo`, `pdftotext`), además de los cuatro PDF y las transcripciones visuales locales. Esos insumos no están incluidos en un clon de GitHub. Las guías y transcripciones visuales se revisan manualmente si cambia un PDF.
-
-## Estado de Git
-
-Git se inicializó el 2026-10-06 con la rama `main`, tras habilitar el usuario acceso completo. `origin` apunta a `https://github.com/itsebasvz/hackelectroCDMX.git`.
-
-El repositorio remoto se creó mediante GitHub CLI el 2026-10-06: [itsebasvz/hackelectroCDMX](https://github.com/itsebasvz/hackelectroCDMX), con visibilidad pública. La publicación respeta las exclusiones de terceros descritas en la revisión de licencia.
