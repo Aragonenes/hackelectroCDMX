@@ -184,6 +184,25 @@ export function selectJourneyVehicle(
   id: string,
 ): DynamicScenario {
   const record = journeyVehicles.find((v) => v.id === id);
+  const pitchVehicle = s.catalog.vehicles.find(
+    (v) => v.id === id && v.evidence.price?.sourceId === "F-PITCH",
+  );
+  if (record && pitchVehicle) {
+    return {
+      ...s,
+      ev: structuredClone(pitchVehicle),
+      journey: {
+        ...s.journey,
+        vehicleId: id,
+        purchasePrice: pitchVehicle.price,
+        chargePowerConfirmed: true,
+        technical: {
+          ...s.journey.technical,
+          massKg: record.parameters.massKg.value,
+        },
+      },
+    };
+  }
   if (!record) {
     const ev = s.catalog.vehicles.find(
       (v) => v.id === id && v.fuel === "electricidad",

@@ -89,3 +89,4 @@ La cuenta Vercel autenticada permite publicar por CLI. El rechazo de la conexió
 - [Modelo de jornada v2](modelo-jornada.md): trayectoria por tramo, compatibilidad v1 y mezcla mensual.
 - [Datos preparados de jornada](datos-jornada.md): CEM 4.0, Pedregal 2023, cobertura y preparación reproducible.
 - [Auditoría de factores](../investigacion/Variables_Factores/auditoria-jornada.md): variantes, incidencias y supuestos por parámetro.
+- [Demo de Ruta 1 para el pitch](demo-pitch.md): caso con un reto energético y búsqueda de combinaciones de 33 modelos con entradas F explícitas.

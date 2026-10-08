@@ -9,7 +9,7 @@ export interface VehicleEnergyComparison {
   firstReserveKm: number | null;
   capacity: number;
   monthlyGridKwh: number;
-  economicState: "faltan entradas";
+  economicState: "faltan entradas" | "supuestos completos";
   technicalState: "supuesto F";
 }
 export async function compareJourneys(
@@ -37,7 +37,10 @@ export async function compareJourneys(
             candidate.journey.days[d.day]!.mixDays,
         0,
       ),
-      economicState: "faltan entradas",
+      economicState:
+        candidate.journey.purchasePrice === null
+          ? "faltan entradas"
+          : "supuestos completos",
       technicalState: "supuesto F",
     });
     progress(output.length, journeyVehicles.length);

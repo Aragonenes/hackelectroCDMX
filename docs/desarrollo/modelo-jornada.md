@@ -1,6 +1,6 @@
 # Motor de jornada v2
 
-`ScenarioSchema` discrimina JSON 1/modelo 1.0.0 y JSON 2/modelo 2.0.0. El modelo v1 conserva ecuaciones, evidencia, catálogo y checksum originales. La conversión se activa mediante **Activar jornada dinámica**, después de lectura y verificación del archivo v1; no modifica silenciosamente archivos importados. El v2 contiene perfil de terreno preparado, clima, franjas, mezcla mensual y evidencia necesarios para recalcular sin servicios de datos externos.
+`ScenarioSchema` discrimina JSON 1/modelo 1.0.0 y JSON 2/modelo 2.0.0. El modelo v1 conserva ecuaciones, evidencia, catálogo y checksum originales. La conversión ordinaria se activa en Configurar, después de lectura y verificación del archivo v1; no modifica silenciosamente archivos importados. Por petición del usuario para su presentación, **Activar jornada dinámica** en el mapa carga la [demo del pitch](demo-pitch.md) con entradas F preparadas. El v2 contiene perfil de terreno preparado, clima, franjas, mezcla mensual y evidencia necesarios para recalcular sin servicios de datos externos.
 
 La unidad representativa conserva vueltas previstas, adicionales, maniobras y operadores. Cada día tiene inicio, pausa, abordajes relativos y 96 franjas editables de peso de ingreso, ocupación simultánea y tiempo relativo. Tres sectores por cada uno de los dos trazos ajustan ocupación y duración. El horario de la línea secundario es una condición independiente de jornada propia, turnos y ventana de carga en patio. La mezcla suma exactamente los días operativos.
 
