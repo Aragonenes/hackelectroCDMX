@@ -1,0 +1,109 @@
+import type { Result } from "../domain/schema";
+import { journeyAt } from "../domain/journey";
+import { clockTime } from "./JourneyControls";
+import { num } from "../ui/format";
+export default function JourneyCards({
+  result: r,
+  minute,
+  stale,
+}: {
+  result: Result;
+  minute: number;
+  stale: boolean;
+}) {
+  if (!r.dynamic || r.scenario.schemaVersion !== "2") return null;
+  const d = r.dynamic.selected,
+    j = r.scenario.journey,
+    p = journeyAt(d, minute),
+    soc = p.soc * 100;
+  return (
+    <div className="dynamic-cards">
+      <section
+        className="map-card journey-battery-card"
+        aria-label="Batería de la jornada"
+      >
+        <div className="map-card-heading">
+          <b>Batería</b>
+          <span>{stale ? "Resultado anterior" : "Escenario exploratorio"}</span>
+        </div>
+        <div className="journey-card-reading">
+          <b className="journey-reading">{num(soc, 1)}%</b>
+          <span>SOC · reserva {num(r.scenario.energy.socMin * 100, 0)}%</span>
+        </div>
+        <div
+          className="map-battery-meter"
+          role="meter"
+          aria-label="SOC de la jornada"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={soc}
+        >
+          <span style={{ width: `${soc}%` }} />
+          <i style={{ left: `${r.scenario.energy.socMin * 100}%` }} />
+        </div>
+        <p>
+          Tramo {num(p.netKwh, 3)} kWh · cierre {num(d.socEnd * 100, 1)}%
+          {d.firstReserve ? " · invade reserva" : " · reserva protegida"}
+          {d.firstExhaustion ? " · energía insuficiente" : ""}.
+        </p>
+        <b className="journey-vehicle-name">{r.scenario.ev.name}</b>
+        <p className="journey-event">
+          {p.kind === "service"
+            ? `Vuelta ${p.cycle} · trazo ${p.trace} · sector ${p.sector + 1}`
+            : p.kind === "additional"
+              ? "Adicionales · ubicación desconocida"
+              : "Pausa de la unidad"}
+        </p>
+        <a href="#/operacion/energia">Energía y recarga</a>
+      </section>
+      <section
+        className="map-card journey-detail-card"
+        aria-label="Pasajeros de la jornada"
+      >
+        <div className="map-card-heading">
+          <b>Pasajeros</b>
+          <span>
+            {clockTime(Math.floor(p.minute / 15) * 15)} · {d.name}
+          </span>
+        </div>
+        <div className="journey-card-reading">
+          <b className="journey-reading">
+            {num(p.occupancy, 1)} / {r.scenario.ev.capacity}
+          </b>
+          <span>plazas simultáneas</span>
+        </div>
+        <p>
+          {num(p.boardings, 0)} / {num(d.boardings, 0)} abordajes acumulados del
+          escenario.
+        </p>
+        <a href="#/configurar">Perfiles de servicio</a>
+      </section>
+      <section
+        className="map-card journey-detail-card"
+        aria-label="Condiciones de la jornada"
+      >
+        <div className="map-card-heading">
+          <b>Condiciones</b>
+          <span>
+            {j.conditions.wet ? "Mojado" : "Seco"} · climatización{" "}
+            {j.conditions.hvac ? "activa" : "apagada"}
+          </span>
+        </div>
+        <div className="journey-card-reading">
+          <b className="journey-reading">{num(p.temperatureC, 1)} °C</b>
+          <span>ambiente</span>
+        </div>
+        <p>
+          {p.kind === "service"
+            ? `${num(p.elevationM, 0)} m · pendiente ${num(p.slope * 100, 1)}%`
+            : "Elevación y pendiente desconocidas."}
+        </p>
+        <p>
+          Desnivel +{num(p.effects.gradeKwh, 3)} · auxiliares{" "}
+          {num(p.effects.auxiliaryDeltaKwh, 3)} kWh frente a referencia.
+        </p>
+        <a href="#/operacion/energia">Explicación y fuentes</a>
+      </section>
+    </div>
+  );
+}

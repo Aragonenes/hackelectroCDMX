@@ -1,3 +1,6 @@
+import JourneyProfiles from "./features/JourneyProfiles";
+import VehicleEnergyComparison from "./features/VehicleEnergyComparison";
+import { convertToDynamic, selectJourneyVehicle } from "./data/journey";
 import { lazy, Suspense, useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -66,6 +69,8 @@ export default function App() {
   const route = useWorkspaceRoute();
   const compact = useCompactWorkspace();
   const [expanded, setExpanded] = useState(false);
+  const [cursorMinute, setCursorMinute] = useState<number | null>(null);
+  const [seekMinute, setSeekMinute] = useState<number | null>(null);
   const [visited, setVisited] = useState<Set<WorkspacePath>>(
     () => new Set([route.path]),
   );
@@ -138,6 +143,15 @@ export default function App() {
     }
   };
   const selectRoute = (r: RouteRecord) => {
+    if (
+      scenario.schemaVersion === "2" &&
+      r.id !== scenario.journey.prepared.routeId
+    ) {
+      setNotice(
+        "La jornada dinámica tiene terreno preparado sólo para Metro CU–San Fernando–Huipulco. Restaura el ejemplo original en Archivos para evaluar otros ramales con v1.",
+      );
+      return;
+    }
     setScenario({
       ...structuredClone(scenario),
       route: {
@@ -206,6 +220,8 @@ export default function App() {
     ),
     "/economia/pruebas": engine.result && (
       <Sensitivity
+        progress={engine.sensitivityProgress}
+        onCancel={engine.cancelSensitivity}
         id="pruebas-economia"
         variables={["electricityPrice"]}
         result={engine.result}
@@ -228,7 +244,30 @@ export default function App() {
     ),
     "/ambiente": engine.result && <Environment result={engine.result} />,
     "/operacion/energia": engine.result && (
-      <EnergyPanel result={engine.result} />
+      <>
+        <EnergyPanel result={engine.result} />
+        {engine.result.dynamic && (
+          <>
+            <JourneyProfiles
+              result={engine.result}
+              cursor={cursorMinute}
+              onSeek={setSeekMinute}
+            />
+            <VehicleEnergyComparison
+              vehicles={engine.comparison}
+              running={engine.comparing}
+              progress={engine.comparisonProgress}
+              error={engine.comparisonError}
+              onStart={engine.startComparison}
+              onCancel={engine.cancelComparison}
+              onSelect={(id) => {
+                if (scenario.schemaVersion === "2")
+                  setScenario(selectJourneyVehicle(scenario, id));
+              }}
+            />
+          </>
+        )}
+      </>
     ),
     "/operacion/condiciones": (
       <Diagnostic
@@ -240,6 +279,8 @@ export default function App() {
     ),
     "/operacion/pruebas": engine.result && (
       <Sensitivity
+        progress={engine.sensitivityProgress}
+        onCancel={engine.cancelSensitivity}
         id="pruebas-operacion"
         variables={["cycles", "consumption"]}
         result={engine.result}
@@ -266,6 +307,25 @@ export default function App() {
     ),
     "/fuentes": <SourcesPanel scenario={scenario} />,
   };
+  if (engine.result?.dynamic?.economicComplete === false) {
+    for (const path of [
+      "/economia/caja",
+      "/economia/costos",
+      "/economia/pruebas",
+      "/economia/alternativas",
+    ] as const)
+      views[path] = (
+        <section className="panel">
+          <h3>Precio de vehículo desconocido</h3>
+          <p>
+            La comparación energética está disponible. Para evaluar finanzas o
+            alternativas, introduce un precio explícito y los supuestos de la
+            variante.
+          </p>
+          <a href="#/configurar">Completar entradas</a>
+        </section>
+      );
+  }
   const tabs =
     route.area === "economia"
       ? [
@@ -413,6 +473,16 @@ export default function App() {
             >
               <RouteMap
                 routeId={scenario.route.id}
+                onCursor={setCursorMinute}
+                seekMinute={seekMinute}
+                onDay={(selectedDay) => {
+                  if (scenario.schemaVersion === "2")
+                    setScenario({
+                      ...scenario,
+                      journey: { ...scenario.journey, selectedDay },
+                    });
+                }}
+
                 cycles={scenario.operation.cycles}
                 onCycles={(cycles) =>
                   setScenario(withValue(scenario, "operation.cycles", cycles))
@@ -434,6 +504,20 @@ export default function App() {
               />
             </Suspense>
           </main>
+          {scenario.schemaVersion === "1" &&
+            route.path === "/mapa" &&
+            scenario.route.id === "M09-514" && (
+              <div className="journey-activate map-card">
+                <b>{scenario.ev.name}</b>
+                <span>Escenario exploratorio · consumo uniforme v1</span>
+                <button
+                  className="primary"
+                  onClick={() => setScenario(convertToDynamic(scenario))}
+                >
+                  Activar jornada dinámica
+                </button>
+              </div>
+            )}
           <aside aria-label="Resumen de condiciones">
             {" "}
             <a

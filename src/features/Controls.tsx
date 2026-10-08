@@ -1,3 +1,5 @@
+import JourneyControls from "./JourneyControls";
+import { journeyVehicles, selectJourneyVehicle } from "../data/journey";
 import { BusFront, SlidersHorizontal } from "lucide-react";
 import type { Scenario } from "../domain/schema";
 import Editor, { NumberField } from "./Editor";
@@ -42,6 +44,10 @@ export default function Controls({
     );
   };
   const choose = (group: "ice" | "ev" | "charger", id: string) => {
+    if (group === "ev" && s.schemaVersion === "2") {
+      onChange(selectJourneyVehicle(s, id));
+      return;
+    }
     const next = structuredClone(s);
     if (group === "charger")
       next.charger = structuredClone(
@@ -83,6 +89,7 @@ export default function Controls({
             Cambiar ruta
           </button>
         </div>
+        <JourneyControls scenario={s} onChange={onChange} />
         <section className="control-group">
           <h3>
             <BusFront size={16} /> Vehículos a comparar
@@ -119,6 +126,13 @@ export default function Controls({
                   .map((v) => (
                     <option key={v.id} value={v.id}>
                       {v.name}
+                    </option>
+                  ))}
+                {group === "ev" &&
+                  s.schemaVersion === "2" &&
+                  journeyVehicles.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.name} · supuestos F
                     </option>
                   ))}
               </select>

@@ -1,3 +1,8 @@
+import * as Dialog from "@radix-ui/react-dialog";
+import JourneyCards from "./JourneyCards";
+import { journeyAt } from "../domain/journey";
+import { dayNames } from "../data/journey";
+import { clockTime } from "./JourneyControls";
 import { useEffect, useRef, useState } from "react";
 import {
   Hospital as HospitalIcon,
@@ -34,6 +39,33 @@ function energyColor(soc: number, reserve: number) {
     : soc < reserve + 0.1
       ? "#AC6D14"
       : "#027A35";
+}
+function layerColor(
+  mode: "route" | "energy" | "consumption" | "slope" | "occupancy",
+  point: ReturnType<typeof consumptionAt>,
+  reserve: number,
+  capacity = 15,
+) {
+  if (mode === "consumption" && "netKwh" in point) {
+    const c = point.netKwh / (point.segmentKm || 0.05);
+    return c < 0.3 ? "#027A35" : c < 1 ? "#AC6D14" : "#9D2148";
+  }
+  if (mode === "slope" && "slope" in point)
+    return point.slope < 0
+      ? "#266CB4"
+      : point.slope < 0.02
+        ? "#55585A"
+        : point.slope < 0.04
+          ? "#AC6D14"
+          : "#9D2148";
+  if (mode === "occupancy" && "occupancy" in point) {
+    return point.occupancy / capacity < 0.5
+      ? "#027A35"
+      : point.occupancy / capacity < 0.9
+        ? "#AC6D14"
+        : "#9D2148";
+  }
+  return energyColor(point.soc, reserve);
 }
 function fitRoute(
   m: maplibregl.Map,
@@ -116,9 +148,11 @@ function Outline({
   cycle,
   mode,
   onLimit,
+  locationKnown = true,
 }: {
+  locationKnown?: boolean;
   cycle: number;
-  mode: "route" | "energy";
+  mode: "route" | "energy" | "consumption" | "slope" | "occupancy";
   onLimit: () => void;
   result: Result | null;
   hospitals: Hospitals | null;
@@ -149,7 +183,8 @@ function Outline({
     30 + ((p[0]! - minX) / (maxX - minX || 1)) * 540,
     340 - ((p[1]! - minY) / (maxY - minY || 1)) * 310,
   ];
-  const position = features ? positionOnTrace(features, fraction) : null;
+  const position =
+    features && locationKnown ? positionOnTrace(features, fraction) : null;
   const marker = position ? project(position.coordinates) : null;
   const limit = result ? batteryLimit(result) : null;
   const reserve =
@@ -175,10 +210,19 @@ function Outline({
             strokeLinecap="round"
           />
         ))}
-      {mode === "energy" &&
+      {mode !== "route" &&
         result &&
         features &&
-        traceSegments(features).map((segment, i, all) => {
+        (result.scenario.schemaVersion === "2"
+          ? result.scenario.journey.prepared.segments.map((seg) => ({
+              start: seg.start,
+              end: seg.end,
+              from: seg.fromKm,
+              to: seg.toKm,
+              trace: seg.trace,
+            }))
+          : traceSegments(features)
+        ).map((segment, i, all) => {
           const point = consumptionAt(
             result,
             cycle,
@@ -191,7 +235,12 @@ function Outline({
                 .map((p) => p.join(","))
                 .join(" ")}
               fill="none"
-              stroke={energyColor(point.soc, result.scenario.energy.socMin)}
+              stroke={layerColor(
+                mode,
+                point,
+                result.scenario.energy.socMin,
+                result.scenario.ev.capacity,
+              )}
               strokeWidth="5"
               strokeLinecap="round"
             />
@@ -259,6 +308,9 @@ function Outline({
 }
 export default function RouteMap({
   routeId,
+  onDay,
+  onCursor,
+  seekMinute,
   result,
   stale,
   cycles,
@@ -269,6 +321,9 @@ export default function RouteMap({
   panelSide?: "left" | "right" | null;
   pauseKey?: string;
   routeId: string;
+  onDay: (day: number) => void;
+  onCursor: (minute: number) => void;
+  seekMinute: number | null;
   result: Result | null;
   stale: boolean;
   cycles: number;
@@ -286,22 +341,32 @@ export default function RouteMap({
     null,
   );
   const hospitalTrigger = useRef<HTMLElement | null>(null);
-  const [mode, setMode] = useState<"route" | "energy">("route");
+  const [mode, setMode] = useState<
+    "route" | "energy" | "consumption" | "slope" | "occupancy"
+  >("route");
   const [context, setContext] = useState(routeId === "M09-514");
   const [scope, setScope] = useState<"day" | "cycle">("day");
   const [cycle, setCycle] = useState(1);
-  const [fraction, setFraction] = useState(0);
+  const [routeFraction, setFraction] = useState(0);
+  const [elapsedMinute, setElapsedMinute] = useState(0);
+  const day = result?.dynamic?.selected;
+  const simulatedMinute = day
+    ? Math.min(day.endMinute, day.startMinute + elapsedMinute)
+    : 0;
+  const dynamicPoint = day ? journeyAt(day, simulatedMinute) : null;
+  const fraction = dynamicPoint?.fraction ?? routeFraction;
   const [fallback, setFallback] = useState(false);
   const [painted, setPainted] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [showVehicle, setShowVehicle] = useState(false);
+  const [journeyDialog, setJourneyDialog] = useState(false);
   const [zoom, setZoom] = useState(12);
   const [note, setNote] = useState("Cargando cartografía histórica…");
   const cycleCount =
     Number.isInteger(cycles) && cycles >= 1 && cycles <= 100
       ? cycles
       : (result?.scenario.operation.cycles ?? 1);
-  const activeCycle = Math.min(cycle, cycleCount);
+  const activeCycle = dynamicPoint?.cycle ?? Math.min(cycle, cycleCount);
   const view = useRef({
     routeId,
     result,
@@ -338,7 +403,16 @@ export default function RouteMap({
     const m = map.current;
     if (!m?.getSource("selected")) return;
     (m.getSource("selected") as maplibregl.GeoJSONSource).setData(selected);
-    const segments = traceSegments(selected),
+    const segments =
+        v.result?.scenario.schemaVersion === "2"
+          ? v.result.scenario.journey.prepared.segments.map((seg) => ({
+              start: seg.start,
+              end: seg.end,
+              from: seg.fromKm,
+              to: seg.toKm,
+              trace: seg.trace,
+            }))
+          : traceSegments(selected),
       total = segments.at(-1)?.to ?? 0;
     const energy: FeatureCollection<LineString> = {
       type: "FeatureCollection",
@@ -349,9 +423,11 @@ export default function RouteMap({
               v.cycle,
               (segment.from + segment.to) / 2 / (total || 1),
             );
-            const color = energyColor(
-              point.soc,
+            const color = layerColor(
+              v.mode,
+              point,
               v.result!.scenario.energy.socMin,
+              v.result!.scenario.ev.capacity,
             );
             return {
               type: "Feature",
@@ -368,7 +444,7 @@ export default function RouteMap({
     m.setLayoutProperty(
       "energy-route",
       "visibility",
-      v.mode === "energy" && v.result ? "visible" : "none",
+      v.mode !== "route" && v.result ? "visible" : "none",
     );
     m.setPaintProperty("selected-route", "line-color", [
       "case",
@@ -519,6 +595,29 @@ export default function RouteMap({
               20
           ) {
             playbackPause.current();
+            const dynamic = view.current.result?.dynamic;
+            if (dynamic) {
+              const frame = dynamic.selected.frames.find(
+                (frame) =>
+                  frame.kind === "service" &&
+                  frame.cycle === view.current.cycle &&
+                  frame.endFraction >= f,
+              );
+              if (frame)
+                setElapsedMinute(
+                  frame.minute -
+                    dynamic.selected.startMinute +
+                    frame.durationMinutes *
+                      Math.max(
+                        0,
+                        Math.min(
+                          1,
+                          (f - frame.fraction) /
+                            (frame.endFraction - frame.fraction || 1),
+                        ),
+                      ),
+                );
+            }
             setFraction(f);
           }
         }
@@ -585,18 +684,44 @@ export default function RouteMap({
       });
     return () => controller.abort();
   }, [routeId, hospitals]);
+  useEffect(() => {
+    setElapsedMinute(0);
+    setCycle(1);
+    setFraction(0);
+  }, [day?.day, routeId]);
   const limit = result ? batteryLimit(result) : null;
-  const position = geometry ? positionOnTrace(geometry, fraction) : null;
+  const position =
+    geometry && dynamicPoint?.kind !== "additional"
+      ? positionOnTrace(geometry, fraction)
+      : null;
   const cartographicSegments = geometry ? traceSegments(geometry) : [];
   const cartographic = cartographicSegments.at(-1)?.to ?? 0;
-  const progressValue =
-    scope === "day"
+  const cycleFrames = day?.frames.filter(
+    (f) => f.kind === "service" && f.cycle === activeCycle,
+  );
+  const scopeStart = day
+    ? scope === "cycle"
+      ? (cycleFrames?.[0]?.minute ?? day.startMinute)
+      : day.startMinute
+    : 0;
+  const scopeEnd = day
+    ? scope === "cycle"
+      ? (cycleFrames?.at(-1)?.endMinute ?? day.endMinute)
+      : day.endMinute
+    : 0;
+  const progressValue = day
+    ? Math.round((simulatedMinute - scopeStart) * 1000)
+    : scope === "day"
       ? Math.round((activeCycle - 1 + fraction) * 1000)
       : Math.round(fraction * 1000);
-  const progressMax = scope === "day" ? cycleCount * 1000 : 1000;
-  const currentPosition = result
-    ? consumptionAt(result, activeCycle, fraction)
-    : null;
+  const progressMax = day
+    ? Math.max(1, Math.round((scopeEnd - scopeStart) * 1000))
+    : scope === "day"
+      ? cycleCount * 1000
+      : 1000;
+  const currentPosition =
+    dynamicPoint ??
+    (result ? consumptionAt(result, activeCycle, fraction) : null);
   const rangeLabel =
     scope === "day"
       ? `Progreso del día · vuelta ${activeCycle} de ${cycleCount}`
@@ -653,6 +778,10 @@ export default function RouteMap({
           kind: "trace",
         }));
   const updateProgress = (value: number) => {
+    if (day) {
+      setElapsedMinute(scopeStart - day.startMinute + value / 1000);
+      return;
+    }
     if (scope === "cycle") {
       setFraction(value / 1000);
       return;
@@ -670,19 +799,41 @@ export default function RouteMap({
   const playback = usePlayback({
     progress: progressValue,
     max: progressMax,
-    limit: limit?.withinDay
-      ? scope === "day"
-        ? (limit.cycle - 1 + limit.fraction) * 1000
-        : activeCycle === limit.cycle
-          ? limit.fraction * 1000
-          : activeCycle > limit.cycle
-            ? 0
-            : null
-      : null,
+    limit: day
+      ? day.firstReserve && day.firstReserve.minute <= scopeEnd
+        ? Math.max(0, (day.firstReserve.minute - scopeStart) * 1000)
+        : null
+      : limit?.withinDay
+        ? scope === "day"
+          ? (limit.cycle - 1 + limit.fraction) * 1000
+          : activeCycle === limit.cycle
+            ? limit.fraction * 1000
+            : activeCycle > limit.cycle
+              ? 0
+              : null
+        : null,
     enabled: !!result && !stale && !!geometry?.features.length,
-    pauseKey: `${pauseKey}:${scope}:${routeId}`,
+    pauseKey: `${pauseKey}:${scope}:${routeId}:${day?.day}:${result?.modelVersion}:${journeyDialog}`,
     onProgress: updateProgress,
   });
+  const cursorTick = Math.floor(simulatedMinute / 5);
+  useEffect(() => {
+    if (day) onCursor(simulatedMinute);
+  }, [cursorTick, day?.day]);
+  useEffect(() => {
+    if (day && seekMinute !== null) {
+      playback.manual();
+      setElapsedMinute(
+        Math.max(
+          0,
+          Math.min(
+            day.endMinute - day.startMinute,
+            seekMinute - day.startMinute,
+          ),
+        ),
+      );
+    }
+  }, [seekMinute]);
   playbackPause.current = playback.manual;
   const frameRoute = () => {
     const m = map.current;
@@ -698,6 +849,27 @@ export default function RouteMap({
   const jump = (nextCycle: number, nextFraction: number) => {
     if (!result || stale || !geometry?.features.length) return;
     playback.manual();
+    if (day) {
+      const f =
+        day.frames.find(
+          (f) =>
+            f.kind === "service" &&
+            f.cycle === nextCycle &&
+            f.endFraction >= nextFraction,
+        ) ?? day.frames.at(-1)!;
+      const ratio = Math.max(
+        0,
+        Math.min(
+          1,
+          (nextFraction - f.fraction) / (f.endFraction - f.fraction || 1),
+        ),
+      );
+      setElapsedMinute(
+        nextCycle === cycleCount && nextFraction === 1
+          ? day.endMinute - day.startMinute
+          : f.minute - day.startMinute + f.durationMinutes * ratio,
+      );
+    }
     setCycle(nextCycle);
     setFraction(nextFraction);
     const target = positionOnTrace(geometry, nextFraction);
@@ -714,6 +886,12 @@ export default function RouteMap({
   const jumpLimit = () => {
     if (!limit?.withinDay) return;
     setMode("energy");
+    if (day?.firstReserve) {
+      playback.manual();
+      setScope("day");
+      setElapsedMinute(day.firstReserve.minute - day.startMinute);
+      return;
+    }
     jump(limit.cycle, limit.fraction);
   };
   const centerHospital = () => {
@@ -768,6 +946,7 @@ export default function RouteMap({
   return (
     <div
       className="map-explorer"
+      data-dynamic={!!day}
       data-panel={panelSide ?? "none"}
       data-pause-key={pauseKey}
     >
@@ -793,6 +972,24 @@ export default function RouteMap({
             Batería en el recorrido
           </button>
         </div>
+        {day && (
+          <label className="map-layer-choice">
+            <span>Capa de jornada</span>
+            <select
+              value={mode}
+              onChange={(e) => {
+                playback.pause();
+                setMode(e.target.value as typeof mode);
+              }}
+            >
+              <option value="route">Recorrido</option>
+              <option value="energy">SOC (%)</option>
+              <option value="consumption">Consumo (kWh/km)</option>
+              <option value="slope">Pendiente (%)</option>
+              <option value="occupancy">Ocupación (pasajeros)</option>
+            </select>
+          </label>
+        )}
         {routeId === "M09-514" && (
           <label className="check-field">
             <input
@@ -816,6 +1013,7 @@ export default function RouteMap({
           {fallback && (
             <Outline
               features={geometry}
+              locationKnown={dynamicPoint?.kind !== "additional"}
               fraction={fraction}
               cycle={activeCycle}
               mode={mode}
@@ -918,17 +1116,33 @@ export default function RouteMap({
           </button>
         </div>
         <div className={`map-hud ${stale ? "is-stale" : ""}`}>
-          <PointCard
-            result={result}
-            cycle={activeCycle}
-            cycles={cycleCount}
-            fraction={fraction}
-            stale={stale}
-            expanded={showVehicle}
-            onToggle={() => setShowVehicle((v) => !v)}
-          />
+          {result?.dynamic ? (
+            <JourneyCards
+              result={result}
+              minute={simulatedMinute}
+              stale={stale}
+            />
+          ) : (
+            <PointCard
+              result={result}
+              cycle={activeCycle}
+              cycles={cycleCount}
+              fraction={fraction}
+              stale={stale}
+              expanded={showVehicle}
+              onToggle={() => setShowVehicle((v) => !v)}
+            />
+          )}
           <div className="map-legend">
-            {mode === "route" ? (
+            {mode !== "route" && mode !== "energy" ? (
+              <span>
+                {mode === "consumption"
+                  ? "Consumo: verde <0.3 · ámbar <1 · guinda ≥1 kWh/km"
+                  : mode === "slope"
+                    ? "Pendiente: azul <0 · gris <2 · ámbar <4 · guinda ≥4%"
+                    : "Ocupación: verde <50 · ámbar <90 · guinda ≥90% de plazas"}
+              </span>
+            ) : mode === "route" ? (
               <>
                 <span>
                   <i style={{ background: "#9D2148" }} />
@@ -968,12 +1182,14 @@ export default function RouteMap({
               </span>
             )}
           </div>
-          <DayCard
-            result={result}
-            stale={stale}
-            onLimit={jumpLimit}
-            canNavigate={!!geometry?.features.length}
-          />
+          {!result?.dynamic && (
+            <DayCard
+              result={result}
+              stale={stale}
+              onLimit={jumpLimit}
+              canNavigate={!!geometry?.features.length}
+            />
+          )}
           {selectedHospital && context && routeId === "M09-514" && (
             <HospitalCard
               hospital={selectedHospital}
@@ -984,6 +1200,34 @@ export default function RouteMap({
           )}
         </div>
       </div>
+      {result?.dynamic && (
+        <Dialog.Root open={journeyDialog} onOpenChange={setJourneyDialog}>
+          <Dialog.Trigger asChild>
+            <button
+              className="journey-mobile-details secondary"
+              onClick={() => playback.pause()}
+            >
+              Detalles de jornada
+            </button>
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay className="dialog-overlay" />
+            <Dialog.Content className="dialog-content journey-modal">
+              <Dialog.Title>Lecturas de la jornada</Dialog.Title>
+              <Dialog.Description>
+                Escenario exploratorio calculado; batería, pasajeros y
+                condiciones a la hora seleccionada.
+              </Dialog.Description>
+              <JourneyCards
+                result={result}
+                minute={simulatedMinute}
+                stale={stale}
+              />
+              <Dialog.Close className="secondary">Cerrar detalles</Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      )}
       <div className="map-journey">
         <div
           className="playback-toolbar"
@@ -1027,6 +1271,31 @@ export default function RouteMap({
               <option value="4">4×</option>
             </select>
           </label>
+          {day && (
+            <label className="playback-day">
+              <span className="sr-only">Día simulado</span>
+              <select
+                aria-label="Día simulado"
+                value={day.day}
+                disabled={stale}
+                onChange={(e) => {
+                  playback.manual();
+                  onDay(Number(e.target.value));
+                }}
+              >
+                {dayNames.map((name, i) => (
+                  <option key={name} value={i}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {day && (
+            <strong className="simulated-clock" aria-label="Hora simulada">
+              {clockTime(simulatedMinute)}
+            </strong>
+          )}
           <span className="playback-note" role="status">
             {playback.stop === "reserve"
               ? "Reserva alcanzada · reproducción pausada"
@@ -1157,7 +1426,8 @@ export default function RouteMap({
                 disabled={!result || stale}
                 onChange={(e) => {
                   playback.manual();
-                  setCycle(Number(e.target.value));
+                  if (day) jump(Number(e.target.value), 0);
+                  else setCycle(Number(e.target.value));
                 }}
               >
                 {Array.from({ length: cycleCount }, (_, i) => (
@@ -1233,8 +1503,9 @@ export default function RouteMap({
       >
         <summary>Acerca del mapa</summary>
         <p className="map-method">
-          Distribución uniforme por distancia; incluye adicionales
-          proporcionalmente, sin tráfico ni pendientes.{" "}
+          {day
+            ? "Trayectoria por hora y tramo con datos históricos y supuestos editables. Los kilómetros adicionales tienen ubicación desconocida. "
+            : "Distribución uniforme por distancia; incluye adicionales proporcionalmente, sin tráfico ni pendientes. "}
           {stale &&
             "Resultado anterior; espera el cálculo o corrige las entradas. "}
           {result &&

@@ -421,6 +421,7 @@ export function journeyAt(day: DayJourney, minute: number) {
   // Primero se demanda energía; después se recupera la energía de descenso.
   return {
     ...f,
+    segmentKm: f.endKm - f.km,
     minute,
     fraction: f.fraction + (f.endFraction - f.fraction) * ratio,
     km: f.km + (f.endKm - f.km) * ratio,
