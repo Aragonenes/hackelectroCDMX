@@ -1,3 +1,4 @@
+import { journeyAt } from "./journey";
 import type { FeatureCollection, LineString } from "geojson";
 import type { Result } from "./schema";
 export const distanceKm = (a: number[], b: number[]) => {
@@ -81,6 +82,21 @@ export function nearestFraction(
   return offset / (segments.at(-1)?.to || 1);
 }
 export function consumptionAt(r: Result, cycle: number, fraction: number) {
+  if (r.dynamic) {
+    const day = r.dynamic.selected;
+    const f =
+      day.frames.find(
+        (f) =>
+          f.kind === "service" &&
+          f.cycle === cycle &&
+          f.endFraction >= fraction,
+      ) ?? day.frames.at(-1)!;
+    const ratio = Math.max(
+      0,
+      Math.min(1, (fraction - f.fraction) / (f.endFraction - f.fraction || 1)),
+    );
+    return journeyAt(day, f.minute + f.durationMinutes * ratio);
+  }
   const cycles = Math.max(1, Math.min(r.scenario.operation.cycles, cycle));
   const km =
     r.scenario.route.cycleKm *
@@ -95,6 +111,15 @@ export function consumptionAt(r: Result, cycle: number, fraction: number) {
 
 /** Límite de energía utilizable, antes de invadir la reserva; incluye km adicionales. */
 export function batteryLimit(r: Result) {
+  if (r.dynamic) {
+    const cross = r.dynamic.selected.firstReserve;
+    return {
+      km: cross?.km ?? r.dailyKm,
+      cycle: cross?.cycle ?? r.scenario.operation.cycles,
+      fraction: cross?.fraction ?? 1,
+      withinDay: !!cross,
+    };
+  }
   const km = r.usableKwh / r.scenario.ev.consumption;
   const cycleKm =
     r.scenario.route.cycleKm * (1 + r.scenario.operation.emptyRatio);

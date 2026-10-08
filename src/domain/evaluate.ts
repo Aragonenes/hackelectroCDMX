@@ -1,33 +1,55 @@
 import {
   ScenarioSchema,
+  LegacyScenarioSchema,
   type Scenario,
   type Result,
   type Constraint,
 } from "./schema";
 import { charging } from "./charging";
 import { financial } from "./finance";
+import { evaluateDynamic } from "./evaluateJourney";
 export function evaluateScenario(input: Scenario): Result {
   const s = ScenarioSchema.parse(input);
+  return s.schemaVersion === "2" ? evaluateDynamic(s) : evaluateLegacy(s);
+}
+export interface EvaluationTotals {
+  dailyBatteryKwh: number;
+  workHours: number;
+  dailyKm: number;
+  monthlyBatteryKwh: number;
+  monthlyGridKwh: number;
+  monthlyKm: number;
+  monthlyLiters: number;
+  monthlyBoardings: number;
+  peakKw: number;
+}
+export function evaluateLegacy(
+  input: Scenario,
+  totals?: EvaluationTotals,
+): Result {
+  const s = LegacyScenarioSchema.parse(input);
   const o = s.operation;
   const e = s.energy;
   const ec = s.economy;
   const serviceKm = s.route.cycleKm * o.cycles;
-  const dailyKm = serviceKm * (1 + o.emptyRatio);
+  const dailyKm = totals?.dailyKm ?? serviceKm * (1 + o.emptyRatio);
   const dailyLiters = dailyKm / s.ice.consumption;
-  const dailyBatteryKwh = dailyKm * s.ev.consumption;
+  const dailyBatteryKwh = totals?.dailyBatteryKwh ?? dailyKm * s.ev.consumption;
   const dailyGridKwh = dailyBatteryKwh / e.efficiency;
   const usableKwh = s.ev.batteryKwh * e.soh * (e.socMax - e.socMin);
   const socEnd = e.socMax - dailyBatteryKwh / (s.ev.batteryKwh * e.soh);
   const charge = charging(s, dailyBatteryKwh);
   const headway = o.cycleMinutes / o.fleet;
   const workHours =
+    totals?.workHours ??
     (o.cycles * o.cycleMinutes) / 60 +
-    (dailyKm - serviceKm) / o.emptySpeedKmh +
-    o.handlingHours;
+      (dailyKm - serviceKm) / o.emptySpeedKmh +
+      o.handlingHours;
   const shared = ec.adminMonth * o.fleet + ec.depotMonth;
+  const monthlyKm = totals?.monthlyKm ?? dailyKm * o.days;
   const iceOperating =
-    (dailyLiters * e.fuelPrice + dailyKm * s.ice.maintenancePerKm) *
-      o.days *
+    ((totals?.monthlyLiters ?? dailyLiters * o.days) * e.fuelPrice +
+      monthlyKm * s.ice.maintenancePerKm) *
       o.fleet +
     s.ice.insuranceMonth * o.fleet +
     shared;
@@ -36,15 +58,30 @@ export function evaluateScenario(input: Scenario): Result {
       ? 0
       : s.ev.maintenancePerKm;
   const evOperating =
-    (dailyGridKwh * e.electricityPrice + dailyKm * maintenance) *
-      o.days *
+    ((totals?.monthlyGridKwh ?? dailyGridKwh * o.days) * e.electricityPrice +
+      monthlyKm * maintenance) *
       o.fleet +
     s.ev.insuranceMonth * o.fleet +
     shared +
-    charge.peakKw * e.demandPrice +
+    (totals?.peakKw ?? charge.peakKw) * e.demandPrice +
     e.fixedElectricity;
-  const ice = financial(s, s.ice, iceOperating, false);
-  const ev = financial(s, s.ev, evOperating, true);
+  const financialScenario = totals
+    ? { ...s, operation: { ...o, boardings: totals.monthlyBoardings / o.days } }
+    : s;
+  const ice = financial(
+    financialScenario,
+    s.ice,
+    iceOperating,
+    false,
+    totals?.monthlyKm,
+  );
+  const ev = financial(
+    financialScenario,
+    s.ev,
+    evOperating,
+    true,
+    totals?.monthlyKm,
+  );
   const constraints: Constraint[] = [];
   const check = (id: string, label: string, pass: boolean, detail: string) =>
     constraints.push({ id, label, status: pass ? "pass" : "fail", detail });

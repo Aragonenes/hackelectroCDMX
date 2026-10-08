@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { JourneySchema } from "./journeySchema";
+import type { JourneyResults } from "./journey";
 const n = z.number().finite().nonnegative();
 const positive = z.number().finite().positive();
 const fraction = n.max(1);
@@ -84,7 +86,7 @@ export const CatalogSchema = z.object({
   finances: z.array(FinanceSchema).min(1).max(50),
   sources: z.array(SourceSchema).max(500),
 });
-export const ScenarioSchema = z
+export const LegacyScenarioSchema = z
   .object({
     schemaVersion: z.literal("1"),
     modelVersion: z.literal("1.0.0"),
@@ -181,6 +183,43 @@ export const ScenarioSchema = z
         message: "Indica el mes del reemplazo de batería.",
       });
   });
+export const DynamicScenarioSchema = z
+  .object({
+    ...LegacyScenarioSchema.shape,
+    schemaVersion: z.literal("2"),
+    modelVersion: z.literal("2.0.0"),
+    journey: JourneySchema,
+  })
+  .superRefine((s, c) => {
+    const legacy = LegacyScenarioSchema.safeParse({
+      ...s,
+      schemaVersion: "1",
+      modelVersion: "1.0.0",
+    });
+    if (!legacy.success)
+      for (const issue of legacy.error.issues) c.addIssue({ ...issue });
+    if (
+      s.journey.days.reduce((sum, d) => sum + d.mixDays, 0) !== s.operation.days
+    )
+      c.addIssue({
+        code: "custom",
+        path: ["journey", "days"],
+        message: "La mezcla mensual debe sumar los días de operación.",
+      });
+    if (s.route.id !== s.journey.prepared.routeId)
+      c.addIssue({
+        code: "custom",
+        path: ["route"],
+        message:
+          "La jornada requiere el perfil preparado del ramal seleccionado.",
+      });
+  });
+export const ScenarioSchema = z.discriminatedUnion("schemaVersion", [
+  LegacyScenarioSchema,
+  DynamicScenarioSchema,
+]);
+export type LegacyScenario = z.infer<typeof LegacyScenarioSchema>;
+export type DynamicScenario = z.infer<typeof DynamicScenarioSchema>;
 export type Evidence = z.infer<typeof EvidenceSchema>;
 export type Vehicle = z.infer<typeof VehicleSchema>;
 export type Charger = z.infer<typeof ChargerSchema>;
@@ -250,7 +289,8 @@ export interface ChargeResult {
   timeline: { hour: number; kw: number }[];
 }
 export interface Result {
-  modelVersion: "1.0.0";
+  modelVersion: "1.0.0" | "2.0.0";
+  dynamic?: JourneyResults;
   scenario: Scenario;
   dailyKm: number;
   serviceKm: number;

@@ -4,7 +4,7 @@ import { getValue, evidenceOf } from "./values";
 import { ScenarioSchema, type Scenario, type Result } from "../domain/schema";
 const Envelope = z.object({
   format: z.literal("hackelectro-scenario"),
-  version: z.literal("1"),
+  version: z.enum(["1", "2"]),
   generatedAt: z.string(),
   checksum: z.string().regex(/^[a-f0-9]{64}$/),
   scenario: ScenarioSchema,
@@ -32,7 +32,7 @@ export async function serializeScenario(scenario: Scenario) {
   return JSON.stringify(
     {
       format: "hackelectro-scenario",
-      version: "1",
+      version: normalized.schemaVersion,
       generatedAt: new Date().toISOString(),
       checksum: await scenarioHash(normalized),
       scenario: normalized,
@@ -58,6 +58,8 @@ export async function parseScenario(text: string) {
       "Archivo incompatible: revisa la versión, las entradas y las fuentes. Consulta el formato de exportación de HackElectroCDMX.",
     );
   const envelope = validated.data;
+  if (envelope.version !== envelope.scenario.schemaVersion)
+    throw new Error("La versión del archivo no coincide con la del escenario.");
   if ((await scenarioHash(envelope.scenario)) !== envelope.checksum)
     throw new Error(
       "El checksum no coincide. El archivo fue modificado o está incompleto.",

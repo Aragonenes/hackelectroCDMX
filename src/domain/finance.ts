@@ -74,6 +74,7 @@ export function financial(
   vehicle: Vehicle,
   operatingMonth: number,
   isEv: boolean,
+  monthlyKm?: number,
 ): FinancialResult {
   operatingMonth = money(operatingMonth);
   const o = s.operation;
@@ -187,7 +188,9 @@ export function financial(
       residual,
   );
   const totalKm =
-    s.route.cycleKm * o.cycles * (1 + o.emptyRatio) * o.days * 60 * fleet;
+    (monthlyKm ?? s.route.cycleKm * o.cycles * (1 + o.emptyRatio) * o.days) *
+    60 *
+    fleet;
   return {
     capex,
     upfront,
