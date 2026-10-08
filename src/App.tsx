@@ -473,6 +473,17 @@ export default function App() {
             >
               <RouteMap
                 routeId={scenario.route.id}
+                activation={
+                  scenario.schemaVersion === "1" &&
+                  route.path === "/mapa" &&
+                  scenario.route.id === "M09-514"
+                    ? {
+                        vehicleName: scenario.ev.name,
+                        onActivate: () =>
+                          setScenario(convertToDynamic(scenario)),
+                      }
+                    : undefined
+                }
                 onCursor={setCursorMinute}
                 seekMinute={seekMinute}
                 onDay={(selectedDay) => {
@@ -504,20 +515,6 @@ export default function App() {
               />
             </Suspense>
           </main>
-          {scenario.schemaVersion === "1" &&
-            route.path === "/mapa" &&
-            scenario.route.id === "M09-514" && (
-              <div className="journey-activate map-card">
-                <b>{scenario.ev.name}</b>
-                <span>Escenario exploratorio · consumo uniforme v1</span>
-                <button
-                  className="primary"
-                  onClick={() => setScenario(convertToDynamic(scenario))}
-                >
-                  Activar jornada dinámica
-                </button>
-              </div>
-            )}
           <aside aria-label="Resumen de condiciones">
             {" "}
             <a

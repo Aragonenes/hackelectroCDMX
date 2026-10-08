@@ -174,17 +174,32 @@
 .simulation-map .map-canvas {
   height: 100%;
 }
-.simulation-map .map-tools {
+.simulation-map .map-controls {
   position: absolute;
-  z-index: 5;
+  z-index: 6;
   top: var(--work-top);
   left: var(--work-left);
+  right: 82px;
+  bottom: var(--work-bottom);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  pointer-events: none;
+}
+.simulation-map .map-controls > * {
+  pointer-events: auto;
+}
+.simulation-map .map-tools {
+  flex: none;
+  width: 100%;
   padding: 0;
   border: 0;
   background: none;
   gap: 12px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 .simulation-map .map-modes {
   background: white;
@@ -217,10 +232,11 @@
   border-radius: 14px;
 }
 .simulation-map .map-point-card {
-  top: 164px;
-  left: var(--work-left);
+  position: static;
   width: 244px;
-  max-height: calc(100% - 380px);
+  max-width: 100%;
+  min-height: 0;
+  flex-shrink: 1;
   overflow: auto;
 }
 .simulation-map .map-day-card {
@@ -759,10 +775,13 @@
     text-align: left;
     font-size: 9px;
   }
-  .simulation-map .map-tools {
+  .simulation-map .map-controls {
     top: 158px;
     left: 12px;
-    right: 12px;
+    right: 64px;
+    bottom: 340px;
+  }
+  .simulation-map .map-tools {
     gap: 6px;
   }
   .simulation-map .map-tools .check-field {
@@ -773,10 +792,7 @@
     padding: 8px;
   }
   .simulation-map .map-point-card {
-    top: 220px;
-    left: 12px;
     width: 210px;
-    max-height: calc(100% - 400px);
     padding: 12px;
   }
   .simulation-map .map-day-card {
@@ -1025,11 +1041,8 @@
   .workspace-status {
     top: 148px;
   }
-  .simulation-map .map-tools {
+  .simulation-map .map-controls {
     top: 164px;
-  }
-  .simulation-map .map-point-card {
-    top: 224px;
   }
   .simulation-map .journey-options {
     position: static;
@@ -1090,17 +1103,20 @@
 }
 /* Jornada dinámica */
 .journey-activate {
-  position: absolute;
-  top: 150px;
-  left: 200px;
-  max-width: 300px;
   display: grid;
-  gap: 10px;
-  padding: 16px;
-  z-index: 4;
+  gap: 8px;
+  margin: 12px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.journey-activate .primary {
+  min-height: 44px;
+  width: 100%;
+  font-size: 11px;
 }
 .journey-activate span {
-  font-size: 12px;
+  font-size: 10px;
+  line-height: 1.5;
 }
 .dynamic-cards {
   display: grid;
@@ -1160,11 +1176,6 @@
   padding: 10px 0;
 }
 @media (max-width: 1023px) {
-  .journey-activate {
-    top: 170px;
-    left: 16px;
-    max-width: calc(100% - 100px);
-  }
   .dynamic-cards {
     max-height: calc(100dvh - 420px);
   }
@@ -1252,9 +1263,6 @@
   }
   .simulation-map [data-dynamic="true"] .map-legend {
     display: none;
-  }
-  .journey-activate {
-    top: 230px;
   }
   .journey-activate b {
     font-size: 13px;

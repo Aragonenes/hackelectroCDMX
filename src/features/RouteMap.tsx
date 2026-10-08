@@ -14,7 +14,12 @@ import {
   Pause,
   RotateCcw,
 } from "lucide-react";
-import { PointCard, DayCard, HospitalCard } from "./MapCards";
+import {
+  PointCard,
+  DayCard,
+  HospitalCard,
+  type JourneyActivation,
+} from "./MapCards";
 import { MapSymbol, VehicleIcon, type Hospital } from "./MapSymbols";
 import * as maplibregl from "maplibre-gl";
 import mapWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
@@ -308,6 +313,7 @@ function Outline({
 }
 export default function RouteMap({
   routeId,
+  activation,
   onDay,
   onCursor,
   seekMinute,
@@ -321,6 +327,7 @@ export default function RouteMap({
   panelSide?: "left" | "right" | null;
   pauseKey?: string;
   routeId: string;
+  activation?: JourneyActivation;
   onDay: (day: number) => void;
   onCursor: (minute: number) => void;
   seekMinute: number | null;
@@ -968,55 +975,69 @@ export default function RouteMap({
       data-panel={panelSide ?? "none"}
       data-pause-key={pauseKey}
     >
-      <div className="map-tools">
-        <div className="map-modes" aria-label="Vista del mapa">
-          <button
-            aria-pressed={mode === "route"}
-            onClick={() => {
-              playback.pause();
-              setMode("route");
-            }}
-          >
-            Recorrido
-          </button>
-          <button
-            aria-pressed={mode === "energy"}
-            disabled={!result || stale}
-            onClick={() => {
-              playback.pause();
-              setMode("energy");
-            }}
-          >
-            Batería en el recorrido
-          </button>
-        </div>
-        {day && (
-          <label className="map-layer-choice">
-            <span>Capa de jornada</span>
-            <select
-              value={mode}
-              onChange={(e) => {
+      <div className={`map-controls ${stale ? "is-stale" : ""}`}>
+        <div className="map-tools">
+          <div className="map-modes" aria-label="Vista del mapa">
+            <button
+              aria-pressed={mode === "route"}
+              onClick={() => {
                 playback.pause();
-                setMode(e.target.value as typeof mode);
+                setMode("route");
               }}
             >
-              <option value="route">Recorrido</option>
-              <option value="energy">SOC (%)</option>
-              <option value="consumption">Consumo (kWh/km)</option>
-              <option value="slope">Pendiente (%)</option>
-              <option value="occupancy">Ocupación (pasajeros)</option>
-            </select>
-          </label>
-        )}
-        {routeId === "M09-514" && (
-          <label className="check-field">
-            <input
-              type="checkbox"
-              checked={context}
-              onChange={(e) => setContext(e.target.checked)}
-            />
-            Contexto hospitalario
-          </label>
+              Recorrido
+            </button>
+            <button
+              aria-pressed={mode === "energy"}
+              disabled={!result || stale}
+              onClick={() => {
+                playback.pause();
+                setMode("energy");
+              }}
+            >
+              Batería en el recorrido
+            </button>
+          </div>
+          {day && (
+            <label className="map-layer-choice">
+              <span>Capa de jornada</span>
+              <select
+                value={mode}
+                onChange={(e) => {
+                  playback.pause();
+                  setMode(e.target.value as typeof mode);
+                }}
+              >
+                <option value="route">Recorrido</option>
+                <option value="energy">SOC (%)</option>
+                <option value="consumption">Consumo (kWh/km)</option>
+                <option value="slope">Pendiente (%)</option>
+                <option value="occupancy">Ocupación (pasajeros)</option>
+              </select>
+            </label>
+          )}
+          {routeId === "M09-514" && (
+            <label className="check-field">
+              <input
+                type="checkbox"
+                checked={context}
+                onChange={(e) => setContext(e.target.checked)}
+              />
+              Contexto hospitalario
+            </label>
+          )}
+        </div>
+        {!result?.dynamic && (
+          <PointCard
+            result={result}
+            cycle={activeCycle}
+            cycles={cycleCount}
+            fraction={fraction}
+            stale={stale}
+            expanded={showVehicle}
+            onToggle={() => setShowVehicle((v) => !v)}
+            activation={activation}
+          />
         )}
       </div>
       <div className="map-stage">
@@ -1134,21 +1155,11 @@ export default function RouteMap({
           </button>
         </div>
         <div className={`map-hud ${stale ? "is-stale" : ""}`}>
-          {result?.dynamic ? (
+          {result?.dynamic && (
             <JourneyCards
               result={result}
               minute={simulatedMinute}
               stale={stale}
-            />
-          ) : (
-            <PointCard
-              result={result}
-              cycle={activeCycle}
-              cycles={cycleCount}
-              fraction={fraction}
-              stale={stale}
-              expanded={showVehicle}
-              onToggle={() => setShowVehicle((v) => !v)}
             />
           )}
           <div className="map-legend">

@@ -11,6 +11,11 @@ import { batteryLimit, consumptionAt } from "../domain/geometry";
 import { num } from "../ui/format";
 import type { Hospital } from "./MapSymbols";
 
+export type JourneyActivation = {
+  vehicleName: string;
+  onActivate: () => void;
+};
+
 export function PointCard({
   result,
   cycle,
@@ -19,6 +24,7 @@ export function PointCard({
   stale,
   expanded,
   onToggle,
+  activation,
 }: {
   result: Result | null;
   cycle: number;
@@ -27,6 +33,7 @@ export function PointCard({
   stale: boolean;
   expanded: boolean;
   onToggle: () => void;
+  activation?: JourneyActivation;
 }) {
   const point = result ? consumptionAt(result, cycle, fraction) : null;
   const soc = point ? Math.max(0, Math.min(100, point.soc * 100)) : 0;
@@ -38,6 +45,15 @@ export function PointCard({
           {stale ? "Resultado anterior" : "Escenario simulado"}
         </span>
       </div>
+      {activation && (
+        <div className="journey-activate">
+          <b>{activation.vehicleName}</b>
+          <span>Escenario exploratorio · consumo uniforme v1</span>
+          <button className="primary" onClick={activation.onActivate}>
+            Activar jornada dinámica
+          </button>
+        </div>
+      )}
       <p>
         Vuelta {cycle} de {cycles} ·{" "}
         <strong>{point ? num(point.km, 1) : "—"} km</strong> del día
