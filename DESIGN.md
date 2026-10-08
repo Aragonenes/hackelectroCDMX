@@ -967,3 +967,9 @@ Create an institutional dependency page with a compact Government header, depend
 - Manual de Identidad Gráfica Institucional 2024–2030, Jefatura de Gobierno: https://jefaturadegobierno.cdmx.gob.mx/storage/app/uploads/public/69e/a52/e82/69ea52e8270f9839787048.pdf
 - Manual de Identidad Gráfica / Atención Ciudadana, ADIP: https://adip.cdmx.gob.mx/centros/atencion-ciudadana/manual-de-identidad-grafica
 - Llave CDMX: https://llave.cdmx.gob.mx/
+
+## Simulador de jornada dinámica · implementación 2026-10-08
+
+El mapa conserva los cuatro accesos y superficies blancas con guinda. La jornada v2 se activa mediante una conversión visible del escenario original. Tres cards compactas a la derecha muestran batería/reserva/proyección, ocupación/abordajes y temperatura/pavimento/pendiente. El vehículo y el carácter exploratorio se identifican desde el inicio. En móvil, las lecturas completas se consultan en diálogo.
+
+La reproducción inferior muestra acciones y progreso en dos filas; día y hora simulada son visibles, con vueltas, sentidos y escala en opciones. Reproduce resultados precalculados, 60 segundos por escala a 1×, y se pausa en reserva. Capas de consumo, pendiente y ocupación añaden unidades y leyenda. Operación conserva perfiles sincronizados; abrir paneles recoge cards sin cambiar cámara. El territorio, la temperatura histórica y los perfiles F se distinguen de observaciones actuales. Controles de 44 px, teclado, movimiento reducido y atribuciones permanecen activos.

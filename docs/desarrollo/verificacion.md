@@ -84,3 +84,9 @@ Entrega local en `feat/redisenio-mapa`; [experiencia e inventario](redisenio-map
 - El dominio, protocolo del worker, JSON v1, catálogo, recursos territoriales y factores permanecen sin cambios. El informe comparte las tablas extraídas, conservando quince indicadores y sesenta meses. Reproducir no ejecuta el evaluador por fotograma ni modifica escenario/archivos. La prueba temporal de recaudo continúa aislada.
 - Plan y progreso nuevos son locales e ignorados. Main conserva su versión previa; no se hizo push ni despliegue del rediseño.
 - Ajuste visual final: presets, modos del mapa, marcadores y etiquetas de casillas tienen objetivos de al menos 44 px; los presets recuperan texto de 11 px. Check de 56 pruebas/build y formato correctos; recorridos de accesibilidad y composición responsive repetidos y correctos.
+
+## Jornada v2 · entrega local 2026-10-08
+
+Se integraron CEM 4.0, perfiles horarios PED 2023 con cobertura parcial, auditoría de 33 ID, motor calibrable por tramo, conversión explícita v1/v2, mezcla mensual, comparación, reproducción y exportaciones. Antes del cierre: 67 pruebas unitarias correctas, incluidas 11 analíticas nuevas; compilación correcta; activación en Chromium local sin errores JS. El usuario indicó terminar sin más tests y verificará el front: **no se ejecutó la suite E2E ni una nueva suite integral tras los ajustes finales**. El último control de tipos pasó; se aplicó formato. No se afirma verificación final de accesibilidad, impresión, zoom al 200% ni todos los flujos nuevos.
+
+Servidor local de revisión: http://localhost:5173. Activar jornada dinámica desde el mapa o Configurar. Los cambios permanecen en `feat/simulacion-jornada`, sin push ni despliegue. JSON v1 mantiene su cálculo; JSON v2 guarda entradas y perfil preparado. Fuentes históricas y coeficientes exploratorios no acreditan aforo, servicio actual, homologación ni inversión.

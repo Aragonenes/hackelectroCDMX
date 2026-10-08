@@ -85,3 +85,7 @@ vercel deploy --prod --yes --scope hello-world-9171
 La cuenta Vercel autenticada permite publicar por CLI, pero rechazó el enlace automático del repositorio por falta de **Login Connection de GitHub**. Para habilitar despliegues al hacer push y previews de ramas, el titular debe conectar GitHub en su cuenta Vercel y vincular `itsebasvz/hackelectroCDMX` desde Project Settings → Git. No se afirma que esa integración esté activa. La compilación es portable e independiente de esta conexión.
 
 `.vercelignore` excluye seguimiento local, credenciales y fuentes de terceros conservadas localmente. Vercel CLI generó configuración/credenciales locales ignoradas; no deben incorporarse a Git ni al sitio.
+
+- [Modelo de jornada v2](modelo-jornada.md): trayectoria por tramo, compatibilidad v1 y mezcla mensual.
+- [Datos preparados de jornada](datos-jornada.md): CEM 4.0, Pedregal 2023, cobertura y preparación reproducible.
+- [Auditoría de factores](../investigacion/Variables_Factores/auditoria-jornada.md): variantes, incidencias y supuestos por parámetro.
