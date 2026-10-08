@@ -1153,6 +1153,9 @@
   font-size: 14px;
   line-height: 1.5;
 }
+.journey-settings .pitch-load {
+  margin-bottom: 16px;
+}
 .journey-model-label {
   font: 600 10px var(--font-ui);
   letter-spacing: 0;
@@ -1383,9 +1386,77 @@
   line-height: 1.2;
 }
 .dynamic-cards .journey-vehicle-name {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.3;
   display: block;
+}
+.dynamic-cards .journey-battery-icon {
+  color: #266cb4;
+  align-self: center;
+}
+.dynamic-cards .journey-vehicle {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+.dynamic-cards .journey-vehicle > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+.pitch-search-context {
+  display: grid;
+  gap: 16px;
+  padding: 18px 20px;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbf7f9;
+}
+.pitch-search-context b {
+  display: block;
+  margin: 8px 0;
+  font-size: 15px;
+}
+.pitch-search-context p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.pitch-catalog {
+  min-width: 0;
+}
+.pitch-catalog summary {
+  min-height: 44px;
+  padding: 12px 0;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pitch-catalog .table-scroll {
+  max-height: 360px;
+  overflow: auto;
+}
+.pitch-catalog table {
+  min-width: 580px;
+  font-size: 12px;
+}
+.alternative-energy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin: 14px 0;
+  border-radius: 8px;
+  color: var(--success);
+  background: #eaf5ee;
+}
+.alternative-energy b,
+.alternative-energy span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
 }
 .simulation-map .dynamic-cards {
   max-height: calc(100dvh - 385px);

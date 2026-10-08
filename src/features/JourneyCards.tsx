@@ -2,6 +2,9 @@ import type { Result } from "../domain/schema";
 import { journeyAt } from "../domain/journey";
 import { clockTime } from "./JourneyControls";
 import { num } from "../ui/format";
+import { Battery } from "lucide-react";
+import { VehicleIcon } from "./MapSymbols";
+import { isPitchScenario } from "../data/pitch";
 export default function JourneyCards({
   result: r,
   minute,
@@ -24,9 +27,20 @@ export default function JourneyCards({
       >
         <div className="map-card-heading">
           <b>Batería</b>
-          <span>{stale ? "Resultado anterior" : "Escenario exploratorio"}</span>
+          <span className="map-simulation">
+            {stale
+              ? "Resultado anterior"
+              : isPitchScenario(r.scenario)
+                ? "Demo del pitch"
+                : "Escenario simulado"}
+          </span>
         </div>
         <div className="journey-card-reading">
+          <Battery
+            className="journey-battery-icon"
+            size={23}
+            aria-hidden="true"
+          />
           <b className="journey-reading">{num(soc, 1)}%</b>
           <span>SOC · reserva {num(r.scenario.energy.socMin * 100, 0)}%</span>
         </div>
@@ -46,13 +60,20 @@ export default function JourneyCards({
           {d.firstReserve ? " · invade reserva" : " · reserva protegida"}
           {d.firstExhaustion ? " · energía insuficiente" : ""}.
         </p>
-        <b className="journey-vehicle-name">{r.scenario.ev.name}</b>
+        <div className="journey-vehicle">
+          <VehicleIcon category={r.scenario.ev.category} />
+          <b className="journey-vehicle-name">{r.scenario.ev.name}</b>
+        </div>
         <p className="journey-event">
           {p.kind === "service"
-            ? `Vuelta ${p.cycle} · trazo ${p.trace} · sector ${p.sector + 1}`
+            ? `Vuelta ${p.cycle} de ${r.scenario.operation.cycles} · ${num(p.km, 1)} km del día`
             : p.kind === "additional"
               ? "Adicionales · ubicación desconocida"
               : "Pausa de la unidad"}
+        </p>
+        <p className="journey-consumed">
+          {num(p.kwh, 2)} kWh consumidos · {r.scenario.ev.capacity} plazas de
+          prueba
         </p>
         <a href="#/operacion/energia">Energía y recarga</a>
       </section>

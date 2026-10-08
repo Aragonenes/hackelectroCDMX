@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Scenario } from "../domain/schema";
 import type { Journey } from "../domain/journeySchema";
 import { convertToDynamic, dayNames } from "../data/journey";
+import { createPitchScenario, isPitchScenario } from "../data/pitch";
 export const clockTime = (minute: number) =>
   `${String(Math.floor((Math.max(0, minute) % 1440) / 60)).padStart(2, "0")}:${String(Math.floor(Math.max(0, minute) % 60)).padStart(2, "0")}${minute >= 1440 ? " (+1 día)" : ""}`;
 function Input({
@@ -46,6 +47,14 @@ export default function JourneyControls({
   if (s.schemaVersion === "1")
     return (
       <section className="control-group journey-settings">
+        {s.route.id === "M09-514" && (
+          <button
+            className="secondary pitch-load"
+            onClick={() => onChange(createPitchScenario())}
+          >
+            Cargar demo para el pitch
+          </button>
+        )}
         <h3>Jornada por hora y tramo</h3>
         <p className="journey-intro">
           El escenario original conserva su cálculo uniforme v1. La conversión
@@ -87,6 +96,14 @@ export default function JourneyControls({
   };
   return (
     <section className="control-group journey-settings">
+      <button
+        className="secondary pitch-load"
+        onClick={() => onChange(createPitchScenario())}
+      >
+        {isPitchScenario(s)
+          ? "Reiniciar demo del pitch"
+          : "Cargar demo para el pitch"}
+      </button>
       <h3>
         Perfiles de jornada{" "}
         <span className="journey-model-label">Modelo 2</span>

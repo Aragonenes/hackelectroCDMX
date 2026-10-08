@@ -1,6 +1,7 @@
 import JourneyProfiles from "./features/JourneyProfiles";
 import VehicleEnergyComparison from "./features/VehicleEnergyComparison";
-import { convertToDynamic, selectJourneyVehicle } from "./data/journey";
+import { selectJourneyVehicle } from "./data/journey";
+import { createPitchScenario, isPitchScenario } from "./data/pitch";
 import { lazy, Suspense, useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -178,6 +179,13 @@ export default function App() {
   };
   const apply = (s: Scenario) => {
     setScenario(s);
+    if (isPitchScenario(s)) {
+      setNotice(
+        `${s.ev.name} aplicado al simulador. Revisa la reserva al cierre y el estado de la demo.`,
+      );
+      navigate("/mapa");
+      return;
+    }
     setNotice(
       "Combinación aplicada. Los acuerdos de carga, financiamiento y autorización siguen pendientes.",
     );
@@ -211,6 +219,8 @@ export default function App() {
     ),
     "/economia/alternativas": (
       <Optimizer
+        scenario={scenario}
+        baseline={engine.result}
         search={engine.search}
         searching={engine.searching}
         progress={engine.progress}
@@ -453,8 +463,7 @@ export default function App() {
                   scenario.route.id === "M09-514"
                     ? {
                         vehicleName: scenario.ev.name,
-                        onActivate: () =>
-                          setScenario(convertToDynamic(scenario)),
+                        onActivate: () => setScenario(createPitchScenario()),
                       }
                     : undefined
                 }

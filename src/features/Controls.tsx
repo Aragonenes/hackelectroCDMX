@@ -130,11 +130,16 @@ export default function Controls({
                   ))}
                 {group === "ev" &&
                   s.schemaVersion === "2" &&
-                  journeyVehicles.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.name} · supuestos F
-                    </option>
-                  ))}
+                  journeyVehicles
+                    .filter(
+                      (v) =>
+                        !s.catalog.vehicles.some((entry) => entry.id === v.id),
+                    )
+                    .map((v) => (
+                      <option key={v.id} value={v.id}>
+                        {v.name} · supuestos F
+                      </option>
+                    ))}
               </select>
             </div>
           ))}

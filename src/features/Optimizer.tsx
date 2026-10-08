@@ -4,8 +4,11 @@ import {
   CheckCircle2,
   AlertCircle,
   X,
+  Battery,
 } from "lucide-react";
-import type { Scenario, SearchResult } from "../domain/schema";
+import type { Scenario, SearchResult, Result } from "../domain/schema";
+import { isPitchScenario, PITCH_SOURCE } from "../data/pitch";
+import { presentedConditions } from "./conditions";
 import { num, mxn } from "../ui/format";
 const reasons: Record<string, string> = {
   capacity: "Capacidad insuficiente",
@@ -17,8 +20,11 @@ const reasons: Record<string, string> = {
   income: "Presupuesto laboral menor al objetivo",
   monthly: "Déficit mensual persistente",
   initial: "Capital inicial insuficiente",
+  "economic-data": "Faltan entradas económicas",
 };
 export default function Optimizer({
+  scenario,
+  baseline,
   search,
   searching,
   progress,
@@ -27,6 +33,8 @@ export default function Optimizer({
   onApply,
   disabled,
 }: {
+  scenario: Scenario;
+  baseline: Result | null;
   search: SearchResult | null;
   searching: boolean;
   progress: { tested: number; total: number };
@@ -35,6 +43,14 @@ export default function Optimizer({
   onApply: (s: Scenario) => void;
   disabled: boolean;
 }) {
+  const pitch = isPitchScenario(scenario);
+  const models = scenario.catalog.vehicles.filter(
+    (v) =>
+      v.fuel === "electricidad" && v.evidence.price?.sourceId === PITCH_SOURCE,
+  );
+  const openConditions = baseline
+    ? presentedConditions(baseline).filter((c) => c.status === "fail")
+    : [];
   return (
     <section className="optimizer" id="condiciones">
       <div className="optimizer-intro">
@@ -68,6 +84,54 @@ export default function Optimizer({
           )}
         </button>
       </div>
+      {pitch && (
+        <div className="pitch-search-context">
+          <div>
+            <span className="small-label">
+              DEMO RUTA 1 · {models.length} MODELOS ELÉCTRICOS
+            </span>
+            <b>
+              {openConditions.length === 1
+                ? `Reto: ${openConditions[0]!.label.toLowerCase()}`
+                : "Protegemos la reserva, el servicio y los ingresos"}
+            </b>
+            <p>
+              Precios y potencias F para el pitch. Las opciones usan la misma
+              jornada, pasajeros, tarifa y personal.
+            </p>
+          </div>
+          <details className="pitch-catalog">
+            <summary>Ver catálogo de la demo</summary>
+            <div className="table-scroll">
+              <table>
+                <caption>
+                  33 modelos del expediente · entradas ilustrativas, no ofertas
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Vehículo</th>
+                    <th>Plazas</th>
+                    <th>Batería</th>
+                    <th>Consumo</th>
+                    <th>Precio F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {models.map((v) => (
+                    <tr key={v.id}>
+                      <th scope="row">{v.name}</th>
+                      <td>{v.capacity}</td>
+                      <td>{num(v.batteryKwh, 1)} kWh</td>
+                      <td>{num(v.consumption, 2)} kWh/km</td>
+                      <td>{mxn(v.price)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      )}
       {searching && (
         <div className="search-progress" role="status">
           <progress max={progress.total || 1} value={progress.tested} />
@@ -92,9 +156,13 @@ export default function Optimizer({
                   <AlertCircle size={18} />
                 )}
                 <span>
+                  {search.vehicleCount !== undefined &&
+                    `${search.vehicleCount} vehículos · `}
                   {search.tested} combinaciones evaluadas ·{" "}
                   {search.alternatives.length
-                    ? "mejores opciones condicionadas"
+                    ? pitch
+                      ? `${search.feasibleVehicleCount} modelos con opciones favorables`
+                      : "mejores opciones condicionadas"
                     : "ninguna cumple todas las restricciones"}
                 </span>
               </div>
@@ -106,6 +174,18 @@ export default function Optimizer({
                   >
                     <span className="option-number">OPCIÓN {index + 1}</span>
                     <h3>{a.scenario.ev.name}</h3>
+                    {a.result.dynamic && (
+                      <div className="alternative-energy">
+                        <Battery size={22} aria-hidden="true" />
+                        <div>
+                          <b>Reserva protegida</b>
+                          <span>
+                            {num(a.result.socEnd * 100, 1)}% al cierre · reserva{" "}
+                            {num(a.scenario.energy.socMin * 100, 0)}%
+                          </span>
+                        </div>
+                      </div>
+                    )}
                     <p>
                       {a.scenario.chargerCount} × {a.scenario.charger.name}
                       <br />
@@ -116,6 +196,19 @@ export default function Optimizer({
                     </span>
                     <strong className="support-value">{mxn(a.support)}</strong>
                     <dl>
+                      {pitch && (
+                        <div>
+                          <dt>Condiciones calculadas</dt>
+                          <dd>
+                            {
+                              presentedConditions(a.result).filter(
+                                (c) => c.status === "pass",
+                              ).length
+                            }{" "}
+                            favorables
+                          </dd>
+                        </div>
+                      )}
                       <div>
                         <dt>Capital propio</dt>
                         <dd>{mxn(a.result.ev.ownRequired)}</dd>
@@ -133,7 +226,10 @@ export default function Optimizer({
                       className="secondary"
                       onClick={() => onApply(a.scenario)}
                     >
-                      Explorar esta combinación <ArrowRight size={16} />
+                      {pitch
+                        ? "Aplicar al simulador"
+                        : "Explorar esta combinación"}{" "}
+                      <ArrowRight size={16} />
                     </button>
                   </article>
                 ))}
