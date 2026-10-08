@@ -1,6 +1,6 @@
 # Contexto del proyecto
 
-El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon CDMX. La selección fue confirmada por el usuario el 8 de octubre de 2026. La solución aprobada es un evaluador por ramal con motor TypeScript en Web Worker y aplicación React/Vite. Ruta 1 es el ejemplo exploratorio; la flota real, acuerdos y viabilidad de inversión no están acreditados.
+El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon CDMX. La selección fue confirmada por el usuario el 6 de octubre de 2026. La solución aprobada es un evaluador por ramal con motor TypeScript en Web Worker y aplicación React/Vite. Ruta 1 es el ejemplo exploratorio; la flota real, acuerdos y viabilidad de inversión no están acreditados.
 
 ## Organización
 
@@ -9,7 +9,7 @@ El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon
 - La solución y el stack ya fueron aprobados. `src/` contiene dominio, datos, worker, features e interfaz; no introducir backend, cuentas o base de datos sin nueva necesidad autorizada.
 - Mantener carpetas usadas: `docs/`, `scripts/`, `src/`, `public/data/`, `tests/` y CI. No crear carpetas vacías o arquitecturas supuestas.
 - `docs/README.md` es la entrada documental. Las guías generales están en `docs/contexto/`; los expedientes con índices propios en `docs/investigacion/ruta1/` y `docs/investigacion/latinoamerica/`. Los originales, extracciones, transcripciones visuales y assets conservan sus carpetas; `docs/inventario.json` sigue siendo el inventario de los cuatro PDF. Al mover un documento, actualizar enlaces y rutas de los registros; si un documento propio con hash cambia, actualizar su hash y tamaño sin modificar los hashes de originales.
-- El 8 de octubre de 2026, tras habilitar el usuario acceso completo, se inicializó Git con la rama `main` y se configuró `origin` como `https://github.com/itsebasvz/hackelectroCDMX.git`. La protección de solo lectura de la sesión anterior ya no aplica. Comprobar el estado antes de operaciones Git.
+- El 6 de octubre de 2026, tras habilitar el usuario acceso completo, se inicializó Git con la rama `main` y se configuró `origin` como `https://github.com/itsebasvz/hackelectroCDMX.git`. La protección de solo lectura de la sesión anterior ya no aplica. Comprobar el estado antes de operaciones Git.
 
 ## Commits
 
@@ -24,7 +24,7 @@ El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon
 
 ## Licencias y publicación
 
-- El usuario eligió **MIT para código propio y CC BY 4.0 para documentación propia** el 8 de octubre de 2026. Los avisos están en `LICENSE` y `docs/LICENSE.md`; la revisión y el alcance están en `docs/contexto/licencia-proyecto.md`. El PDF del hackatón disponible no establece una licencia del proyecto ni cesión de derechos; no asumir que se han revisado bases o términos de inscripción adicionales.
+- El usuario eligió **MIT para código propio y CC BY 4.0 para documentación propia** el 6 de octubre de 2026. Los avisos están en `LICENSE` y `docs/LICENSE.md`; la revisión y el alcance están en `docs/contexto/licencia-proyecto.md`. El PDF del hackatón disponible no establece una licencia del proyecto ni cesión de derechos; no asumir que se han revisado bases o términos de inscripción adicionales.
 - `scripts/extraer_documentos.py` es una herramienta documental que regenera las cuatro extracciones y su inventario; sigue siendo relevante para trazabilidad. El usuario pidió eliminar scripts si no fueran relevantes, no eliminar esta herramienta de extracción necesaria.
 - La licencia del trabajo propio no relicencia PDF, extracciones, imágenes, transcripciones o datasets de terceros. Conservar sus metadatos y derechos; las fuentes UNKNOWN se citan y no se redistribuyen automáticamente, conforme al método de investigación.
 - Los textos jurídicos se recuperaron de la API oficial de licencias de GitHub (MIT, completando sólo año y titular) y Creative Commons (`docs/CC-BY-4.0.txt`, copia íntegra). Su procedencia y hashes están en `docs/contexto/procedencia-licencias.json`; `docs/LICENSE.md` define el alcance, no sustituye el texto oficial.
@@ -32,7 +32,7 @@ El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon
 
 ## Aplicación y verificación
 
-- Rediseño vigente aprobado el 8 de octubre de 2026: mapa a toda la ventana, cuatro accesos flotantes (Configurar, Economía, Ambiente y Operación), paneles con URL propia y reproducción del recorrido calculado. Consultar `docs/desarrollo/redisenio-mapa.md` y `docs/desarrollo/interfaz-evaluacion.md`. Reutilizar las herramientas existentes y conservar compatibilidad del JSON v1; no convertir contexto hospitalario en demanda ni variación de vueltas en más recaudo. La reproducción es ritmo visual, no velocidad, seguimiento real ni prueba de solvencia. Los puntos OSM son referencias aproximadas de inmuebles bajo ODbL, no paradas.
+- Rediseño vigente aprobado el 7 de octubre de 2026: mapa a toda la ventana, cuatro accesos flotantes (Configurar, Economía, Ambiente y Operación), paneles con URL propia y reproducción del recorrido calculado. Consultar `docs/desarrollo/redisenio-mapa.md` y `docs/desarrollo/interfaz-evaluacion.md`. Reutilizar las herramientas existentes y conservar compatibilidad del JSON v1; no convertir contexto hospitalario en demanda ni variación de vueltas en más recaudo. La reproducción es ritmo visual, no velocidad, seguimiento real ni prueba de solvencia. Los puntos OSM son referencias aproximadas de inmuebles bajo ODbL, no paradas.
 
 - Consultar `docs/desarrollo/README.md` y `docs/desarrollo/metodologia-motor.md`. Ejecutar `npm run check`, `npm run test:e2e` y `npm run format:check` antes de publicar.
 - Reservar inversión, principal, ingreso objetivo y liquidez por separado. El enganche es mínimo; asignar capital/apoyo sin inflar artificialmente el apoyo. No rescatar déficit recurrente mediante aportación inicial.

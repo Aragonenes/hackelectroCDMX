@@ -1,6 +1,6 @@
 # Síntesis de estudio: Electro Hackathon CDMX
 
-Actualizada el **8 de octubre de 2026** a partir de cuatro PDF locales (221 páginas), incluida la presentación completa de EMA. Las extracciones de las capturas fueron retiradas. Esta síntesis organiza los contenidos e incluye interpretaciones explícitas para trabajar con ellos; no representa reglas nuevas del evento ni una validación externa de sus estadísticas.
+Actualizada el **6 de octubre de 2026** a partir de cuatro PDF locales (221 páginas), incluida la presentación completa de EMA. Las extracciones de las capturas fueron retiradas. Esta síntesis organiza los contenidos e incluye interpretaciones explícitas para trabajar con ellos; no representa reglas nuevas del evento ni una validación externa de sus estadísticas.
 
 ## Decisión del equipo
 

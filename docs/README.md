@@ -1,6 +1,6 @@
 # Índice documental — Reto 2: Electrifica tu flota
 
-Actualizado el **8 de octubre de 2026**. Originales locales: **4 PDF, 221 páginas**; investigación de Ruta 1 con **58 referencias registradas**, incluidas esas cuatro fuentes. La presentación completa de EMA sustituyó las extracciones y referencias de las capturas anteriores. El equipo ya confirmó la elección del reto 2.
+Actualizado el **6 de octubre de 2026**. Originales locales: **4 PDF, 221 páginas**; investigación de Ruta 1 con **58 referencias registradas**, incluidas esas cuatro fuentes. La presentación completa de EMA sustituyó las extracciones y referencias de las capturas anteriores. El equipo ya confirmó la elección del reto 2.
 
 **Material publicable:** análisis propios, referencias, matrices, parámetros, inventario y licencias; también recursos geográficos con CC BY 4.0 explícita, atribución y procedencia. Los PDF, extracciones completas, transcripciones e imágenes permanecen sólo en la copia local y están excluidos de Git. Los enlaces de sus citas identifican la [fuente local y sus páginas](contexto/fuentes-locales.md); no ofrecen descargas de materiales sin permiso verificado.
 
@@ -43,7 +43,7 @@ Para discutir el producto futuro, comenzar por el [documento maestro](documento-
 
 ### Evaluación documental de Ruta 1
 
-La [evaluación ampliada de viabilidad](investigacion/ruta1/evaluacion-viabilidad-ruta1.md) estudia **Metro Universidad/CU–San Fernando–Huipulco**, con consulta pública del 8 de octubre de 2026 y cobertura de las categorías A–N del plan. El ramal merece validación, pero no se demostró viabilidad: faltan baseline, utilización, demanda propia, equivalencia, patio/carga e ingreso/financiamiento aplicables. La [nota inicial](investigacion/ruta1/investigacion-ruta1.md) conserva un ejemplo genérico que no representa el ramal.
+La [evaluación ampliada de viabilidad](investigacion/ruta1/evaluacion-viabilidad-ruta1.md) estudia **Metro Universidad/CU–San Fernando–Huipulco**, con consulta pública del 6 de octubre de 2026 y cobertura de las categorías A–N del plan. El ramal merece validación, pero no se demostró viabilidad: faltan baseline, utilización, demanda propia, equivalencia, patio/carga e ingreso/financiamiento aplicables. La [nota inicial](investigacion/ruta1/investigacion-ruta1.md) conserva un ejemplo genérico que no representa el ramal.
 
 - [Tabla de 106 parámetros (CSV)](investigacion/ruta1/parametros-ruta1.csv): datos, faltantes, supuestos y cálculos con ámbito y límites de uso.
 - [Registro de 58 fuentes (JSON)](investigacion/ruta1/fuentes-ruta1.json): metadatos, consulta, permisos, acceso y cola de recuperación de originales.
@@ -102,7 +102,7 @@ Las extracciones y la guía de capacitación no actualizan la información con i
 
 ### Verificación de la reorganización
 
-El 8 de octubre de 2026 se reubicaron 15 documentos y se añadieron índices para ambos expedientes. Se comprobaron enlaces locales y anclas, lectura de JSON/CSV, correspondencia de referencias y rutas de procedencia. Se conservaron las 58 y 26 referencias, las 106 filas de parámetros, las 63 de la matriz de datos y las 14 de cada registro de fuentes prioritarias y búsquedas.
+El 6 de octubre de 2026 se reubicaron 15 documentos y se añadieron índices para ambos expedientes. Se comprobaron enlaces locales y anclas, lectura de JSON/CSV, correspondencia de referencias y rutas de procedencia. Se conservaron las 58 y 26 referencias, las 106 filas de parámetros, las 63 de la matriz de datos y las 14 de cada registro de fuentes prioritarias y búsquedas.
 
 Los 41 archivos de originales, extracciones e imágenes/revisiones visuales conservan sus hashes, al igual que `inventario.json`. Para el documento propio S21 se actualizaron ruta, tamaño y hash tras ajustar sus enlaces, registrando el hash anterior. El script de extracción mantiene sus entradas y salidas y no se modificó. Esta reorganización no cambia las conclusiones ni los pendientes de investigación.
 

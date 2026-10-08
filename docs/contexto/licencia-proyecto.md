@@ -1,6 +1,6 @@
 # Licencias de hackelectroCDMX
 
-Revisión: **2026-10-08**. **Decisión confirmada por el usuario: MIT para código propio y CC BY 4.0 para documentación propia.** Se incorporaron [LICENSE](../../LICENSE) y el [aviso de documentación](../LICENSE.md), con exclusiones para materiales de terceros.
+Revisión: **2026-10-06**. **Decisión confirmada por el usuario: MIT para código propio y CC BY 4.0 para documentación propia.** Se incorporaron [LICENSE](../../LICENSE) y el [aviso de documentación](../LICENSE.md), con exclusiones para materiales de terceros.
 
 ## Qué dicen los documentos del hackatón
 
@@ -62,10 +62,10 @@ Un repositorio público sin licencia explícita no concede por sí solo las libe
 
 En la sesión inicial, `git status --short` confirmó que la carpeta todavía no era un repositorio funcional y `.git` estaba montada como solo lectura. Ninguno de estos fallos implicaba que el nombre remoto ya estuviera ocupado. El análisis de licencia y la convención de commits pudieron prepararse localmente.
 
-Posteriormente, `gh repo create hackelectroCDMX --public --description …` terminó correctamente y devolvió [itsebasvz/hackelectroCDMX](https://github.com/itsebasvz/hackelectroCDMX). La conexión permitió crear el repositorio el 2026-10-08, aunque una consulta de verificación posterior volvió a fallar por conexión. No se atribuyó el problema de escritura en `.git` a las credenciales de GitHub.
+Posteriormente, `gh repo create hackelectroCDMX --public --description …` terminó correctamente y devolvió [itsebasvz/hackelectroCDMX](https://github.com/itsebasvz/hackelectroCDMX). La conexión permitió crear el repositorio el 2026-10-06, aunque una consulta de verificación posterior volvió a fallar por conexión. No se atribuyó el problema de escritura en `.git` a las credenciales de GitHub.
 
 El mismo día, tras habilitar el usuario acceso completo, `git init -b main` terminó correctamente. Se configuró `origin` con la URL del repositorio creado y `gh repo view` confirmó en esa etapa que el remoto era público y estaba vacío. Posteriormente, el usuario autorizó preparar el primer commit y enviarlo; el conjunto de publicación se delimitó como se describe arriba.
 
 ## Referencias y verificación
 
-Fuentes web consultadas el **2026-10-08**: textos oficiales de MIT/OSI, Apache, Creative Commons, GNU y GitHub enlazados arriba. Se guardó análisis propio y referencias. Los cuatro PDF locales se mantuvieron intactos; no se regeneraron sus extracciones. MIT y CC BY 4.0 se aplicaron al trabajo propio tras la elección del usuario; ninguna licencia de una fuente de terceros fue sustituida por ellas.
+Fuentes web consultadas el **2026-10-06**: textos oficiales de MIT/OSI, Apache, Creative Commons, GNU y GitHub enlazados arriba. Se guardó análisis propio y referencias. Los cuatro PDF locales se mantuvieron intactos; no se regeneraron sus extracciones. MIT y CC BY 4.0 se aplicaron al trabajo propio tras la elección del usuario; ninguna licencia de una fuente de terceros fue sustituida por ellas.

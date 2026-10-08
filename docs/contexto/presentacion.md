@@ -1,6 +1,6 @@
 # Introducción Electromovilidad — Guía del PDF completo
 
-Fuente exclusiva de esta guía: [Introducción Electromovilidad.pdf](fuentes-locales.md#introduccion-electromovilidad), **60 páginas**. Revisada el 8 de octubre de 2026. [Texto y transcripciones visuales por página](fuentes-locales.md#introduccion-electromovilidad).
+Fuente exclusiva de esta guía: [Introducción Electromovilidad.pdf](fuentes-locales.md#introduccion-electromovilidad), **60 páginas**. Revisada el 6 de octubre de 2026. [Texto y transcripciones visuales por página](fuentes-locales.md#introduccion-electromovilidad).
 
 Esta guía se elaboró nuevamente a partir del PDF completo. Las extracciones anteriores de las capturas se eliminaron. Las observaciones de revisión se distinguen de lo que afirma el expositor; no se verificaron las cifras en internet.
 

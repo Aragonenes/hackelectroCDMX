@@ -1,6 +1,6 @@
 # Gobierno de la Ciudad de México — Style Reference
 
-**Aplicación al evaluador, rediseño aprobado el 8 de octubre de 2026:** el mapa es el espacio principal de simulación, a toda la ventana. Cuatro accesos flotantes (Configurar, Economía, Ambiente y Operación) abren un panel de trabajo a la vez. Esta composición sustituye la mesa de columnas y la página larga. Los modos de portal que siguen son referencias; las reglas de producto siguientes tienen prioridad para este evaluador. Se conserva identidad propia de un proyecto estudiantil, sin aval del Gobierno.
+**Aplicación al evaluador, rediseño aprobado el 7 de octubre de 2026:** el mapa es el espacio principal de simulación, a toda la ventana. Cuatro accesos flotantes (Configurar, Economía, Ambiente y Operación) abren un panel de trabajo a la vez. Esta composición sustituye la mesa de columnas y la página larga. Los modos de portal que siguen son referencias; las reglas de producto siguientes tienen prioridad para este evaluador. Se conserva identidad propia de un proyecto estudiantil, sin aval del Gobierno.
 
 ## Modo de producto: dashboard sobre el mapa
 
