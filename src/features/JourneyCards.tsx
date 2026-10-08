@@ -2,7 +2,7 @@ import type { Result } from "../domain/schema";
 import { journeyAt } from "../domain/journey";
 import { clockTime } from "./JourneyControls";
 import { num } from "../ui/format";
-import { Battery } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Battery, Minus } from "lucide-react";
 import { VehicleIcon } from "./MapSymbols";
 import { isPitchScenario } from "../data/pitch";
 export default function JourneyCards({
@@ -18,7 +18,14 @@ export default function JourneyCards({
   const d = r.dynamic.selected,
     j = r.scenario.journey,
     p = journeyAt(d, minute),
-    soc = p.soc * 100;
+    soc = p.soc * 100,
+    slope = p.kind === "service" ? Math.round(p.slope * 1000) / 10 || 0 : null,
+    SlopeIcon =
+      slope !== null && slope > 0
+        ? ArrowUpRight
+        : slope !== null && slope < 0
+          ? ArrowDownRight
+          : Minus;
   return (
     <div className="dynamic-cards">
       <section
@@ -99,7 +106,7 @@ export default function JourneyCards({
       </section>
       <section
         className="map-card journey-detail-card"
-        aria-label="Condiciones de la jornada"
+        aria-label="Pendiente y condiciones de la jornada"
       >
         <div className="map-card-heading">
           <b>Condiciones</b>
@@ -108,18 +115,33 @@ export default function JourneyCards({
             {j.conditions.hvac ? "activa" : "apagada"}
           </span>
         </div>
-        <div className="journey-card-reading">
-          <b className="journey-reading">{num(p.temperatureC, 1)} °C</b>
-          <span>ambiente</span>
+        <div className="journey-card-reading journey-slope-reading">
+          <SlopeIcon size={23} aria-hidden="true" />
+          <b className="journey-reading">
+            {slope === null ? "—" : `${slope > 0 ? "+" : ""}${num(slope, 1)}%`}
+          </b>
+          <span>
+            Pendiente ·{" "}
+            {slope === null
+              ? p.kind === "pause"
+                ? "en pausa"
+                : "sin ubicación"
+              : slope > 0
+                ? "subida"
+                : slope < 0
+                  ? "descenso"
+                  : "tramo llano"}
+          </span>
         </div>
         <p>
+          {num(p.temperatureC, 1)} °C ambiente ·{" "}
           {p.kind === "service"
-            ? `${num(p.elevationM, 0)} m · pendiente ${num(p.slope * 100, 1)}%`
-            : "Elevación y pendiente desconocidas."}
+            ? `${num(p.elevationM, 0)} m de altitud`
+            : "altitud desconocida"}
         </p>
         <p>
-          Desnivel +{num(p.effects.gradeKwh, 3)} · auxiliares{" "}
-          {num(p.effects.auxiliaryDeltaKwh, 3)} kWh frente a referencia.
+          Subida {num(p.effects.gradeKwh, 3)} kWh · recuperación del tramo{" "}
+          {num(p.regenKwh, 3)} kWh.
         </p>
         <a href="#/operacion/energia">Explicación y fuentes</a>
       </section>

@@ -1394,6 +1394,14 @@
   color: #266cb4;
   align-self: center;
 }
+.dynamic-cards .journey-slope-reading {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+.dynamic-cards .journey-slope-reading > svg {
+  color: var(--primary);
+  align-self: center;
+}
 .dynamic-cards .journey-vehicle {
   display: flex;
   align-items: flex-start;
