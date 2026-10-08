@@ -296,10 +296,7 @@ export default function App() {
     "/fuentes": <SourcesPanel scenario={scenario} />,
   };
   if (engine.result?.dynamic?.economicComplete === false) {
-    for (const path of [
-      "/economia/costos",
-      "/economia/alternativas",
-    ] as const)
+    for (const path of ["/economia/costos", "/economia/alternativas"] as const)
       views[path] = (
         <section className="panel">
           <h3>Precio de vehículo desconocido</h3>
@@ -534,7 +531,7 @@ export default function App() {
               ? "Corrige las entradas. Se conserva el último resultado válido, ahora desactualizado."
               : engine.status === "error"
                 ? "No se pudo completar el cálculo."
-                : "Escenario actualizado · los resultados cambian al editar los parámetros."}
+                : ""}
         </div>
         <WorkspacePanel
           path={route.path}
