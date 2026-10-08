@@ -136,7 +136,7 @@
   background: #fbf7f9;
   box-shadow: 0 4px 14px #2e2b2f14;
 }
-.workspace-navigation a[aria-current='page'] {
+.workspace-navigation a[aria-current="page"] {
   color: white;
   background: var(--primary);
   border-color: var(--primary);
@@ -260,10 +260,10 @@
   max-height: 250px;
   overflow: auto;
 }
-.simulation-map [data-panel='right'] .map-legend {
+.simulation-map [data-panel="right"] .map-legend {
   display: none;
 }
-.simulation-map [data-panel='left'] .map-point-card {
+.simulation-map [data-panel="left"] .map-point-card {
   display: none;
 }
 .simulation-map .maplibregl-ctrl-top-right {
@@ -278,8 +278,8 @@
   width: 40px;
   height: 44px;
 }
-.simulation-map [data-panel='right'] .maplibregl-ctrl-top-right,
-.simulation-map [data-panel='right'] .map-reframe {
+.simulation-map [data-panel="right"] .maplibregl-ctrl-top-right,
+.simulation-map [data-panel="right"] .map-reframe {
   right: calc(clamp(560px, 54vw, 860px) + 30px);
 }
 .simulation-map .maplibregl-ctrl-bottom-right {
@@ -514,7 +514,7 @@
   font-size: 12px;
   font-weight: 600;
 }
-.workspace-tabs a[aria-current='page'] {
+.workspace-tabs a[aria-current="page"] {
   background: #f8e8ed;
   color: var(--primary);
 }
@@ -662,7 +662,7 @@
   }
 }
 @media (min-width: 1024px) and (max-width: 1279px) {
-  .simulation-map [data-panel='right'] .map-point-card {
+  .simulation-map [data-panel="right"] .map-point-card {
     display: none;
   }
   .simulation-header {
@@ -988,16 +988,16 @@
     flex: 1;
   }
 }
-.simulation-map [data-panel='right'] .map-tools .check-field {
+.simulation-map [data-panel="right"] .map-tools .check-field {
   display: none;
 }
 @media (min-width: 1024px) and (max-width: 1279px) {
-  .simulation-map [data-panel='right'] .map-tools {
+  .simulation-map [data-panel="right"] .map-tools {
     display: none;
   }
 }
 @media (max-width: 1023px) {
-  .simulation-map [data-panel='right'] .map-tools .check-field {
+  .simulation-map [data-panel="right"] .map-tools .check-field {
     display: flex;
   }
 }

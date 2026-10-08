@@ -1,36 +1,38 @@
-import { z } from 'zod';
-import { sections } from './fields';
-import { getValue, evidenceOf } from './values';
-import { ScenarioSchema, type Scenario, type Result } from '../domain/schema';
+import { z } from "zod";
+import { sections } from "./fields";
+import { getValue, evidenceOf } from "./values";
+import { ScenarioSchema, type Scenario, type Result } from "../domain/schema";
 const Envelope = z.object({
-  format: z.literal('hackelectro-scenario'),
-  version: z.literal('1'),
+  format: z.literal("hackelectro-scenario"),
+  version: z.literal("1"),
   generatedAt: z.string(),
   checksum: z.string().regex(/^[a-f0-9]{64}$/),
   scenario: ScenarioSchema,
 });
 export function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value !== null && typeof value === 'object')
+  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+  if (value !== null && typeof value === "object")
     return `{${Object.entries(value)
       .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
       .map(([k, v]) => `${JSON.stringify(k)}:${canonical(v)}`)
-      .join(',')}}`;
+      .join(",")}}`;
   return JSON.stringify(value);
 }
 export async function scenarioHash(scenario: Scenario) {
-  const raw = new TextEncoder().encode(canonical(ScenarioSchema.parse(scenario)));
-  const digest = await crypto.subtle.digest('SHA-256', raw);
+  const raw = new TextEncoder().encode(
+    canonical(ScenarioSchema.parse(scenario)),
+  );
+  const digest = await crypto.subtle.digest("SHA-256", raw);
   return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 export async function serializeScenario(scenario: Scenario) {
   const normalized = ScenarioSchema.parse(scenario);
   return JSON.stringify(
     {
-      format: 'hackelectro-scenario',
-      version: '1',
+      format: "hackelectro-scenario",
+      version: "1",
       generatedAt: new Date().toISOString(),
       checksum: await scenarioHash(normalized),
       scenario: normalized,
@@ -41,26 +43,30 @@ export async function serializeScenario(scenario: Scenario) {
 }
 export async function parseScenario(text: string) {
   if (new TextEncoder().encode(text).byteLength > 5_000_000)
-    throw new Error('El archivo supera el límite de 5 MB.');
+    throw new Error("El archivo supera el límite de 5 MB.");
   let data: unknown;
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error('El archivo no contiene un JSON legible. Exporta de nuevo el escenario.');
+    throw new Error(
+      "El archivo no contiene un JSON legible. Exporta de nuevo el escenario.",
+    );
   }
   const validated = Envelope.safeParse(data);
   if (!validated.success)
     throw new Error(
-      'Archivo incompatible: revisa la versión, las entradas y las fuentes. Consulta el formato de exportación de HackElectroCDMX.',
+      "Archivo incompatible: revisa la versión, las entradas y las fuentes. Consulta el formato de exportación de HackElectroCDMX.",
     );
   const envelope = validated.data;
   if ((await scenarioHash(envelope.scenario)) !== envelope.checksum)
-    throw new Error('El checksum no coincide. El archivo fue modificado o está incompleto.');
+    throw new Error(
+      "El checksum no coincide. El archivo fue modificado o está incompleto.",
+    );
   return envelope.scenario;
 }
 export function download(text: string, filename: string, type: string) {
   const url = URL.createObjectURL(new Blob([text], { type }));
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
   link.download = filename;
   link.click();
@@ -68,41 +74,42 @@ export function download(text: string, filename: string, type: string) {
 }
 export function csvCell(value: string | number) {
   const text = String(value);
-  const safe = /^[=+\-@\t\r]/.test(text) && typeof value === 'string' ? `'${text}` : text;
+  const safe =
+    /^[=+\-@\t\r]/.test(text) && typeof value === "string" ? `'${text}` : text;
   return `"${safe.replaceAll('"', '""')}"`;
 }
 export function resultsCsv(r: Result) {
   const rows: (string | number)[][] = [
-    ['escenario', r.scenario.name],
-    ['ramal', r.scenario.route.name],
-    ['modelo', r.modelVersion],
-    ['naturaleza', 'ESCENARIO CONDICIONADO'],
-    ['km_unidad_dia', r.dailyKm],
-    ['variable', 'unidad', 'combustion', 'electrico'],
-    ['costo_economico_5_anios', 'MXN', r.ice.economicCost, r.ev.economicCost],
-    ['costo_por_km', 'MXN/km', r.ice.costPerKm, r.ev.costPerKm],
-    ['energia_unidad_dia', 'L / kWh medidor', r.dailyLiters, r.dailyGridKwh],
-    ['desembolso_inicial_propio', 'MXN', r.ice.ownRequired, r.ev.ownRequired],
-    ['deuda_mes_60', 'MXN', r.ice.debtRemaining, r.ev.debtRemaining],
+    ["escenario", r.scenario.name],
+    ["ramal", r.scenario.route.name],
+    ["modelo", r.modelVersion],
+    ["naturaleza", "ESCENARIO CONDICIONADO"],
+    ["km_unidad_dia", r.dailyKm],
+    ["variable", "unidad", "combustion", "electrico"],
+    ["costo_economico_5_anios", "MXN", r.ice.economicCost, r.ev.economicCost],
+    ["costo_por_km", "MXN/km", r.ice.costPerKm, r.ev.costPerKm],
+    ["energia_unidad_dia", "L / kWh medidor", r.dailyLiters, r.dailyGridKwh],
+    ["desembolso_inicial_propio", "MXN", r.ice.ownRequired, r.ev.ownRequired],
+    ["deuda_mes_60", "MXN", r.ice.debtRemaining, r.ev.debtRemaining],
     [
-      'CO2_escape_vs_CO2e_electricidad',
-      'kg/dia/unidad; limites incompatibles',
+      "CO2_escape_vs_CO2e_electricidad",
+      "kg/dia/unidad; limites incompatibles",
       r.emissions.iceCO2KgDay,
       r.emissions.evCO2eKgDay,
     ],
     [],
     [
-      'mes',
-      'recaudo_MXN',
-      'operacion_EV_MXN',
-      'trabajo_MXN',
-      'ingreso_propietario_MXN',
-      'pago_MXN',
-      'interes_MXN',
-      'principal_MXN',
-      'deuda_MXN',
-      'reserva_MXN',
-      'margen_MXN',
+      "mes",
+      "recaudo_MXN",
+      "operacion_EV_MXN",
+      "trabajo_MXN",
+      "ingreso_propietario_MXN",
+      "pago_MXN",
+      "interes_MXN",
+      "principal_MXN",
+      "deuda_MXN",
+      "reserva_MXN",
+      "margen_MXN",
     ],
   ];
   for (const m of r.ev.months)
@@ -119,7 +126,19 @@ export function resultsCsv(r: Result) {
       m.reserve,
       m.freeCash,
     ]);
-  rows.push([], ['entrada', 'valor', 'unidad', 'nivel', 'naturaleza', 'fuente', 'fecha', 'limite']);
+  rows.push(
+    [],
+    [
+      "entrada",
+      "valor",
+      "unidad",
+      "nivel",
+      "naturaleza",
+      "fuente",
+      "fecha",
+      "limite",
+    ],
+  );
   for (const section of sections)
     for (const field of section.fields) {
       const evidence = evidenceOf(r.scenario, field.path);
@@ -134,12 +153,18 @@ export function resultsCsv(r: Result) {
         evidence.limitation,
       ]);
     }
-  rows.push([], ['condicion', 'estado', 'detalle']);
+  rows.push([], ["condicion", "estado", "detalle"]);
   for (const c of r.constraints) rows.push([c.label, c.status, c.detail]);
-  rows.push([], ['fuente', 'titulo', 'URL', 'fecha', 'limite']);
+  rows.push([], ["fuente", "titulo", "URL", "fecha", "limite"]);
   for (const source of r.scenario.catalog.sources)
-    rows.push([source.id, source.title, source.url, source.date, source.limitation]);
-  rows.push([], ['supuestos_y_limites']);
+    rows.push([
+      source.id,
+      source.title,
+      source.url,
+      source.date,
+      source.limitation,
+    ]);
+  rows.push([], ["supuestos_y_limites"]);
   r.warnings.forEach((w) => rows.push([w]));
-  return '\uFEFF' + rows.map((row) => row.map(csvCell).join(',')).join('\r\n');
+  return "\uFEFF" + rows.map((row) => row.map(csvCell).join(",")).join("\r\n");
 }

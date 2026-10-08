@@ -1,28 +1,35 @@
-import { lazy, Suspense, useMemo, useState, useEffect } from 'react';
-import { Coins } from 'lucide-react';
-import type { Result } from '../domain/schema';
-import { mxn, num } from '../ui/format';
-import { groupBudgetPhases, monthlyBudget, type BudgetPhase } from '../domain/explore';
+import { lazy, Suspense, useMemo, useState, useEffect } from "react";
+import { Coins } from "lucide-react";
+import type { Result } from "../domain/schema";
+import { mxn, num } from "../ui/format";
+import {
+  groupBudgetPhases,
+  monthlyBudget,
+  type BudgetPhase,
+} from "../domain/explore";
 import {
   cashSummary,
   financialAnalysis,
   type RevenueStressPoint,
   type PaymentCapacity,
-} from '../domain/financialAnalysis';
-const Chart = lazy(() => import('../ui/Chart'));
+} from "../domain/financialAnalysis";
+const Chart = lazy(() => import("../ui/Chart"));
 const amount = (v: number) =>
-  new Intl.NumberFormat('es-MX', {
-    style: 'currency',
-    currency: 'MXN',
+  new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(v);
-const signed = (v: number) => `${v > 0 ? '+' : ''}${amount(v)}`;
+const signed = (v: number) => `${v > 0 ? "+" : ""}${amount(v)}`;
 function describeBudgetPhase(phase: BudgetPhase, r: Result) {
   const replacement = r.ev.months.find(
-    (m) => m.month >= phase.startMonth && m.month <= phase.endMonth && m.replacement > 0,
+    (m) =>
+      m.month >= phase.startMonth &&
+      m.month <= phase.endMonth &&
+      m.replacement > 0,
   );
-  if (replacement) return 'Reposición programada';
+  if (replacement) return "Reposición programada";
 
   const currentIce = r.ice.months[phase.startMonth - 1]!;
   const currentEv = r.ev.months[phase.startMonth - 1]!;
@@ -32,10 +39,12 @@ function describeBudgetPhase(phase: BudgetPhase, r: Result) {
     (previousIce?.payment && currentIce.payment === 0) ||
     (previousEv?.payment && currentEv.payment === 0)
   )
-    return 'Después de la última cuota';
+    return "Después de la última cuota";
   if (currentIce.payment > 0 || currentEv.payment > 0)
-    return r.scenario.finance.kind === 'lease' ? 'Renta mensual activa' : 'Cuota mensual activa';
-  return 'Sin pagos mensuales';
+    return r.scenario.finance.kind === "lease"
+      ? "Renta mensual activa"
+      : "Cuota mensual activa";
+  return "Sin pagos mensuales";
 }
 
 function debtAxisLabel(value: number) {
@@ -45,20 +54,24 @@ function debtAxisLabel(value: number) {
 }
 
 function financeEvents(r: Result) {
-  const events: { month: number; label: string; kind: 'payoff' | 'replacement' }[] = [];
+  const events: {
+    month: number;
+    label: string;
+    kind: "payoff" | "replacement";
+  }[] = [];
   const horizon = Math.min(r.ice.months.length, r.ev.months.length);
-  if (r.scenario.finance.kind === 'credit') {
+  if (r.scenario.finance.kind === "credit") {
     for (const [name, finance] of [
-      ['de combustión', r.ice],
-      ['del vehículo eléctrico', r.ev],
+      ["de combustión", r.ice],
+      ["del vehículo eléctrico", r.ev],
     ] as const) {
       if (finance.principal <= 0) continue;
       const lastPaid = [...finance.months].reverse().find((m) => m.payment > 0);
       if (lastPaid?.balance === 0)
         events.push({
           month: lastPaid.month,
-          label: `Crédito ${name} liquidado${lastPaid.month === horizon ? ' al cierre del horizonte' : ''}`,
-          kind: 'payoff',
+          label: `Crédito ${name} liquidado${lastPaid.month === horizon ? " al cierre del horizonte" : ""}`,
+          kind: "payoff",
         });
     }
   }
@@ -66,8 +79,8 @@ function financeEvents(r: Result) {
   if (replacement && replacement.month <= horizon)
     events.push({
       month: replacement.month,
-      label: 'Reposición de batería',
-      kind: 'replacement',
+      label: "Reposición de batería",
+      kind: "replacement",
     });
   return events;
 }
@@ -97,7 +110,10 @@ export default function FinancePanel({
   const analysis = useMemo(() => financialAnalysis(r), [r]);
   const current = analysis[month - 1]!;
   const stress = points?.find((p) => p.dropPercent === drop);
-  const budgetPhases = useMemo(() => groupBudgetPhases(r.ice.months, r.ev.months), [r]);
+  const budgetPhases = useMemo(
+    () => groupBudgetPhases(r.ice.months, r.ev.months),
+    [r],
+  );
   const events = useMemo(() => financeEvents(r), [r]);
   const hasDebt = r.ice.principal > 0 || r.ev.principal > 0;
   const cashOption = useMemo(() => {
@@ -106,55 +122,65 @@ export default function FinancePanel({
       monthlyBudget(r.ev.months[month - 1]!),
     ];
     const parts = [
-      ['operating', 'Operación', '#55585A'],
-      ['workers', 'Personal presupuestado', '#777175'],
-      ['owner', 'Ingreso concesionario presupuestado', '#ABA1A6'],
-      ['payment', 'Financiamiento', '#9D2148'],
-      ['reserve', 'Reserva y reposición', '#B66A81'],
-      ['margin', 'Resultado de caja', '#69404E'],
+      ["operating", "Operación", "#55585A"],
+      ["workers", "Personal presupuestado", "#777175"],
+      ["owner", "Ingreso concesionario presupuestado", "#ABA1A6"],
+      ["payment", "Financiamiento", "#9D2148"],
+      ["reserve", "Reserva y reposición", "#B66A81"],
+      ["margin", "Resultado de caja", "#69404E"],
     ] as const;
     return {
       grid: { left: 90, right: 45, top: 64, bottom: 46 },
       tooltip: {
-        trigger: 'axis',
-        appendTo: 'body',
+        trigger: "axis",
+        appendTo: "body",
         confine: true,
         formatter: (params: unknown) => {
-          const rows = params as { seriesName: string; value: number; axisValueLabel: string }[];
-          return `<div class="finance-tooltip"><b>${rows[0]?.axisValueLabel ?? ''}</b>${rows.map((row) => `<div><span>${row.seriesName}</span><b>${amount(row.value)}</b></div>`).join('')}</div>`;
+          const rows = params as {
+            seriesName: string;
+            value: number;
+            axisValueLabel: string;
+          }[];
+          return `<div class="finance-tooltip"><b>${rows[0]?.axisValueLabel ?? ""}</b>${rows.map((row) => `<div><span>${row.seriesName}</span><b>${amount(row.value)}</b></div>`).join("")}</div>`;
         },
         valueFormatter: (v: unknown) => amount(Number(v)),
       },
-      legend: { top: 0, data: parts.map((p) => p[1]), textStyle: { fontSize: 11 } },
+      legend: {
+        top: 0,
+        data: parts.map((p) => p[1]),
+        textStyle: { fontSize: 11 },
+      },
       xAxis: {
-        type: 'value',
+        type: "value",
         axisLabel: { formatter: (v: number) => num(v / 1000, 0) },
-        name: 'Miles de MXN',
-        nameLocation: 'middle',
+        name: "Miles de MXN",
+        nameLocation: "middle",
         nameGap: 30,
       },
       yAxis: {
-        type: 'category',
-        data: [s.ice.fuel === 'diesel' ? 'Diésel' : 'Gasolina', 'Eléctrico'],
+        type: "category",
+        data: [s.ice.fuel === "diesel" ? "Diésel" : "Gasolina", "Eléctrico"],
         inverse: true,
       },
       series: parts.map(([key, name, color], i) => ({
         name,
-        type: 'bar',
-        stack: 'cash',
+        type: "bar",
+        stack: "cash",
         barMaxWidth: 48,
         itemStyle: { color },
         data: budgets.map((b) => ({
           value: b[key],
-          itemStyle: { color: key === 'margin' && b.margin < 0 ? '#B51C42' : color },
+          itemStyle: {
+            color: key === "margin" && b.margin < 0 ? "#B51C42" : color,
+          },
         })),
         ...(i === 0
           ? {
               markLine: {
-                symbol: 'none',
+                symbol: "none",
                 label: { show: false },
                 data: [{ xAxis: budgets[0]!.revenue }],
-                lineStyle: { color: '#3d3c40', type: 'dashed' },
+                lineStyle: { color: "#3d3c40", type: "dashed" },
               },
             }
           : {}),
@@ -162,56 +188,72 @@ export default function FinancePanel({
     };
   }, [r, month]);
   const debtOption = useMemo(() => {
-    const labels = ['Inicio', ...Array.from({ length: horizon }, (_, index) => `Mes ${index + 1}`)];
+    const labels = [
+      "Inicio",
+      ...Array.from({ length: horizon }, (_, index) => `Mes ${index + 1}`),
+    ];
     const eventMonths = [...new Set(events.map((event) => event.month))];
     return {
-      color: ['#55585A', '#9D2148'],
+      color: ["#55585A", "#9D2148"],
       grid: { left: 60, right: 16, top: 28, bottom: 25 },
       tooltip: {
-        trigger: 'axis',
-        appendTo: 'body',
+        trigger: "axis",
+        appendTo: "body",
         confine: true,
         valueFormatter: (value: unknown) => amount(Number(value)),
       },
-      legend: { top: 0, data: ['Combustión', 'Eléctrico'], textStyle: { fontSize: 10 } },
+      legend: {
+        top: 0,
+        data: ["Combustión", "Eléctrico"],
+        textStyle: { fontSize: 10 },
+      },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
         data: labels,
         axisLabel: {
           interval: 11,
-          formatter: (value: string) => (value === 'Inicio' ? value : `M${value.slice(4)}`),
+          formatter: (value: string) =>
+            value === "Inicio" ? value : `M${value.slice(4)}`,
           fontSize: 9,
         },
       },
       yAxis: {
-        type: 'value',
+        type: "value",
         min: 0,
-        axisLabel: { formatter: (value: number) => debtAxisLabel(value), fontSize: 9 },
+        axisLabel: {
+          formatter: (value: number) => debtAxisLabel(value),
+          fontSize: 9,
+        },
         splitNumber: 3,
       },
       series: [
         {
-          name: 'Combustión',
-          type: 'line',
+          name: "Combustión",
+          type: "line",
           showSymbol: false,
           lineStyle: { width: 2 },
-          data: [r.ice.principal, ...r.ice.months.slice(0, horizon).map((m) => m.balance)],
+          data: [
+            r.ice.principal,
+            ...r.ice.months.slice(0, horizon).map((m) => m.balance),
+          ],
           ...(eventMonths.length
             ? {
                 markLine: {
                   silent: true,
-                  symbol: 'none',
+                  symbol: "none",
                   label: { show: false },
-                  lineStyle: { type: 'dashed', opacity: 0.75 },
+                  lineStyle: { type: "dashed", opacity: 0.75 },
                   data: eventMonths.map((eventMonth) => ({
                     xAxis: `Mes ${eventMonth}`,
                     lineStyle: {
                       color: events.some(
-                        (event) => event.month === eventMonth && event.kind === 'replacement',
+                        (event) =>
+                          event.month === eventMonth &&
+                          event.kind === "replacement",
                       )
-                        ? '#B66A81'
-                        : '#777175',
+                        ? "#B66A81"
+                        : "#777175",
                     },
                   })),
                 },
@@ -219,11 +261,14 @@ export default function FinancePanel({
             : {}),
         },
         {
-          name: 'Eléctrico',
-          type: 'line',
+          name: "Eléctrico",
+          type: "line",
           showSymbol: false,
           lineStyle: { width: 2 },
-          data: [r.ev.principal, ...r.ev.months.slice(0, horizon).map((m) => m.balance)],
+          data: [
+            r.ev.principal,
+            ...r.ev.months.slice(0, horizon).map((m) => m.balance),
+          ],
         },
       ],
     };
@@ -236,58 +281,75 @@ export default function FinancePanel({
     >
       <div className="panel-title finance-panel-title">
         <div>
-          <h3 id="finance-title">¿El recaudo sostiene los pagos y el ingreso presupuestado?</h3>
-          <p className="finance-panel-subtitle">Montos de la flota · escenario editable</p>
+          <h3 id="finance-title">
+            ¿El recaudo sostiene los pagos y el ingreso presupuestado?
+          </h3>
+          <p className="finance-panel-subtitle">
+            Montos de la flota · escenario editable
+          </p>
         </div>
         <Coins size={19} />
       </div>
       {stale && (
         <p className="notice" role="status">
-          Resultado anterior: el escenario está en actualización o contiene entradas inválidas.
-          Exploración deshabilitada.
+          Resultado anterior: el escenario está en actualización o contiene
+          entradas inválidas. Exploración deshabilitada.
         </p>
       )}
       <div className="finance-conclusion">
         <span className="eyebrow">PRESUPUESTO ELÉCTRICO · {horizon} MESES</span>
-        <strong className={summary.minimum < 0 ? 'negative' : ''}>
-          {amount(summary.minimum)} <span>mínimo de caja · mes {summary.month}</span>
+        <strong className={summary.minimum < 0 ? "negative" : ""}>
+          {amount(summary.minimum)}{" "}
+          <span>mínimo de caja · mes {summary.month}</span>
         </strong>
         <p>
-          {summary.deficitMonths} de {horizon} meses con déficit.{' '}
+          {summary.deficitMonths} de {horizon} meses con déficit.{" "}
           {summary.minimum < 0
-            ? 'El recaudo supuesto no sostiene todas las partidas presupuestadas.'
-            : 'El recaudo supuesto cubre las partidas presupuestadas en el horizonte.'}
+            ? "El recaudo supuesto no sostiene todas las partidas presupuestadas."
+            : "El recaudo supuesto cubre las partidas presupuestadas en el horizonte."}
         </p>
         <p>
-          Personal e ingreso del concesionario son montos presupuestados.{' '}
+          Personal e ingreso del concesionario son montos presupuestados.{" "}
           {s.economy.laborCost < s.economy.incomeGoal
-            ? 'El presupuesto laboral es inferior al ingreso objetivo declarado; una caja suficiente no corrige esa condición. '
-            : ''}
-          Esta suficiencia simulada no acredita protección salarial ni viabilidad integral.
+            ? "El presupuesto laboral es inferior al ingreso objetivo declarado; una caja suficiente no corrige esa condición. "
+            : ""}
+          Esta suficiencia simulada no acredita protección salarial ni
+          viabilidad integral.
         </p>
       </div>
-      <h4 className="finance-section-heading">Distribución mensual del recaudo</h4>
+      <h4 className="finance-section-heading">
+        Distribución mensual del recaudo
+      </h4>
       <div className="budget-timeline">
         <div className="budget-timeline-heading">
           <div>
-            <span className="eyebrow">ETAPAS DEL HORIZONTE · {horizon} MESES</span>
+            <span className="eyebrow">
+              ETAPAS DEL HORIZONTE · {horizon} MESES
+            </span>
             <p>
-              Se abre en el primer mes con menor caja eléctrica. Puedes consultar otra etapa o mes.
+              Se abre en el primer mes con menor caja eléctrica. Puedes
+              consultar otra etapa o mes.
             </p>
           </div>
           <span className="revenue-label">
-            Recaudo mensual del escenario <b>{amount(selectedEvMonth.revenue)}</b>
+            Recaudo mensual del escenario{" "}
+            <b>{amount(selectedEvMonth.revenue)}</b>
           </span>
         </div>
         {budgetPhases.length === 1 ? (
           <p className="budget-single-phase">
-            Meses 1–{horizon} · {describeBudgetPhase(budgetPhases[0]!, r)} · una etapa de
-            presupuesto
+            Meses 1–{horizon} · {describeBudgetPhase(budgetPhases[0]!, r)} · una
+            etapa de presupuesto
           </p>
         ) : (
-          <div className="budget-phases" role="group" aria-label="Etapas del presupuesto mensual">
+          <div
+            className="budget-phases"
+            role="group"
+            aria-label="Etapas del presupuesto mensual"
+          >
             {budgetPhases.map((phase, index) => {
-              const active = month >= phase.startMonth && month <= phase.endMonth;
+              const active =
+                month >= phase.startMonth && month <= phase.endMonth;
               const range =
                 phase.startMonth === phase.endMonth
                   ? `Mes ${phase.startMonth}`
@@ -298,7 +360,7 @@ export default function FinancePanel({
               return (
                 <button
                   key={`${phase.startMonth}-${phase.endMonth}`}
-                  className={`budget-phase${active ? ' selected' : ''}`}
+                  className={`budget-phase${active ? " selected" : ""}`}
                   type="button"
                   disabled={stale}
                   aria-pressed={active}
@@ -307,17 +369,22 @@ export default function FinancePanel({
                 >
                   <span className="budget-phase-index">
                     Etapa {index + 1}
-                    {active ? ' · Seleccionada' : ''}
+                    {active ? " · Seleccionada" : ""}
                   </span>
                   <strong>{range}</strong>
                   <span>{description}</span>
                   <small className="budget-phase-results">
                     <span>
-                      Combustión{' '}
-                      <b className={iceMargin < 0 ? 'negative' : ''}>{mxn(iceMargin)}/mes</b>
+                      Combustión{" "}
+                      <b className={iceMargin < 0 ? "negative" : ""}>
+                        {mxn(iceMargin)}/mes
+                      </b>
                     </span>
                     <span>
-                      Eléctrico <b className={margin < 0 ? 'negative' : ''}>{mxn(margin)}/mes</b>
+                      Eléctrico{" "}
+                      <b className={margin < 0 ? "negative" : ""}>
+                        {mxn(margin)}/mes
+                      </b>
                     </span>
                   </small>
                 </button>
@@ -366,12 +433,12 @@ export default function FinancePanel({
         </div>
         {(
           [
-            ['operating', 'Operación'],
-            ['workers', 'Personal presupuestado'],
-            ['owner', 'Ingreso concesionario presupuestado'],
-            ['payment', 'Pago del activo'],
-            ['reserve', 'Reserva y reposición'],
-            ['margin', 'Resultado de caja'],
+            ["operating", "Operación"],
+            ["workers", "Personal presupuestado"],
+            ["owner", "Ingreso concesionario presupuestado"],
+            ["payment", "Pago del activo"],
+            ["reserve", "Reserva y reposición"],
+            ["margin", "Resultado de caja"],
           ] as const
         ).map(([key, label]) => (
           <div className="finance-value-row" key={key}>
@@ -382,15 +449,16 @@ export default function FinancePanel({
         ))}
       </div>
       <p className="chart-explanation">
-        La línea discontinua marca el recaudo supuesto. Reserva y reposición reúne provisión mensual
-        y reposición no cubierta, sin equivaler al saldo acumulado. El excedente de caja no tiene
-        reparto asignado; una caja negativa es déficit.
+        La línea discontinua marca el recaudo supuesto. Reserva y reposición
+        reúne provisión mensual y reposición no cubierta, sin equivaler al saldo
+        acumulado. El excedente de caja no tiene reparto asignado; una caja
+        negativa es déficit.
       </p>
       <section className="finance-section" aria-labelledby="capacity-title">
         <h4 id="capacity-title">Capacidad de pago del activo · mes {month}</h4>
         <p>
-          Recursos antes de pagar el activo, después de operación, personal, ingreso del
-          concesionario y obligaciones de reserva/reposición.
+          Recursos antes de pagar el activo, después de operación, personal,
+          ingreso del concesionario y obligaciones de reserva/reposición.
         </p>
         <div className="capacity-legend">
           <span>Barra: recursos disponibles</span>
@@ -401,8 +469,8 @@ export default function FinancePanel({
       <section className="finance-section" aria-labelledby="bridge-title">
         <h4 id="bridge-title">¿Qué absorbe el ahorro operativo?</h4>
         <p>
-          Puente de caja del mes {month}. Una contribución positiva libera caja; una negativa la
-          reduce.
+          Puente de caja del mes {month}. Una contribución positiva libera caja;
+          una negativa la reduce.
         </p>
         <CashBridgeView bridge={current.bridge} />
       </section>
@@ -413,9 +481,9 @@ export default function FinancePanel({
       >
         <h4 id="revenue-stress-title">Prueba temporal de menor recaudo</h4>
         <p>
-          Rango elegido por la herramienta: 0–30%, pasos de un punto. Reduce sólo los ascensos
-          supuestos; tarifa, servicio, flota, costos, financiamiento e ingresos objetivo permanecen
-          constantes.
+          Rango elegido por la herramienta: 0–30%, pasos de un punto. Reduce
+          sólo los ascensos supuestos; tarifa, servicio, flota, costos,
+          financiamiento e ingresos objetivo permanecen constantes.
         </p>
         <label htmlFor="revenue-drop">
           Caída del recaudo supuesto <b>{drop}%</b>
@@ -436,30 +504,37 @@ export default function FinancePanel({
         ) : !stress ? (
           <p role="status">
             {stale
-              ? 'Prueba deshabilitada hasta actualizar el escenario.'
-              : 'Calculando las 31 pruebas con el evaluador…'}
+              ? "Prueba deshabilitada hasta actualizar el escenario."
+              : "Calculando las 31 pruebas con el evaluador…"}
           </p>
         ) : (
           <div className="stress-results" aria-live="polite">
-            {(['ice', 'ev'] as const).map((key) => (
+            {(["ice", "ev"] as const).map((key) => (
               <article key={key}>
                 <h5>
-                  {key === 'ice' ? 'Combustión' : 'Eléctrico'} · caída {drop}%
+                  {key === "ice" ? "Combustión" : "Eléctrico"} · caída {drop}%
                 </h5>
                 <p>
-                  Caja mes {month}{' '}
-                  <strong className={stress[key].months[month - 1]!.freeCash < 0 ? 'negative' : ''}>
+                  Caja mes {month}{" "}
+                  <strong
+                    className={
+                      stress[key].months[month - 1]!.freeCash < 0
+                        ? "negative"
+                        : ""
+                    }
+                  >
                     {amount(stress[key].months[month - 1]!.freeCash)}
                   </strong>
                 </p>
                 <p>
-                  Mínimo del horizonte{' '}
+                  Mínimo del horizonte{" "}
                   <b>
-                    {amount(stress[key].summary.minimum)} · mes {stress[key].summary.month}
+                    {amount(stress[key].summary.minimum)} · mes{" "}
+                    {stress[key].summary.month}
                   </b>
                 </p>
                 <p>
-                  Meses con déficit{' '}
+                  Meses con déficit{" "}
                   <b>
                     {stress[key].summary.deficitMonths} / {horizon}
                   </b>
@@ -469,22 +544,28 @@ export default function FinancePanel({
           </div>
         )}
         <small>
-          Prueba separada del presupuesto original. No se aplica al escenario ni modifica guardado,
-          JSON, CSV o informe. No estima probabilidades ni un umbral global de viabilidad.
+          Prueba separada del presupuesto original. No se aplica al escenario ni
+          modifica guardado, JSON, CSV o informe. No estima probabilidades ni un
+          umbral global de viabilidad.
         </small>
       </section>
       <details className="finance-detail">
         <summary>Consultar deuda, intereses, comisiones y reservas</summary>
-        <section className="debt-evolution" aria-labelledby="debt-evolution-title">
+        <section
+          className="debt-evolution"
+          aria-labelledby="debt-evolution-title"
+        >
           <div className="debt-evolution-heading">
             <div>
               <h4 id="debt-evolution-title">
-                {hasDebt ? 'Evolución de la deuda' : 'Sin saldo de deuda financiada'}
+                {hasDebt
+                  ? "Evolución de la deuda"
+                  : "Sin saldo de deuda financiada"}
               </h4>
               <p>
                 {hasDebt
-                  ? 'Amortización suponiendo todos los pagos previstos, incluso con déficit de caja. Su descenso no demuestra capacidad de pago. El mes 0 muestra el principal inicial.'
-                  : 'Saldo financiado en el escenario · MXN'}
+                  ? "Amortización suponiendo todos los pagos previstos, incluso con déficit de caja. Su descenso no demuestra capacidad de pago. El mes 0 muestra el principal inicial."
+                  : "Saldo financiado en el escenario · MXN"}
               </p>
             </div>
             <span>
@@ -502,8 +583,8 @@ export default function FinancePanel({
             </Suspense>
           ) : (
             <p className="debt-empty">
-              No se genera saldo financiado en este escenario. Los pagos de renta, si existen,
-              aparecen en el presupuesto mensual.
+              No se genera saldo financiado en este escenario. Los pagos de
+              renta, si existen, aparecen en el presupuesto mensual.
             </p>
           )}
           <div
@@ -525,7 +606,10 @@ export default function FinancePanel({
           {events.length > 0 && (
             <div className="finance-events-section">
               <h5>Hitos del escenario</h5>
-              <ul className="finance-events" aria-label="Hitos financieros del escenario">
+              <ul
+                className="finance-events"
+                aria-label="Hitos financieros del escenario"
+              >
                 {events.map((event) => (
                   <li
                     className={`finance-event ${event.kind}`}
@@ -541,50 +625,58 @@ export default function FinancePanel({
         </section>
         <div className="finance-detail-values">
           <p>
-            <b>Principal inicial:</b> combustión {amount(r.ice.principal)}; eléctrico{' '}
-            {amount(r.ev.principal)}.
+            <b>Principal inicial:</b> combustión {amount(r.ice.principal)};
+            eléctrico {amount(r.ev.principal)}.
           </p>
           <p>
-            <b>Principal amortizado en el mes {month}:</b> combustión{' '}
-            {amount(selectedIceMonth.principal)}; eléctrico {amount(selectedEvMonth.principal)}.
+            <b>Principal amortizado en el mes {month}:</b> combustión{" "}
+            {amount(selectedIceMonth.principal)}; eléctrico{" "}
+            {amount(selectedEvMonth.principal)}.
           </p>
           <p>
-            <b>Intereses acumulados · 60 meses:</b> combustión {amount(r.ice.interestTotal)};
-            eléctrico {amount(r.ev.interestTotal)}.
+            <b>Intereses acumulados · 60 meses:</b> combustión{" "}
+            {amount(r.ice.interestTotal)}; eléctrico{" "}
+            {amount(r.ev.interestTotal)}.
           </p>
           <p>
-            <b>Intereses del mes {month}:</b> combustión {amount(selectedIceMonth.interest)};
-            eléctrico {amount(selectedEvMonth.interest)}.
+            <b>Intereses del mes {month}:</b> combustión{" "}
+            {amount(selectedIceMonth.interest)}; eléctrico{" "}
+            {amount(selectedEvMonth.interest)}.
           </p>
           <p>
-            <b>Comisiones iniciales:</b> combustión {amount(r.ice.financingFee)}; eléctrico{' '}
-            {amount(r.ev.financingFee)}.
+            <b>Comisiones iniciales:</b> combustión {amount(r.ice.financingFee)}
+            ; eléctrico {amount(r.ev.financingFee)}.
           </p>
           {(r.ice.debtRemaining > 0 || r.ev.debtRemaining > 0) && (
             <p className="notice">
-              <b>Deuda pendiente al mes 60:</b> combustión {amount(r.ice.debtRemaining)}; eléctrico{' '}
-              {amount(r.ev.debtRemaining)}. El compromiso continúa después del horizonte.
+              <b>Deuda pendiente al mes 60:</b> combustión{" "}
+              {amount(r.ice.debtRemaining)}; eléctrico{" "}
+              {amount(r.ev.debtRemaining)}. El compromiso continúa después del
+              horizonte.
             </p>
           )}
           <p>
-            <b>Provisión mensual de reserva:</b> {amount(current.reserve.provision)} por tecnología.{' '}
-            <b>Saldo después del mes {month}:</b> combustión {amount(selectedIceMonth.reserve)};
-            eléctrico {amount(current.reserve.balance)}.
+            <b>Provisión mensual de reserva:</b>{" "}
+            {amount(current.reserve.provision)} por tecnología.{" "}
+            <b>Saldo después del mes {month}:</b> combustión{" "}
+            {amount(selectedIceMonth.reserve)}; eléctrico{" "}
+            {amount(current.reserve.balance)}.
           </p>
           {analysis
             .filter((a) => a.reserve.replacement > 0)
             .map((a) => (
               <p key={a.month}>
-                <b>Reposición eléctrica programada · mes {a.month}:</b>{' '}
-                {amount(a.reserve.replacement)}. Cubierta con reserva: {amount(a.reserve.covered)}.
-                Faltante descontado de caja: {amount(a.reserve.shortfall)}.
+                <b>Reposición eléctrica programada · mes {a.month}:</b>{" "}
+                {amount(a.reserve.replacement)}. Cubierta con reserva:{" "}
+                {amount(a.reserve.covered)}. Faltante descontado de caja:{" "}
+                {amount(a.reserve.shortfall)}.
               </p>
             ))}
           <p>
-            Las reservas no financian déficits recurrentes.{' '}
-            {events.some((e) => e.kind === 'replacement')
-              ? 'La cobertura indicada corresponde sólo a la reposición programada.'
-              : 'No hay reposición programada en el horizonte.'}{' '}
+            Las reservas no financian déficits recurrentes.{" "}
+            {events.some((e) => e.kind === "replacement")
+              ? "La cobertura indicada corresponde sólo a la reposición programada."
+              : "No hay reposición programada en el horizonte."}{" "}
             No se modela cobertura de averías.
           </p>
         </div>
@@ -593,61 +685,80 @@ export default function FinancePanel({
   );
 }
 
-function CapacityBars({ ice, ev }: { ice: PaymentCapacity; ev: PaymentCapacity }) {
+function CapacityBars({
+  ice,
+  ev,
+}: {
+  ice: PaymentCapacity;
+  ev: PaymentCapacity;
+}) {
   const low = Math.min(0, ice.available, ev.available);
-  const high = Math.max(1, ice.available, ev.available, ice.payment, ev.payment);
+  const high = Math.max(
+    1,
+    ice.available,
+    ev.available,
+    ice.payment,
+    ev.payment,
+  );
   const position = (value: number) => ((value - low) / (high - low)) * 100;
   return (
     <div className="capacity-bars">
       {(
         [
-          ['Combustión', ice],
-          ['Eléctrico', ev],
+          ["Combustión", ice],
+          ["Eléctrico", ev],
         ] as const
       ).map(([name, c]) => (
         <article className="capacity-row" key={name}>
           <div className="capacity-heading">
             <h5>{name}</h5>
             <span>
-              Disponibles <b>{amount(c.available)}</b> · Pago previsto <b>{amount(c.payment)}</b>
+              Disponibles <b>{amount(c.available)}</b> · Pago previsto{" "}
+              <b>{amount(c.payment)}</b>
             </span>
           </div>
           <div
             className="capacity-track"
             title={`${name}: disponibles ${amount(c.available)}; pago previsto ${amount(c.payment)}; caja ${amount(c.cash)}`}
             role="img"
-            aria-label={`${name}: recursos disponibles ${amount(c.available)}, pago previsto ${amount(c.payment)}, ${c.cash < 0 ? 'brecha' : 'holgura'} ${amount(Math.abs(c.cash))}.`}
+            aria-label={`${name}: recursos disponibles ${amount(c.available)}, pago previsto ${amount(c.payment)}, ${c.cash < 0 ? "brecha" : "holgura"} ${amount(Math.abs(c.cash))}.`}
           >
             <i className="finance-zero" style={{ left: `${position(0)}%` }} />
             <div
-              className={`capacity-bar ${name === 'Eléctrico' ? 'electric' : ''} ${c.available < 0 ? 'deficit' : ''}`}
+              className={`capacity-bar ${name === "Eléctrico" ? "electric" : ""} ${c.available < 0 ? "deficit" : ""}`}
               style={{
                 left: `${position(Math.min(0, c.available))}%`,
                 width: `${Math.abs(position(c.available) - position(0))}%`,
               }}
             />
-            <i className="capacity-marker" style={{ left: `${position(c.payment)}%` }} />
+            <i
+              className="capacity-marker"
+              style={{ left: `${position(c.payment)}%` }}
+            />
           </div>
-          <p className={c.cash < 0 ? 'negative' : ''}>
-            {c.cash < 0 ? 'Brecha' : 'Holgura'} <b>{amount(Math.abs(c.cash))}</b>
+          <p className={c.cash < 0 ? "negative" : ""}>
+            {c.cash < 0 ? "Brecha" : "Holgura"}{" "}
+            <b>{amount(Math.abs(c.cash))}</b>
             {c.revenueCushionPercent !== null && (
               <>
-                {' '}
-                · equivalente al <b>{num(c.revenueCushionPercent, 2)}%</b> del recaudo
+                {" "}
+                · equivalente al <b>{num(c.revenueCushionPercent, 2)}%</b> del
+                recaudo
               </>
             )}
           </p>
           {c.available < 0 && (
             <p className="negative">
-              Déficit previo al pago del activo: una cuota cero tampoco resolvería este presupuesto.
+              Déficit previo al pago del activo: una cuota cero tampoco
+              resolvería este presupuesto.
             </p>
           )}
         </article>
       ))}
       <p className="chart-explanation">
-        Holgura = disponibles − pago previsto = resultado de caja. El porcentaje positivo sólo
-        expresa su equivalencia en recaudo; no es una probabilidad ni un margen bancario
-        recomendado.
+        Holgura = disponibles − pago previsto = resultado de caja. El porcentaje
+        positivo sólo expresa su equivalencia en recaudo; no es una probabilidad
+        ni un margen bancario recomendado.
       </p>
     </div>
   );
@@ -656,7 +767,7 @@ function CapacityBars({ ice, ev }: { ice: PaymentCapacity; ev: PaymentCapacity }
 function CashBridgeView({
   bridge,
 }: {
-  bridge: ReturnType<typeof financialAnalysis>[number]['bridge'];
+  bridge: ReturnType<typeof financialAnalysis>[number]["bridge"];
 }) {
   const values = [
     0,
@@ -669,19 +780,28 @@ function CashBridgeView({
   const position = (value: number) => ((value - low) / (high - low)) * 100;
   const rows = [
     {
-      label: 'Caja de combustión',
+      label: "Caja de combustión",
       amount: bridge.start,
       before: 0,
       after: bridge.start,
       total: true,
     },
     ...bridge.contributions.map((c) => ({ ...c, total: false })),
-    { label: 'Caja eléctrica', amount: bridge.end, before: 0, after: bridge.end, total: true },
+    {
+      label: "Caja eléctrica",
+      amount: bridge.end,
+      before: 0,
+      after: bridge.end,
+      total: true,
+    },
   ];
   return (
     <div className="cash-bridge" aria-label="Puente reconciliado de caja">
       {rows.map((row) => (
-        <div className={`bridge-row ${row.total ? 'total' : ''}`} key={row.label}>
+        <div
+          className={`bridge-row ${row.total ? "total" : ""}`}
+          key={row.label}
+        >
           <div>
             <span>{row.label}</span>
             <b>{row.total ? amount(row.amount) : signed(row.amount)}</b>
@@ -689,13 +809,16 @@ function CashBridgeView({
           <div className="bridge-track" aria-hidden="true">
             <i className="finance-zero" style={{ left: `${position(0)}%` }} />
             <span
-              className={`bridge-bar ${row.amount < 0 ? 'decrease' : ''}`}
+              className={`bridge-bar ${row.amount < 0 ? "decrease" : ""}`}
               style={{
                 left: `${position(Math.min(row.before, row.after))}%`,
                 width: `${Math.abs(position(row.after) - position(row.before))}%`,
               }}
             />
-            <i className="bridge-end" style={{ left: `${position(row.after)}%` }} />
+            <i
+              className="bridge-end"
+              style={{ left: `${position(row.after)}%` }}
+            />
           </div>
           {!row.total && <small>Caja acumulada: {amount(row.after)}</small>}
         </div>

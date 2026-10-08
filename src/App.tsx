@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import { lazy, Suspense, useEffect, useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import {
   Search,
   MapPin,
@@ -14,38 +14,42 @@ import {
   ChevronRight,
   CheckCircle2,
   AlertCircle,
-} from 'lucide-react';
-import type { RouteRecord, Scenario } from './domain/schema';
-import { ScenarioSchema } from './domain/schema';
-import { useScenario } from './features/store';
-import { useEngine } from './features/useEngine';
-import Controls, { focusParameter } from './features/Controls';
-import Diagnostic from './features/Diagnostic';
-import { withValue } from './features/values';
-import { CostPanel, EnergyPanel, ResultMetrics } from './features/ResultViews';
-import FinancePanel from './features/FinancePanel';
-import Environment from './features/Environment';
-import Sensitivity from './features/Sensitivity';
-import WorkspacePanel, { useCompactWorkspace } from './features/WorkspacePanel';
-import { useWorkspaceRoute, navigate, type WorkspacePath } from './features/navigation';
-import { presentedConditions } from './features/conditions';
-import Optimizer from './features/Optimizer';
-import Report from './features/Report';
-import { sensitivityVariables } from './domain/explore';
-import { num } from './ui/format';
-import './workspace.css';
-import FilesPanel from './features/FilesPanel';
-import SourcesPanel from './features/SourcesPanel';
-const RouteMap = lazy(() => import('./features/RouteMap'));
-const SAVED_KEY = 'hackelectro:saved:v1';
+} from "lucide-react";
+import type { RouteRecord, Scenario } from "./domain/schema";
+import { ScenarioSchema } from "./domain/schema";
+import { useScenario } from "./features/store";
+import { useEngine } from "./features/useEngine";
+import Controls, { focusParameter } from "./features/Controls";
+import Diagnostic from "./features/Diagnostic";
+import { withValue } from "./features/values";
+import { CostPanel, EnergyPanel, ResultMetrics } from "./features/ResultViews";
+import FinancePanel from "./features/FinancePanel";
+import Environment from "./features/Environment";
+import Sensitivity from "./features/Sensitivity";
+import WorkspacePanel, { useCompactWorkspace } from "./features/WorkspacePanel";
+import {
+  useWorkspaceRoute,
+  navigate,
+  type WorkspacePath,
+} from "./features/navigation";
+import { presentedConditions } from "./features/conditions";
+import Optimizer from "./features/Optimizer";
+import Report from "./features/Report";
+import { sensitivityVariables } from "./domain/explore";
+import { num } from "./ui/format";
+import "./workspace.css";
+import FilesPanel from "./features/FilesPanel";
+import SourcesPanel from "./features/SourcesPanel";
+const RouteMap = lazy(() => import("./features/RouteMap"));
+const SAVED_KEY = "hackelectro:saved:v1";
 const normalize = (text: string) =>
   text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 function readSaved(): Scenario[] {
   try {
-    const data: unknown = JSON.parse(localStorage.getItem(SAVED_KEY) ?? '[]');
+    const data: unknown = JSON.parse(localStorage.getItem(SAVED_KEY) ?? "[]");
     return Array.isArray(data)
       ? data.slice(0, 20).flatMap((x) => {
           const r = ScenarioSchema.safeParse(x);
@@ -62,7 +66,9 @@ export default function App() {
   const route = useWorkspaceRoute();
   const compact = useCompactWorkspace();
   const [expanded, setExpanded] = useState(false);
-  const [visited, setVisited] = useState<Set<WorkspacePath>>(() => new Set([route.path]));
+  const [visited, setVisited] = useState<Set<WorkspacePath>>(
+    () => new Set([route.path]),
+  );
   useEffect(() => {
     setVisited((previous) =>
       previous.has(route.path) ? previous : new Set([...previous, route.path]),
@@ -70,26 +76,27 @@ export default function App() {
     setExpanded(false);
   }, [route.path]);
   useEffect(() => {
-    if (route.path === '/configurar' && route.field) focusParameter(route.field);
+    if (route.path === "/configurar" && route.field)
+      focusParameter(route.field);
   }, [route.path, route.field, visited]);
-  const onParameter = (path: string) => navigate('/configurar', path);
+  const onParameter = (path: string) => navigate("/configurar", path);
   const [routes, setRoutes] = useState<RouteRecord[]>([]);
-  const [query, setQuery] = useState('');
-  const [routesError, setRoutesError] = useState('');
+  const [query, setQuery] = useState("");
+  const [routesError, setRoutesError] = useState("");
   const [routeDialog, setRouteDialog] = useState(false);
-  const [notice, setNotice] = useState('');
+  const [notice, setNotice] = useState("");
   const [saved, setSaved] = useState<Scenario[]>(readSaved);
   const [name, setName] = useState(scenario.name);
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/data/routes.json', { signal: controller.signal })
+    fetch("/data/routes.json", { signal: controller.signal })
       .then((r) => {
-        if (!r.ok) throw new Error('No se pudo cargar el catálogo de ramales.');
+        if (!r.ok) throw new Error("No se pudo cargar el catálogo de ramales.");
         return r.json();
       })
       .then(setRoutes)
       .catch((e) => {
-        if (e.name !== 'AbortError') setRoutesError(e.message);
+        if (e.name !== "AbortError") setRoutesError(e.message);
       });
     return () => controller.abort();
   }, []);
@@ -100,25 +107,34 @@ export default function App() {
     .filter((r) => normalize(`${r.route} ${r.name}`).includes(normalize(query)))
     .sort(
       (a, b) =>
-        Number(b.id === scenario.route.id) - Number(a.id === scenario.route.id) ||
-        a.route.localeCompare(b.route, 'es', { numeric: true }) ||
-        a.name.localeCompare(b.name, 'es'),
+        Number(b.id === scenario.route.id) -
+          Number(a.id === scenario.route.id) ||
+        a.route.localeCompare(b.route, "es", { numeric: true }) ||
+        a.name.localeCompare(b.name, "es"),
     );
-  const valid = engine.status === 'ready' && engine.result !== null;
+  const valid = engine.status === "ready" && engine.result !== null;
   const save = () => {
-    const parsed = ScenarioSchema.safeParse({ ...scenario, name: name.trim() || scenario.name });
+    const parsed = ScenarioSchema.safeParse({
+      ...scenario,
+      name: name.trim() || scenario.name,
+    });
     if (!parsed.success) {
-      setNotice('Corrige las condiciones antes de guardar.');
+      setNotice("Corrige las condiciones antes de guardar.");
       return;
     }
-    const next = [parsed.data, ...saved.filter((s) => s.name !== parsed.data.name)].slice(0, 20);
+    const next = [
+      parsed.data,
+      ...saved.filter((s) => s.name !== parsed.data.name),
+    ].slice(0, 20);
     try {
       localStorage.setItem(SAVED_KEY, JSON.stringify(next));
       setSaved(next);
       setScenario(parsed.data);
-      setNotice('Escenario guardado en este navegador.');
+      setNotice("Escenario guardado en este navegador.");
     } catch {
-      setNotice('Almacenamiento lleno o deshabilitado. Exporta el JSON para conservarlo.');
+      setNotice(
+        "Almacenamiento lleno o deshabilitado. Exporta el JSON para conservarlo.",
+      );
     }
   };
   const selectRoute = (r: RouteRecord) => {
@@ -133,40 +149,48 @@ export default function App() {
       },
       evidence: {
         ...scenario.evidence,
-        'route.cycleKm': {
-          sourceId: 'M09',
-          nature: 'derivado',
-          level: 'A',
+        "route.cycleKm": {
+          sourceId: "M09",
+          nature: "derivado",
+          level: "A",
           date: r.internalDate,
-          scope: 'Geometría histórica del ramal',
-          limitation: 'Suma de trazos cartográficos; no ciclo actual medido.',
+          scope: "Geometría histórica del ramal",
+          limitation: "Suma de trazos cartográficos; no ciclo actual medido.",
         },
       },
     });
     setNotice(
-      'Cambió la geometría. Operación, demanda y economía conservan los supuestos del escenario; revísalos para este ramal.',
+      "Cambió la geometría. Operación, demanda y economía conservan los supuestos del escenario; revísalos para este ramal.",
     );
   };
   const apply = (s: Scenario) => {
     setScenario(s);
     setNotice(
-      'Combinación aplicada. Los acuerdos de carga, financiamiento y autorización siguen pendientes.',
+      "Combinación aplicada. Los acuerdos de carga, financiamiento y autorización siguen pendientes.",
     );
   };
-  const modal = route.path !== '/mapa' && (expanded || compact);
+  const modal = route.path !== "/mapa" && (expanded || compact);
   const failures = engine.result
-    ? presentedConditions(engine.result).filter((c) => c.status === 'fail').length
+    ? presentedConditions(engine.result).filter((c) => c.status === "fail")
+        .length
     : 0;
-  const onExplore = (variable: keyof typeof sensitivityVariables, value: number) => {
+  const onExplore = (
+    variable: keyof typeof sensitivityVariables,
+    value: number,
+  ) => {
     const path = sensitivityVariables[variable].path;
     setScenario(withValue(scenario, path, value));
     onParameter(path);
   };
   const views: Partial<Record<WorkspacePath, React.ReactNode>> = {
-    '/configurar': (
-      <Controls scenario={scenario} onChange={setScenario} onRoutes={() => setRouteDialog(true)} />
+    "/configurar": (
+      <Controls
+        scenario={scenario}
+        onChange={setScenario}
+        onRoutes={() => setRouteDialog(true)}
+      />
     ),
-    '/economia/caja': engine.result && (
+    "/economia/caja": engine.result && (
       <FinancePanel
         result={engine.result}
         stale={!valid}
@@ -174,16 +198,16 @@ export default function App() {
         error={engine.revenueError}
       />
     ),
-    '/economia/costos': engine.result && (
+    "/economia/costos": engine.result && (
       <>
         <ResultMetrics result={engine.result} />
         <CostPanel result={engine.result} />
       </>
     ),
-    '/economia/pruebas': engine.result && (
+    "/economia/pruebas": engine.result && (
       <Sensitivity
         id="pruebas-economia"
-        variables={['electricityPrice']}
+        variables={["electricityPrice"]}
         result={engine.result}
         points={engine.points}
         error={engine.sensitivityError}
@@ -191,7 +215,7 @@ export default function App() {
         onApply={onExplore}
       />
     ),
-    '/economia/alternativas': (
+    "/economia/alternativas": (
       <Optimizer
         search={engine.search}
         searching={engine.searching}
@@ -202,20 +226,22 @@ export default function App() {
         disabled={!valid}
       />
     ),
-    '/ambiente': engine.result && <Environment result={engine.result} />,
-    '/operacion/energia': engine.result && <EnergyPanel result={engine.result} />,
-    '/operacion/condiciones': (
+    "/ambiente": engine.result && <Environment result={engine.result} />,
+    "/operacion/energia": engine.result && (
+      <EnergyPanel result={engine.result} />
+    ),
+    "/operacion/condiciones": (
       <Diagnostic
         result={engine.result}
         stale={!valid}
-        onSearch={() => navigate('/economia/alternativas')}
+        onSearch={() => navigate("/economia/alternativas")}
         onParameter={onParameter}
       />
     ),
-    '/operacion/pruebas': engine.result && (
+    "/operacion/pruebas": engine.result && (
       <Sensitivity
         id="pruebas-operacion"
-        variables={['cycles', 'consumption']}
+        variables={["cycles", "consumption"]}
         result={engine.result}
         points={engine.points}
         error={engine.sensitivityError}
@@ -223,7 +249,7 @@ export default function App() {
         onApply={onExplore}
       />
     ),
-    '/archivos': (
+    "/archivos": (
       <FilesPanel
         scenario={scenario}
         result={engine.result}
@@ -238,21 +264,21 @@ export default function App() {
         valid={valid}
       />
     ),
-    '/fuentes': <SourcesPanel scenario={scenario} />,
+    "/fuentes": <SourcesPanel scenario={scenario} />,
   };
   const tabs =
-    route.area === 'economia'
+    route.area === "economia"
       ? [
-          ['/economia/caja', 'Caja'],
-          ['/economia/costos', 'Costos'],
-          ['/economia/pruebas', 'Pruebas'],
-          ['/economia/alternativas', 'Alternativas'],
+          ["/economia/caja", "Caja"],
+          ["/economia/costos", "Costos"],
+          ["/economia/pruebas", "Pruebas"],
+          ["/economia/alternativas", "Alternativas"],
         ]
-      : route.area === 'operacion'
+      : route.area === "operacion"
         ? [
-            ['/operacion/energia', 'Energía'],
-            ['/operacion/condiciones', 'Condiciones'],
-            ['/operacion/pruebas', 'Pruebas'],
+            ["/operacion/energia", "Energía"],
+            ["/operacion/condiciones", "Condiciones"],
+            ["/operacion/pruebas", "Pruebas"],
           ]
         : [];
   return (
@@ -261,11 +287,17 @@ export default function App() {
         <div className="workspace-surround" inert={modal || undefined}>
           <a
             className="skip-link"
-            href={route.path === '/mapa' ? '#contenido' : '#workspace-panel-title'}
+            href={
+              route.path === "/mapa" ? "#contenido" : "#workspace-panel-title"
+            }
             onClick={(event) => {
               event.preventDefault();
               document
-                .getElementById(route.path === '/mapa' ? 'map-distance' : 'workspace-panel-title')
+                .getElementById(
+                  route.path === "/mapa"
+                    ? "map-distance"
+                    : "workspace-panel-title",
+                )
                 ?.focus({ preventScroll: true });
             }}
           >
@@ -309,23 +341,41 @@ export default function App() {
               <span className="github-mark" /> <span>Aragonenes</span>
             </a>
           </header>
-          <nav className="workspace-navigation" aria-label="Áreas del escenario">
+          <nav
+            className="workspace-navigation"
+            aria-label="Áreas del escenario"
+          >
             {[
               {
-                path: '/configurar',
-                area: 'configurar',
-                label: 'Configurar',
+                path: "/configurar",
+                area: "configurar",
+                label: "Configurar",
                 icon: SlidersHorizontal,
               },
-              { path: '/economia/caja', area: 'economia', label: 'Economía', icon: Coins },
-              { path: '/ambiente', area: 'ambiente', label: 'Ambiente', icon: Leaf },
-              { path: '/operacion/energia', area: 'operacion', label: 'Operación', icon: Activity },
+              {
+                path: "/economia/caja",
+                area: "economia",
+                label: "Economía",
+                icon: Coins,
+              },
+              {
+                path: "/ambiente",
+                area: "ambiente",
+                label: "Ambiente",
+                icon: Leaf,
+              },
+              {
+                path: "/operacion/energia",
+                area: "operacion",
+                label: "Operación",
+                icon: Activity,
+              },
             ].map(({ path, area, label, icon: Icon }) => (
               <a
                 key={path}
                 href={`#${path}`}
                 data-area={area}
-                aria-current={route.area === area ? 'page' : undefined}
+                aria-current={route.area === area ? "page" : undefined}
                 aria-expanded={route.area === area}
                 aria-controls="workspace-panel-title"
               >
@@ -335,62 +385,92 @@ export default function App() {
               </a>
             ))}
             <div className="workspace-utilities">
-              <a href="#/archivos" aria-current={route.area === 'archivos' ? 'page' : undefined}>
+              <a
+                href="#/archivos"
+                aria-current={route.area === "archivos" ? "page" : undefined}
+              >
                 <FolderOpen size={18} /> Archivos
               </a>
-              <a href="#/fuentes" aria-current={route.area === 'fuentes' ? 'page' : undefined}>
+              <a
+                href="#/fuentes"
+                aria-current={route.area === "fuentes" ? "page" : undefined}
+              >
                 <BookOpen size={18} /> Fuentes
               </a>
             </div>
           </nav>
-          <main id="contenido" className="simulation-map" aria-label="Simulador por ramal">
+          <main
+            id="contenido"
+            className="simulation-map"
+            aria-label="Simulador por ramal"
+          >
             <Suspense
-              fallback={<div className="map-shell map-empty">Cargando vista territorial…</div>}
+              fallback={
+                <div className="map-shell map-empty">
+                  Cargando vista territorial…
+                </div>
+              }
             >
               <RouteMap
                 routeId={scenario.route.id}
                 cycles={scenario.operation.cycles}
-                onCycles={(cycles) => setScenario(withValue(scenario, 'operation.cycles', cycles))}
+                onCycles={(cycles) =>
+                  setScenario(withValue(scenario, "operation.cycles", cycles))
+                }
                 result={
-                  engine.result?.scenario.route.id === scenario.route.id ? engine.result : null
+                  engine.result?.scenario.route.id === scenario.route.id
+                    ? engine.result
+                    : null
                 }
                 stale={!valid}
                 panelSide={
-                  route.path === '/mapa' ? null : route.area === 'configurar' ? 'left' : 'right'
+                  route.path === "/mapa"
+                    ? null
+                    : route.area === "configurar"
+                      ? "left"
+                      : "right"
                 }
                 pauseKey={`${route.path}:${routeDialog}`}
               />
             </Suspense>
           </main>
           <aside aria-label="Resumen de condiciones">
-            {' '}
+            {" "}
             <a
-              className={`scenario-health ${failures ? 'has-issues' : ''}`}
+              className={`scenario-health ${failures ? "has-issues" : ""}`}
               href="#/operacion/condiciones"
             >
               <span>
-                {failures ? <AlertCircle size={17} /> : <CheckCircle2 size={17} />} Estado del
-                escenario
+                {failures ? (
+                  <AlertCircle size={17} />
+                ) : (
+                  <CheckCircle2 size={17} />
+                )}{" "}
+                Estado del escenario
               </span>
               <b>
                 {engine.result
                   ? failures
                     ? `${failures} condiciones por resolver`
-                    : 'Cálculos favorables · pendientes externos'
-                  : 'Preparando evaluación…'}
+                    : "Cálculos favorables · pendientes externos"
+                  : "Preparando evaluación…"}
               </b>
               <ChevronRight size={16} />
             </a>
           </aside>
         </div>
-        <div className="workspace-status" role="status" inert={modal || undefined}>
-          {engine.status === 'calculating'
-            ? 'Calculando los cambios…'
-            : engine.status === 'invalid'
-              ? 'Corrige las entradas. Se conserva el último resultado válido, ahora desactualizado.'
-              : engine.status === 'error'
-                ? 'No se pudo completar el cálculo.'
-                : 'Escenario actualizado · los resultados cambian al editar los parámetros.'}
+        <div
+          className="workspace-status"
+          role="status"
+          inert={modal || undefined}
+        >
+          {engine.status === "calculating"
+            ? "Calculando los cambios…"
+            : engine.status === "invalid"
+              ? "Corrige las entradas. Se conserva el último resultado válido, ahora desactualizado."
+              : engine.status === "error"
+                ? "No se pudo completar el cálculo."
+                : "Escenario actualizado · los resultados cambian al editar los parámetros."}
         </div>
         <WorkspacePanel
           path={route.path}
@@ -398,20 +478,23 @@ export default function App() {
           onExpand={() => setExpanded((v) => !v)}
           modal={modal}
           calculationStatus={
-            engine.status === 'ready'
-              ? 'Actualizado'
-              : engine.status === 'calculating'
-                ? 'Calculando…'
-                : 'Revisar entradas'
+            engine.status === "ready"
+              ? "Actualizado"
+              : engine.status === "calculating"
+                ? "Calculando…"
+                : "Revisar entradas"
           }
         >
           {tabs.length > 0 && (
-            <nav className="workspace-tabs" aria-label={`Vistas de ${route.title}`}>
+            <nav
+              className="workspace-tabs"
+              aria-label={`Vistas de ${route.title}`}
+            >
               {tabs.map(([path, label]) => (
                 <a
                   key={path}
                   href={`#${path}`}
-                  aria-current={route.path === path ? 'page' : undefined}
+                  aria-current={route.path === path ? "page" : undefined}
                 >
                   {label}
                 </a>
@@ -420,11 +503,12 @@ export default function App() {
           )}
           {!valid && engine.result && (
             <p className="panel-stale" role="status">
-              Resultado anterior. Corrige las entradas o espera el nuevo cálculo.
+              Resultado anterior. Corrige las entradas o espera el nuevo
+              cálculo.
             </p>
           )}
           {[...visited]
-            .filter((path) => path !== '/mapa')
+            .filter((path) => path !== "/mapa")
             .map((path) => (
               <div
                 key={path}
@@ -433,9 +517,13 @@ export default function App() {
                 role="region"
                 aria-label={`Contenido de ${route.title}`}
                 hidden={route.path !== path}
-                aria-busy={engine.status === 'calculating' && path !== '/configurar'}
+                aria-busy={
+                  engine.status === "calculating" && path !== "/configurar"
+                }
               >
-                {views[path] || <p role="status">Preparando los resultados del escenario…</p>}
+                {views[path] || (
+                  <p role="status">Preparando los resultados del escenario…</p>
+                )}
               </div>
             ))}
         </WorkspacePanel>
@@ -447,7 +535,11 @@ export default function App() {
         {notice && (
           <div className="workspace-notice" role="status">
             <span>{notice}</span>
-            <button className="icon-action" aria-label="Cerrar aviso" onClick={() => setNotice('')}>
+            <button
+              className="icon-action"
+              aria-label="Cerrar aviso"
+              onClick={() => setNotice("")}
+            >
               <X size={17} />
             </button>
           </div>
@@ -459,8 +551,9 @@ export default function App() {
           <Dialog.Content className="dialog route-dialog">
             <Dialog.Title>Elige un ramal para explorar</Dialog.Title>
             <Dialog.Description>
-              995 registros históricos. Cambiar la geometría conserva los parámetros de prueba; no
-              los convierte en datos reales de la nueva ruta.
+              995 registros históricos. Cambiar la geometría conserva los
+              parámetros de prueba; no los convierte en datos reales de la nueva
+              ruta.
             </Dialog.Description>
             <Dialog.Close className="dialog-close" aria-label="Cerrar catálogo">
               <X size={21} />
@@ -480,17 +573,24 @@ export default function App() {
               {filtered.slice(0, 40).map((r) => (
                 <button
                   key={r.id}
-                  className={r.id === scenario.route.id ? 'route-option selected' : 'route-option'}
+                  className={
+                    r.id === scenario.route.id
+                      ? "route-option selected"
+                      : "route-option"
+                  }
                   onClick={() => {
                     selectRoute(r);
                     setRouteDialog(false);
                   }}
                   aria-pressed={r.id === scenario.route.id}
                 >
-                  <span className="route-number">{r.route || '—'}</span>
+                  <span className="route-number">{r.route || "—"}</span>
                   <span>
                     <strong>{r.name}</strong>
-                    <small>{num(r.cycleKm, 1)} km cartográficos · tecnología sin verificar</small>
+                    <small>
+                      {num(r.cycleKm, 1)} km cartográficos · tecnología sin
+                      verificar
+                    </small>
                   </span>
                 </button>
               ))}
@@ -499,7 +599,8 @@ export default function App() {
               )}
             </div>
             <small>
-              {filtered.length} coincidencias · se muestran hasta 40 · archivo histórico
+              {filtered.length} coincidencias · se muestran hasta 40 · archivo
+              histórico
             </small>
           </Dialog.Content>
         </Dialog.Portal>

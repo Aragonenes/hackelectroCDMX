@@ -1,7 +1,12 @@
-import { useRef } from 'react';
-import { Download, Upload, Printer, Save, RotateCcw } from 'lucide-react';
-import type { Scenario, Result } from '../domain/schema';
-import { download, serializeScenario, parseScenario, resultsCsv } from './files';
+import { useRef } from "react";
+import { Download, Upload, Printer, Save, RotateCcw } from "lucide-react";
+import type { Scenario, Result } from "../domain/schema";
+import {
+  download,
+  serializeScenario,
+  parseScenario,
+  resultsCsv,
+} from "./files";
 export default function FilesPanel({
   scenario,
   result,
@@ -32,7 +37,11 @@ export default function FilesPanel({
     try {
       await action();
     } catch (error) {
-      onNotice(error instanceof Error ? error.message : 'No se pudo completar la acción.');
+      onNotice(
+        error instanceof Error
+          ? error.message
+          : "No se pudo completar la acción.",
+      );
     }
   };
   return (
@@ -41,14 +50,20 @@ export default function FilesPanel({
         <span className="eyebrow">COPIAS Y ARCHIVOS REPRODUCIBLES</span>
         <h2>Guardar y compartir la evaluación</h2>
         <p>
-          Guardar conserva una copia local. Exportar incluye parámetros, catálogo, fuentes y
-          versiones para recalcular el escenario.
+          Guardar conserva una copia local. Exportar incluye parámetros,
+          catálogo, fuentes y versiones para recalcular el escenario.
         </p>
       </div>
       <div className="sharing-groups">
-        <section className="sharing-local" aria-labelledby="sharing-local-title">
+        <section
+          className="sharing-local"
+          aria-labelledby="sharing-local-title"
+        >
           <h3 id="sharing-local-title">Copias en este navegador</h3>
-          <p>Guarda o abre una copia local. Importa un JSON para recalcular sus parámetros.</p>
+          <p>
+            Guarda o abre una copia local. Importa un JSON para recalcular sus
+            parámetros.
+          </p>
           <div className="save-row">
             <div className="field">
               <label htmlFor="scenario-name">Nombre del escenario</label>
@@ -65,7 +80,9 @@ export default function FilesPanel({
             </button>
             {saved.length > 0 && (
               <div className="field">
-                <label htmlFor="saved-choice">Abrir un escenario guardado</label>
+                <label htmlFor="saved-choice">
+                  Abrir un escenario guardado
+                </label>
                 <select
                   id="saved-choice"
                   value=""
@@ -99,24 +116,34 @@ export default function FilesPanel({
               const selected = e.target.files?.[0];
               if (selected)
                 void guarded(async () => {
-                  if (selected.size > 5_000_000) throw new Error('El archivo supera 5 MB.');
+                  if (selected.size > 5_000_000)
+                    throw new Error("El archivo supera 5 MB.");
                   onChange(await parseScenario(await selected.text()));
-                  onNotice('Escenario importado y enviado al motor para recalcular.');
+                  onNotice(
+                    "Escenario importado y enviado al motor para recalcular.",
+                  );
                 });
-              e.target.value = '';
+              e.target.value = "";
             }}
           />
         </section>
-        <section className="sharing-downloads" aria-labelledby="sharing-downloads-title">
+        <section
+          className="sharing-downloads"
+          aria-labelledby="sharing-downloads-title"
+        >
           <h3 id="sharing-downloads-title">Archivos para compartir</h3>
           <div className="download-choice">
-            <button className="primary" disabled={!valid} onClick={() => window.print()}>
+            <button
+              className="primary"
+              disabled={!valid}
+              onClick={() => window.print()}
+            >
               <Printer size={16} />
               Descargar informe / PDF
             </button>
             <p>
-              Versión imprimible con diagnóstico, detalle económico, flujo, entradas y fuentes.
-              Guarda como PDF desde el diálogo de impresión.
+              Versión imprimible con diagnóstico, detalle económico, flujo,
+              entradas y fuentes. Guarda como PDF desde el diálogo de impresión.
             </p>
           </div>
           <div className="download-choice">
@@ -130,8 +157,8 @@ export default function FilesPanel({
                       ...scenario,
                       name: name.trim() || scenario.name,
                     }),
-                    'hackelectro-escenario.json',
-                    'application/json',
+                    "hackelectro-escenario.json",
+                    "application/json",
                   ),
                 )
               }
@@ -139,7 +166,10 @@ export default function FilesPanel({
               <Download size={16} />
               Descargar escenario JSON
             </button>
-            <p>Parámetros, catálogo y fuentes para reproducir y recalcular la evaluación.</p>
+            <p>
+              Parámetros, catálogo y fuentes para reproducir y recalcular la
+              evaluación.
+            </p>
           </div>
           <div className="download-choice">
             <button
@@ -149,15 +179,18 @@ export default function FilesPanel({
                 if (result)
                   download(
                     resultsCsv(result),
-                    'hackelectro-resultados.csv',
-                    'text/csv;charset=utf-8',
+                    "hackelectro-resultados.csv",
+                    "text/csv;charset=utf-8",
                   );
               }}
             >
               <Download size={16} />
               Descargar resultados CSV
             </button>
-            <p>Entradas y resultados tabulares para revisar en una hoja de cálculo.</p>
+            <p>
+              Entradas y resultados tabulares para revisar en una hoja de
+              cálculo.
+            </p>
           </div>
         </section>
       </div>
@@ -166,7 +199,9 @@ export default function FilesPanel({
           className="text-button"
           onClick={() => {
             onReset();
-            onNotice('Se restauró el ejemplo inicial; tus escenarios guardados permanecen.');
+            onNotice(
+              "Se restauró el ejemplo inicial; tus escenarios guardados permanecen.",
+            );
           }}
         >
           <RotateCcw size={15} />

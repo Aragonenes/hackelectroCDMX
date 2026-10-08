@@ -1,20 +1,20 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
-import type { Result } from '../domain/schema';
+import { lazy, Suspense, useMemo, useState } from "react";
+import type { Result } from "../domain/schema";
 import {
   type SensitivitySeries,
   type SensitivityVariable,
   sensitivityVariables,
-} from '../domain/explore';
-import { num, mxn } from '../ui/format';
-const Chart = lazy(() => import('../ui/Chart'));
+} from "../domain/explore";
+import { num, mxn } from "../ui/format";
+const Chart = lazy(() => import("../ui/Chart"));
 export default function Sensitivity({
   result: r,
   points: series,
   error,
   disabled,
   onApply,
-  variables = ['cycles', 'consumption', 'electricityPrice'],
-  id = 'sensibilidad',
+  variables = ["cycles", "consumption", "electricityPrice"],
+  id = "sensibilidad",
 }: {
   variables?: readonly SensitivityVariable[];
   id?: string;
@@ -40,84 +40,92 @@ export default function Sensitivity({
       ? selection.index
       : (points?.findIndex((p) => p.value === data?.current) ?? 0);
   const current = points?.[index];
-  const failures = current?.constraints.filter((c) => c.status === 'fail') ?? [];
+  const failures =
+    current?.constraints.filter((c) => c.status === "fail") ?? [];
   const fixedFailures =
     points?.[0]?.constraints.filter(
-      (c) => c.status === 'fail' && points.every((p) => p.failures.includes(c.id)),
+      (c) =>
+        c.status === "fail" && points.every((p) => p.failures.includes(c.id)),
     ) ?? [];
   const feasible = points?.filter((p) => !p.failures.length) ?? [];
   const options = useMemo(() => {
     if (!points) return null;
     const base = {
-      tooltip: { trigger: 'axis', appendTo: 'body', confine: true },
+      tooltip: { trigger: "axis", appendTo: "body", confine: true },
       legend: { top: 0, textStyle: { fontSize: 12 } },
       grid: { left: 65, right: 30, top: 65, bottom: 60 },
       xAxis: {
-        type: 'category',
-        data: points.map((p) => num(p.value, variable === 'cycles' ? 0 : 4)),
+        type: "category",
+        data: points.map((p) => num(p.value, variable === "cycles" ? 0 : 4)),
         name: config.unit,
-        nameLocation: 'middle',
+        nameLocation: "middle",
         nameGap: 35,
       },
     };
     return [
       {
         ...base,
-        yAxis: { type: 'value', name: 'kWh/unidad/día' },
+        yAxis: { type: "value", name: "kWh/unidad/día" },
         series: [
           {
-            name: 'Energía requerida',
-            type: 'line',
+            name: "Energía requerida",
+            type: "line",
             data: points.map((p) => p.batteryKwh),
-            itemStyle: { color: '#9D2148' },
+            itemStyle: { color: "#9D2148" },
           },
           {
-            name: 'Disponible',
-            type: 'line',
+            name: "Disponible",
+            type: "line",
             data: points.map((p) => p.usableKwh),
-            itemStyle: { color: '#55585A' },
-            lineStyle: { type: 'dashed' },
+            itemStyle: { color: "#55585A" },
+            lineStyle: { type: "dashed" },
           },
         ],
       },
       {
         ...base,
-        yAxis: { type: 'value', name: 'Horas de flota' },
+        yAxis: { type: "value", name: "Horas de flota" },
         series: [
           {
-            name: 'Recarga',
-            type: 'line',
-            data: points.map((p) => (Number.isFinite(p.chargeHours) ? p.chargeHours : null)),
-            itemStyle: { color: '#9D2148' },
+            name: "Recarga",
+            type: "line",
+            data: points.map((p) =>
+              Number.isFinite(p.chargeHours) ? p.chargeHours : null,
+            ),
+            itemStyle: { color: "#9D2148" },
           },
           {
-            name: 'Ventana',
-            type: 'line',
+            name: "Ventana",
+            type: "line",
             data: points.map((p) => p.chargeWindow),
-            itemStyle: { color: '#55585A' },
+            itemStyle: { color: "#55585A" },
           },
         ],
       },
       {
         ...base,
         yAxis: {
-          type: 'value',
-          name: 'MXN/mes',
+          type: "value",
+          name: "MXN/mes",
           axisLabel: { formatter: (v: number) => `${num(v / 1000)} mil` },
         },
         series: [
           {
-            name: 'Combustión',
-            type: 'line',
+            name: "Combustión",
+            type: "line",
             data: points.map((p) => p.iceMargin),
-            itemStyle: { color: '#55585A' },
+            itemStyle: { color: "#55585A" },
           },
           {
-            name: 'Eléctrico',
-            type: 'line',
+            name: "Eléctrico",
+            type: "line",
             data: points.map((p) => p.evMargin),
-            itemStyle: { color: '#9D2148' },
-            markLine: { symbol: 'none', label: { formatter: 'Cero' }, data: [{ yAxis: 0 }] },
+            itemStyle: { color: "#9D2148" },
+            markLine: {
+              symbol: "none",
+              label: { formatter: "Cero" },
+              data: [{ yAxis: 0 }],
+            },
           },
         ],
       },
@@ -129,32 +137,32 @@ export default function Sensitivity({
         ? {
             grid: { left: 105, right: 45, top: 30, bottom: 55 },
             tooltip: {
-              trigger: 'axis',
-              appendTo: 'body',
+              trigger: "axis",
+              appendTo: "body",
               confine: true,
               valueFormatter: (v: number) => mxn(v),
             },
             xAxis: {
-              type: 'value',
-              name: 'MXN/mes · flota',
-              nameLocation: 'middle',
+              type: "value",
+              name: "MXN/mes · flota",
+              nameLocation: "middle",
               nameGap: 35,
               min: (v: { min: number }) => Math.min(v.min, 0),
               max: (v: { max: number }) => Math.max(v.max, 0),
               axisLabel: { formatter: (v: number) => `${num(v / 1000)} mil` },
             },
-            yAxis: { type: 'category', data: ['Combustión', 'Eléctrico'] },
+            yAxis: { type: "category", data: ["Combustión", "Eléctrico"] },
             series: [
               {
-                type: 'bar',
+                type: "bar",
                 data: [
-                  { value: current.iceMargin, itemStyle: { color: '#55585A' } },
-                  { value: current.evMargin, itemStyle: { color: '#9D2148' } },
+                  { value: current.iceMargin, itemStyle: { color: "#55585A" } },
+                  { value: current.evMargin, itemStyle: { color: "#9D2148" } },
                 ],
                 markLine: {
-                  symbol: 'none',
-                  label: { formatter: 'Cero' },
-                  lineStyle: { color: '#55585A', width: 2 },
+                  symbol: "none",
+                  label: { formatter: "Cero" },
+                  lineStyle: { color: "#55585A", width: 2 },
                   data: [{ xAxis: 0 }],
                 },
               },
@@ -164,14 +172,18 @@ export default function Sensitivity({
     [current],
   );
   return (
-    <section className="panel sensitivity-panel" id={id} aria-busy={!series && !error}>
+    <section
+      className="panel sensitivity-panel"
+      id={id}
+      aria-busy={!series && !error}
+    >
       <div className="panel-title">
         <h2>Explora las condiciones del escenario</h2>
         <span className="pill neutral">Mismo recaudo · misma flota</span>
       </div>
       <p>
-        Cambia una variable y observa cómo afecta la energía, la recarga y el presupuesto. Los demás
-        parámetros permanecen constantes.
+        Cambia una variable y observa cómo afecta la energía, la recarga y el
+        presupuesto. Los demás parámetros permanecen constantes.
       </p>
       <div className="exploration-controls">
         <div className="field">
@@ -189,11 +201,11 @@ export default function Sensitivity({
           </select>
         </div>
         <p>
-          {variable === 'cycles'
-            ? 'Cantidad por unidad. El recaudo no cambia; modificar el servicio requiere tu decisión.'
-            : variable === 'consumption'
-              ? 'Consumo neto en batería, incluidos auxiliares y regeneración.'
-              : 'Precio por kWh comprado; cargos de potencia y fijos permanecen constantes.'}
+          {variable === "cycles"
+            ? "Cantidad por unidad. El recaudo no cambia; modificar el servicio requiere tu decisión."
+            : variable === "consumption"
+              ? "Consumo neto en batería, incluidos auxiliares y regeneración."
+              : "Precio por kWh comprado; cargos de potencia y fijos permanecen constantes."}
         </p>
       </div>
       {error ? (
@@ -204,19 +216,21 @@ export default function Sensitivity({
         <>
           <div className="exploration-values">
             <span>
-              Valor actual:{' '}
+              Valor actual:{" "}
               <b>
                 {num(data.current, 4)} {config.unit}
               </b>
             </span>
             <span>
-              Valor explorado:{' '}
+              Valor explorado:{" "}
               <b>
                 {num(current.value, 4)} {config.unit}
               </b>
             </span>
           </div>
-          <label htmlFor={`${id}-value`}>Valor explorado · {config.label}</label>
+          <label htmlFor={`${id}-value`}>
+            Valor explorado · {config.label}
+          </label>
           <input
             id={`${id}-value`}
             type="range"
@@ -225,19 +239,25 @@ export default function Sensitivity({
             step="1"
             value={index}
             disabled={disabled}
-            onChange={(e) => setSelection({ result: r, variable, index: Number(e.target.value) })}
+            onChange={(e) =>
+              setSelection({
+                result: r,
+                variable,
+                index: Number(e.target.value),
+              })
+            }
             aria-valuetext={`${num(current.value, 4)} ${config.unit}`}
           />
           <div
             className="exploration-band"
             role="img"
-            aria-label={`Valores probados: ${feasible.length} de ${points.length} cumplen los cálculos. Punto seleccionado ${num(current.value, 4)}: ${failures.length ? 'por resolver' : 'cumple el cálculo'}.`}
+            aria-label={`Valores probados: ${feasible.length} de ${points.length} cumplen los cálculos. Punto seleccionado ${num(current.value, 4)}: ${failures.length ? "por resolver" : "cumple el cálculo"}.`}
           >
             {points.map((p, i) => (
               <span
                 key={p.value}
-                className={`${p.failures.length ? 'fail' : 'pass'}${i === index ? ' selected' : ''}`}
-                title={`${num(p.value, 4)}: ${p.failures.length ? 'Por resolver' : 'Cumple el cálculo'}`}
+                className={`${p.failures.length ? "fail" : "pass"}${i === index ? " selected" : ""}`}
+                title={`${num(p.value, 4)}: ${p.failures.length ? "Por resolver" : "Cumple el cálculo"}`}
               />
             ))}
           </div>
@@ -247,26 +267,26 @@ export default function Sensitivity({
           </p>
           <p className="muted">
             Rango elegido por la herramienta: {num(points[0]!.value, 4)}–
-            {num(points.at(-1)!.value, 4)} {config.unit}. Son {points.length} valores evaluados, no
-            un intervalo empírico de incertidumbre.
+            {num(points.at(-1)!.value, 4)} {config.unit}. Son {points.length}{" "}
+            valores evaluados, no un intervalo empírico de incertidumbre.
           </p>
           <div className="sensitivity-insight" role="status">
             <strong>
-              {num(current.value, 4)} {config.unit}:{' '}
+              {num(current.value, 4)} {config.unit}:{" "}
               {failures.length
                 ? `${failures.length} condiciones por resolver.`
-                : 'cumple las condiciones calculadas; comprobaciones externas pendientes.'}
+                : "cumple las condiciones calculadas; comprobaciones externas pendientes."}
             </strong>
             <p>
               {feasible.length
                 ? `${feasible.length} valores probados cumplen los cálculos.`
-                : 'Ningún valor probado cumple todas las condiciones calculadas.'}
+                : "Ningún valor probado cumple todas las condiciones calculadas."}
             </p>
             {fixedFailures.length > 0 && (
               <p>
-                Condiciones que impiden cumplir en todos los valores probados:{' '}
-                {fixedFailures.map((c) => c.label).join(' · ')}. Un límite de batería no es un
-                límite global de viabilidad.
+                Condiciones que impiden cumplir en todos los valores probados:{" "}
+                {fixedFailures.map((c) => c.label).join(" · ")}. Un límite de
+                batería no es un límite global de viabilidad.
               </p>
             )}
           </div>
@@ -293,7 +313,7 @@ export default function Sensitivity({
               <strong>
                 {Number.isFinite(current.chargeHours)
                   ? `${num(current.chargeHours, 2)} h`
-                  : 'Sin potencia'}{' '}
+                  : "Sin potencia"}{" "}
                 / {num(current.chargeWindow)} h
               </strong>
               <p>Requeridas / ventana nocturna.</p>
@@ -304,15 +324,16 @@ export default function Sensitivity({
               />
               <p>
                 {current.chargeHours <= current.chargeWindow
-                  ? 'La recarga cabe en la ventana.'
-                  : 'La recarga no cabe en la ventana.'}
+                  ? "La recarga cabe en la ventana."
+                  : "La recarga no cabe en la ventana."}
               </p>
             </article>
           </div>
           <h3>Resultado de caja mensual más bajo</h3>
           <p>
-            Combustión <b>{mxn(current.iceMargin)}</b> · eléctrico <b>{mxn(current.evMargin)}</b>.
-            Después de trabajo, pagos, ingreso objetivo y reserva.
+            Combustión <b>{mxn(current.iceMargin)}</b> · eléctrico{" "}
+            <b>{mxn(current.evMargin)}</b>. Después de trabajo, pagos, ingreso
+            objetivo y reserva.
           </p>
           {cashOption && (
             <Suspense fallback={<div className="chart" />}>
@@ -343,7 +364,7 @@ export default function Sensitivity({
                 <Suspense key={i} fallback={<div className="chart" />}>
                   <Chart
                     option={option}
-                    label={`Curva ${['energía', 'recarga', 'caja'][i]} según ${config.label}. Valores en tabla.`}
+                    label={`Curva ${["energía", "recarga", "caja"][i]} según ${config.label}. Valores en tabla.`}
                   />
                 </Suspense>
               ))}
@@ -356,8 +377,8 @@ export default function Sensitivity({
             >
               <table>
                 <caption>
-                  Valores del mismo evaluador · mínimos de caja en 60 meses · sin pronóstico de
-                  demanda
+                  Valores del mismo evaluador · mínimos de caja en 60 meses ·
+                  sin pronóstico de demanda
                 </caption>
                 <thead>
                   <tr>
@@ -383,16 +404,18 @@ export default function Sensitivity({
                       <td>{num(p.usableKwh, 2)}</td>
                       <td>{num(p.gridKwh, 2)}</td>
                       <td>
-                        {Number.isFinite(p.chargeHours) ? num(p.chargeHours, 2) : 'Sin potencia'} /{' '}
-                        {num(p.chargeWindow)}
+                        {Number.isFinite(p.chargeHours)
+                          ? num(p.chargeHours, 2)
+                          : "Sin potencia"}{" "}
+                        / {num(p.chargeWindow)}
                       </td>
                       <td>{mxn(p.iceMargin)}</td>
                       <td>{mxn(p.evMargin)}</td>
                       <td>
                         {p.constraints
-                          .filter((c) => c.status === 'fail')
+                          .filter((c) => c.status === "fail")
                           .map((c) => c.label)
-                          .join(', ') || 'Ninguna calculada'}
+                          .join(", ") || "Ninguna calculada"}
                       </td>
                     </tr>
                   ))}
@@ -404,7 +427,9 @@ export default function Sensitivity({
       )}
       <button
         className="secondary"
-        disabled={disabled || !current || !data || current.value === data.current}
+        disabled={
+          disabled || !current || !data || current.value === data.current
+        }
         onClick={() => {
           if (current) onApply(variable, current.value);
         }}

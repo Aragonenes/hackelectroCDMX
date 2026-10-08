@@ -1,13 +1,16 @@
-import { BusFront, SlidersHorizontal } from 'lucide-react';
-import type { Scenario } from '../domain/schema';
-import Editor, { NumberField } from './Editor';
-import { sections } from './fields';
-import { preset } from '../data/defaults';
-import { assumed } from '../data/catalog';
-import { num } from '../ui/format';
+import { BusFront, SlidersHorizontal } from "lucide-react";
+import type { Scenario } from "../domain/schema";
+import Editor, { NumberField } from "./Editor";
+import { sections } from "./fields";
+import { preset } from "../data/defaults";
+import { assumed } from "../data/catalog";
+import { num } from "../ui/format";
 
 export function focusParameter(path: string) {
-  const id = path === 'ev.connector' ? 'ev-connector' : `field-${path.replaceAll('.', '-')}`;
+  const id =
+    path === "ev.connector"
+      ? "ev-connector"
+      : `field-${path.replaceAll(".", "-")}`;
   const field = document.getElementById(id);
   if (!field) return;
   let parent = field.parentElement;
@@ -15,7 +18,7 @@ export function focusParameter(path: string) {
     if (parent instanceof HTMLDetailsElement) parent.open = true;
     parent = parent.parentElement;
   }
-  field.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  field.scrollIntoView({ block: "center", behavior: "smooth" });
   field.focus({ preventScroll: true });
 }
 export default function Controls({
@@ -30,30 +33,44 @@ export default function Controls({
   const field = (path: string, help?: string) => {
     const f = sections.flatMap((x) => x.fields).find((x) => x.path === path)!;
     return (
-      <NumberField key={path} field={{ ...f, help: help ?? f.help }} s={s} onChange={onChange} />
+      <NumberField
+        key={path}
+        field={{ ...f, help: help ?? f.help }}
+        s={s}
+        onChange={onChange}
+      />
     );
   };
-  const choose = (group: 'ice' | 'ev' | 'charger', id: string) => {
+  const choose = (group: "ice" | "ev" | "charger", id: string) => {
     const next = structuredClone(s);
-    if (group === 'charger')
-      next.charger = structuredClone(s.catalog.chargers.find((c) => c.id === id)!);
-    else next[group] = structuredClone(s.catalog.vehicles.find((v) => v.id === id)!);
-    if (group === 'ice') {
-      next.energy.fuelPrice = next.ice.fuel === 'diesel' ? 27 : 23.68;
-      next.evidence['energy.fuelPrice'] = {
+    if (group === "charger")
+      next.charger = structuredClone(
+        s.catalog.chargers.find((c) => c.id === id)!,
+      );
+    else
+      next[group] = structuredClone(
+        s.catalog.vehicles.find((v) => v.id === id)!,
+      );
+    if (group === "ice") {
+      next.energy.fuelPrice = next.ice.fuel === "diesel" ? 27 : 23.68;
+      next.evidence["energy.fuelPrice"] = {
         ...assumed(),
-        sourceId: next.ice.fuel === 'diesel' ? 'M24' : 'M23',
-        level: 'D',
-        nature: 'oficial',
-        scope: 'México · nacional',
-        date: next.ice.fuel === 'diesel' ? '2026-09-25' : '2026-08-27',
-        limitation: 'Promedio nacional; no precio del ramal.',
+        sourceId: next.ice.fuel === "diesel" ? "M24" : "M23",
+        level: "D",
+        nature: "oficial",
+        scope: "México · nacional",
+        date: next.ice.fuel === "diesel" ? "2026-09-25" : "2026-08-27",
+        limitation: "Promedio nacional; no precio del ramal.",
       };
     }
     onChange(next);
   };
   return (
-    <aside className="controls-panel" id="parametros" aria-label="Configura tu escenario">
+    <aside
+      className="controls-panel"
+      id="parametros"
+      aria-label="Configura tu escenario"
+    >
       <div className="controls-title">
         <SlidersHorizontal size={19} />
         <h2>Configura tu escenario</h2>
@@ -71,20 +88,22 @@ export default function Controls({
             <BusFront size={16} /> Vehículos a comparar
           </h3>
           <div className="presets" aria-label="Ejemplos por clase">
-            {(['van', 'minibus', 'urban'] as const).map((category, i) => (
+            {(["van", "minibus", "urban"] as const).map((category, i) => (
               <button
                 key={category}
                 aria-pressed={s.ev.category === category}
                 onClick={() => onChange(preset(s, category))}
               >
-                {['Van · gasolina', 'Minibús · diésel', 'Urbano · diésel'][i]}
+                {["Van · gasolina", "Minibús · diésel", "Urbano · diésel"][i]}
               </button>
             ))}
           </div>
-          {(['ice', 'ev'] as const).map((group) => (
+          {(["ice", "ev"] as const).map((group) => (
             <div className="field" key={group}>
               <label htmlFor={`${group}-choice`}>
-                {group === 'ice' ? 'Referencia de combustión' : 'Referencia eléctrica'}
+                {group === "ice"
+                  ? "Referencia de combustión"
+                  : "Referencia eléctrica"}
               </label>
               <select
                 id={`${group}-choice`}
@@ -93,7 +112,9 @@ export default function Controls({
               >
                 {s.catalog.vehicles
                   .filter((v) =>
-                    group === 'ice' ? v.fuel !== 'electricidad' : v.fuel === 'electricidad',
+                    group === "ice"
+                      ? v.fuel !== "electricidad"
+                      : v.fuel === "electricidad",
                   )
                   .map((v) => (
                     <option key={v.id} value={v.id}>
@@ -103,30 +124,38 @@ export default function Controls({
               </select>
             </div>
           ))}
-          {field('ice.consumption', 'Más km por litro significa menor gasto de combustible.')}
           {field(
-            'ev.consumption',
-            'Más kWh por km significa mayor gasto y menor autonomía. Incluye regeneración y auxiliares.',
+            "ice.consumption",
+            "Más km por litro significa menor gasto de combustible.",
+          )}
+          {field(
+            "ev.consumption",
+            "Más kWh por km significa mayor gasto y menor autonomía. Incluye regeneración y auxiliares.",
           )}
         </section>
         <section className="control-group">
           <h3>Trabajo diario</h3>
-          {field('route.cycleKm')}
+          {field("route.cycleKm")}
           {field(
-            'operation.cycles',
-            'Vueltas completas de prueba; cada una recorre la longitud indicada.',
+            "operation.cycles",
+            "Vueltas completas de prueba; cada una recorre la longitud indicada.",
           )}
-          {field('operation.fleet')}
+          {field("operation.fleet")}
           <div className="derived-note">
             <b>
               {Number.isFinite(s.route.cycleKm * s.operation.cycles)
-                ? num(s.route.cycleKm * s.operation.cycles * (1 + s.operation.emptyRatio), 1)
-                : '—'}{' '}
+                ? num(
+                    s.route.cycleKm *
+                      s.operation.cycles *
+                      (1 + s.operation.emptyRatio),
+                    1,
+                  )
+                : "—"}{" "}
               km diarios por unidad
             </b>
             <small>
-              Servicio + {num(s.operation.emptyRatio * 100)}% de recorrido adicional. Parámetros del
-              escenario.
+              Servicio + {num(s.operation.emptyRatio * 100)}% de recorrido
+              adicional. Parámetros del escenario.
             </small>
           </div>
         </section>
@@ -137,7 +166,7 @@ export default function Controls({
             <select
               id="charger-choice"
               value={s.charger.id}
-              onChange={(e) => choose('charger', e.target.value)}
+              onChange={(e) => choose("charger", e.target.value)}
             >
               {s.catalog.chargers.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -146,10 +175,10 @@ export default function Controls({
               ))}
             </select>
           </div>
-          {field('chargerCount')}
+          {field("chargerCount")}
           {field(
-            'energy.chargeHours',
-            'Horas para recuperar la energía de toda la flota antes del siguiente día.',
+            "energy.chargeHours",
+            "Horas para recuperar la energía de toda la flota antes del siguiente día.",
           )}
         </section>
         <Editor scenario={s} onChange={onChange} />

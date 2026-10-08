@@ -1,14 +1,22 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowLeft, Maximize2, Minimize2, X } from 'lucide-react';
-import { navigate, type WorkspacePath, workspaceRoutes } from './navigation';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { ArrowLeft, Maximize2, Minimize2, X } from "lucide-react";
+import { navigate, type WorkspacePath, workspaceRoutes } from "./navigation";
 
 export function useCompactWorkspace() {
-  const [compact, setCompact] = useState(() => matchMedia('(max-width: 1023px)').matches);
+  const [compact, setCompact] = useState(
+    () => matchMedia("(max-width: 1023px)").matches,
+  );
   useEffect(() => {
-    const query = matchMedia('(max-width: 1023px)');
+    const query = matchMedia("(max-width: 1023px)");
     const change = () => setCompact(query.matches);
-    query.addEventListener('change', change);
-    return () => query.removeEventListener('change', change);
+    query.addEventListener("change", change);
+    return () => query.removeEventListener("change", change);
   }, []);
   return compact;
 }
@@ -30,12 +38,12 @@ export default function WorkspacePanel({
   const ref = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
-  const open = path !== '/mapa';
+  const open = path !== "/mapa";
   const area = workspaceRoutes[path].area;
   useLayoutEffect(() => {
     if (!open) {
       if (trigger.current?.isConnected) trigger.current.focus();
-      else document.querySelector<HTMLElement>('.simulation-brand')?.focus();
+      else document.querySelector<HTMLElement>(".simulation-brand")?.focus();
       return;
     }
     if (
@@ -52,26 +60,27 @@ export default function WorkspacePanel({
     if (!open) return;
     const keyboard = (event: KeyboardEvent) => {
       if (event.defaultPrevented) return;
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         event.preventDefault();
-        navigate('/mapa');
+        navigate("/mapa");
       }
-      if (!modal || event.key !== 'Tab' || !ref.current) return;
+      if (!modal || event.key !== "Tab" || !ref.current) return;
       const elements = [
         ...ref.current.querySelectorAll<HTMLElement>(
           'a[href], button, input, select, textarea, [tabindex="0"]',
         ),
       ].filter(
         (el) =>
-          !el.closest('[hidden], [inert]') &&
-          !el.matches(':disabled') &&
+          !el.closest("[hidden], [inert]") &&
+          !el.matches(":disabled") &&
           el.getClientRects().length,
       );
       const first = elements[0];
       const last = elements.at(-1);
       if (
         event.shiftKey &&
-        (document.activeElement === first || document.activeElement === title.current)
+        (document.activeElement === first ||
+          document.activeElement === title.current)
       ) {
         event.preventDefault();
         last?.focus();
@@ -80,15 +89,15 @@ export default function WorkspacePanel({
         first?.focus();
       }
     };
-    document.addEventListener('keydown', keyboard);
-    return () => document.removeEventListener('keydown', keyboard);
+    document.addEventListener("keydown", keyboard);
+    return () => document.removeEventListener("keydown", keyboard);
   }, [open, modal]);
   return (
     <section
       ref={ref}
       hidden={!open}
-      className={`workspace-panel ${area === 'configurar' ? 'is-editor' : ''} ${expanded ? 'is-expanded' : ''}`}
-      role={modal ? 'dialog' : 'region'}
+      className={`workspace-panel ${area === "configurar" ? "is-editor" : ""} ${expanded ? "is-expanded" : ""}`}
+      role={modal ? "dialog" : "region"}
       aria-modal={modal || undefined}
       aria-labelledby="workspace-panel-title"
     >
@@ -106,14 +115,14 @@ export default function WorkspacePanel({
           <button
             className="icon-action panel-expand"
             onClick={onExpand}
-            aria-label={expanded ? 'Restaurar panel' : 'Ampliar panel'}
-            title={expanded ? 'Restaurar panel' : 'Ampliar panel'}
+            aria-label={expanded ? "Restaurar panel" : "Ampliar panel"}
+            title={expanded ? "Restaurar panel" : "Ampliar panel"}
           >
             {expanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
           </button>
           <button
             className="icon-action"
-            onClick={() => navigate('/mapa')}
+            onClick={() => navigate("/mapa")}
             aria-label="Cerrar panel"
             title="Volver al mapa"
           >

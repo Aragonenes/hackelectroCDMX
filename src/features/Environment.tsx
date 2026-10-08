@@ -1,71 +1,75 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
-import type { Result } from '../domain/schema';
+import { lazy, Suspense, useMemo, useState } from "react";
+import type { Result } from "../domain/schema";
 import {
   environmentalView,
   type EnvironmentalScope,
   type EnvironmentalPeriod,
-} from '../domain/environment';
-import { num } from '../ui/format';
-const Chart = lazy(() => import('../ui/Chart'));
+} from "../domain/environment";
+import { num } from "../ui/format";
+const Chart = lazy(() => import("../ui/Chart"));
 export default function Environment({ result: r }: { result: Result }) {
-  const [scope, setScope] = useState<EnvironmentalScope>('fleet');
-  const [period, setPeriod] = useState<EnvironmentalPeriod>('year');
+  const [scope, setScope] = useState<EnvironmentalScope>("fleet");
+  const [period, setPeriod] = useState<EnvironmentalPeriod>("year");
   const view = environmentalView(r, scope, period);
-  const scopeLabel = scope === 'fleet' ? `Flota de ${view.units} unidades` : 'Una unidad';
+  const scopeLabel =
+    scope === "fleet" ? `Flota de ${view.units} unidades` : "Una unidad";
   const periodLabel =
-    period === 'day'
-      ? 'día operativo'
-      : period === 'month'
-        ? 'mes operativo'
-        : 'año de doce meses equivalentes';
+    period === "day"
+      ? "día operativo"
+      : period === "month"
+        ? "mes operativo"
+        : "año de doce meses equivalentes";
   const options = useMemo(() => {
     const base = {
-      tooltip: { trigger: 'axis', appendTo: 'body', confine: true },
+      tooltip: { trigger: "axis", appendTo: "body", confine: true },
       grid: { left: 110, right: 35, top: 55, bottom: 55 },
       xAxis: {
-        type: 'value',
-        nameLocation: 'middle',
+        type: "value",
+        nameLocation: "middle",
         nameGap: 32,
         splitNumber: 3,
         axisLabel: {
           hideOverlap: true,
           formatter: (value: number) =>
-            Math.abs(value) >= 1000 ? `${num(value / 1000, 0)} mil` : num(value, 1),
+            Math.abs(value) >= 1000
+              ? `${num(value / 1000, 0)} mil`
+              : num(value, 1),
         },
       },
-      yAxis: { type: 'category', data: ['Combustión', 'Eléctrico'] },
+      yAxis: { type: "category", data: ["Combustión", "Eléctrico"] },
     };
     return [
       {
         ...base,
-        xAxis: { ...base.xAxis, name: 'kg CO₂ · sólo escape' },
+        xAxis: { ...base.xAxis, name: "kg CO₂ · sólo escape" },
         series: [
           {
-            type: 'bar',
+            type: "bar",
             data: [
-              { value: view.tailpipeCO2Kg, itemStyle: { color: '#55585A' } },
-              { value: 0, itemStyle: { color: '#9D2148' } },
+              { value: view.tailpipeCO2Kg, itemStyle: { color: "#55585A" } },
+              { value: 0, itemStyle: { color: "#9D2148" } },
             ],
             label: {
               show: true,
-              position: 'insideLeft',
-              color: '#FFFFFF',
-              formatter: (p: { value: number }) => (p.value > 0 ? num(p.value, 1) : ''),
+              position: "insideLeft",
+              color: "#FFFFFF",
+              formatter: (p: { value: number }) =>
+                p.value > 0 ? num(p.value, 1) : "",
             },
           },
         ],
       },
       {
         ...base,
-        xAxis: { ...base.xAxis, name: 'kg CO₂e · electricidad comprada' },
-        yAxis: { ...base.yAxis, data: ['Recarga'] },
+        xAxis: { ...base.xAxis, name: "kg CO₂e · electricidad comprada" },
+        yAxis: { ...base.yAxis, data: ["Recarga"] },
         legend: { top: 0, textStyle: { fontSize: 12 } },
         series: view.parts.map((p, i) => ({
           name: p.label,
-          type: 'bar',
-          stack: 'recarga',
+          type: "bar",
+          stack: "recarga",
           data: [p.co2eKg],
-          itemStyle: { color: ['#9D2148', '#55585A', '#266CB4'][i] },
+          itemStyle: { color: ["#9D2148", "#55585A", "#266CB4"][i] },
         })),
       },
     ];
@@ -79,8 +83,8 @@ export default function Environment({ result: r }: { result: Result }) {
         </div>
       </div>
       <p>
-        Sustituir las unidades evita su escape en el recorrido supuesto. La recarga tiene emisiones
-        indirectas que se muestran por separado.
+        Sustituir las unidades evita su escape en el recorrido supuesto. La
+        recarga tiene emisiones indirectas que se muestran por separado.
       </p>
       <div className="environment-controls">
         <div className="field">
@@ -107,9 +111,11 @@ export default function Environment({ result: r }: { result: Result }) {
           </select>
         </div>
         <p>
-          {scopeLabel} · {periodLabel}.{' '}
-          {period !== 'day' && `${r.scenario.operation.days} días operativos por mes.`}{' '}
-          {period === 'year' && 'Año = doce meses equivalentes, sin proyectar degradación.'}
+          {scopeLabel} · {periodLabel}.{" "}
+          {period !== "day" &&
+            `${r.scenario.operation.days} días operativos por mes.`}{" "}
+          {period === "year" &&
+            "Año = doce meses equivalentes, sin proyectar degradación."}
         </p>
       </div>
       <div className="environment-results" role="status">
@@ -117,8 +123,8 @@ export default function Environment({ result: r }: { result: Result }) {
           <span>Combustible que se dejaría de consumir</span>
           <strong>{num(view.liters, 1)} L</strong>
           <small>
-            {r.scenario.ice.fuel === 'diesel' ? 'Diésel' : 'Gasolina'} · manteniendo el recorrido
-            supuesto
+            {r.scenario.ice.fuel === "diesel" ? "Diésel" : "Gasolina"} ·
+            manteniendo el recorrido supuesto
           </small>
         </article>
         <article>
@@ -129,7 +135,9 @@ export default function Environment({ result: r }: { result: Result }) {
         <article>
           <span>CO₂e asociado a la electricidad para recargar</span>
           <strong>{num(view.electricityCO2eKg, 1)} kg CO₂e</strong>
-          <small>{num(view.gridKwh, 1)} kWh comprados · emisiones indirectas</small>
+          <small>
+            {num(view.gridKwh, 1)} kWh comprados · emisiones indirectas
+          </small>
         </article>
       </div>
       <div className="chart-grid environmental-charts">
@@ -153,7 +161,7 @@ export default function Environment({ result: r }: { result: Result }) {
           <Suspense fallback={<div className="chart" />}>
             <Chart
               option={options[1]!}
-              label={`Electricidad comprada: ${num(view.electricityCO2eKg, 2)} kg CO₂e. ${view.parts.map((p) => `${p.label}: ${num(p.co2eKg, 2)} kg CO₂e`).join('; ')}.`}
+              label={`Electricidad comprada: ${num(view.electricityCO2eKg, 2)} kg CO₂e. ${view.parts.map((p) => `${p.label}: ${num(p.co2eKg, 2)} kg CO₂e`).join("; ")}.`}
             />
           </Suspense>
           <ul className="environment-parts">
@@ -166,45 +174,49 @@ export default function Environment({ result: r }: { result: Result }) {
         </div>
       </div>
       <p className="muted">
-        Los factores tienen alcances diferentes: estas gráficas no representan una reducción neta.
-        Son resultados del escenario, no del conjunto de CDMX.
+        Los factores tienen alcances diferentes: estas gráficas no representan
+        una reducción neta. Son resultados del escenario, no del conjunto de
+        CDMX.
       </p>
       <div className="environment-human">
         <article>
           <h3>Aire en el recorrido</h3>
           <p>
-            Eliminar el escape evita emisiones locales de esas unidades; siguen existiendo
-            partículas por desgaste de frenos y neumáticos.
+            Eliminar el escape evita emisiones locales de esas unidades; siguen
+            existiendo partículas por desgaste de frenos y neumáticos.
           </p>
         </article>
         <article>
           <h3>Entorno hospitalario</h3>
           <p>
-            Reducir fuentes de escape es relevante para quienes viajan, trabajan o esperan alrededor
-            del servicio. No se cuantifican enfermedades evitadas ni exposición específica.
+            Reducir fuentes de escape es relevante para quienes viajan, trabajan
+            o esperan alrededor del servicio. No se cuantifican enfermedades
+            evitadas ni exposición específica.
           </p>
         </article>
         <article>
           <h3>Más allá de la operación</h3>
           <p>
-            Fabricación, batería y fin de vida también tienen impactos; no están incluidos en estos
-            resultados.
+            Fabricación, batería y fin de vida también tienen impactos; no están
+            incluidos en estos resultados.
           </p>
         </article>
       </div>
       <details>
         <summary>Supuestos y límites ambientales</summary>
         <p>
-          Combustión: litros calculados × benchmark EPA de{' '}
-          {r.scenario.ice.fuel === 'diesel' ? '10.180' : '8.887'} kg CO₂/galón estadounidense
-          (3.785411784 L). Electricidad: kWh comprados × {num(r.scenario.energy.gridFactor, 6)} kg
-          CO₂e/kWh del escenario; referencia inicial SEN 2024, no medición de 2026. Servicio,
+          Combustión: litros calculados × benchmark EPA de{" "}
+          {r.scenario.ice.fuel === "diesel" ? "10.180" : "8.887"} kg CO₂/galón
+          estadounidense (3.785411784 L). Electricidad: kWh comprados ×{" "}
+          {num(r.scenario.energy.gridFactor, 6)} kg CO₂e/kWh del escenario;
+          referencia inicial SEN 2024, no medición de 2026. Servicio,
           adicionales y pérdidas reciben el mismo factor.
         </p>
         <p>
-          EPA y OMS aportan contexto científico; no factores de salud ni mediciones del ramal. Las
-          fichas bibliográficas están en «Fuentes y supuestos». No se calculan NOx/PM, ciclo de
-          vida, ahorro sanitario o reducción tarifaria.
+          EPA y OMS aportan contexto científico; no factores de salud ni
+          mediciones del ramal. Las fichas bibliográficas están en «Fuentes y
+          supuestos». No se calculan NOx/PM, ciclo de vida, ahorro sanitario o
+          reducción tarifaria.
         </p>
         <ul>
           {r.warnings.map((w) => (

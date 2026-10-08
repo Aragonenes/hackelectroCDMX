@@ -1,12 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 const n = z.number().finite().nonnegative();
 const positive = z.number().finite().positive();
 const fraction = n.max(1);
 const text = z.string().min(1).max(500);
 export const EvidenceSchema = z.object({
   sourceId: text,
-  nature: z.enum(['oficial', 'comercial', 'derivado', 'supuesto', 'observado']),
-  level: z.enum(['A', 'B', 'C', 'D', 'E', 'F']),
+  nature: z.enum(["oficial", "comercial", "derivado", "supuesto", "observado"]),
+  level: z.enum(["A", "B", "C", "D", "E", "F"]),
   date: text,
   scope: text,
   limitation: text,
@@ -15,14 +15,14 @@ export const VehicleSchema = z
   .object({
     id: text,
     name: text,
-    category: z.enum(['van', 'minibus', 'urban']),
-    fuel: z.enum(['gasolina', 'diesel', 'electricidad']),
+    category: z.enum(["van", "minibus", "urban"]),
+    fuel: z.enum(["gasolina", "diesel", "electricidad"]),
     capacity: positive.int().max(200),
     advertisedCapacity: positive.int().max(200),
     price: n.max(100_000_000),
     batteryKwh: n.max(2000),
     maxChargeKw: n.max(2000),
-    connector: z.enum(['unknown', 'AC2', 'CCS2', 'GBT']),
+    connector: z.enum(["unknown", "AC2", "CCS2", "GBT"]),
     includedChargerKw: n.max(2000),
     consumption: positive.min(0.01).max(100),
     maintenancePerKm: n.max(1000),
@@ -31,21 +31,27 @@ export const VehicleSchema = z
     evidence: z.record(z.string(), EvidenceSchema),
   })
   .superRefine((v, c) => {
-    if (v.fuel === 'electricidad' && (v.batteryKwh < 0.1 || v.maxChargeKw < 0.1))
-      c.addIssue({ code: 'custom', message: 'Un BEV necesita batería y potencia positivas.' });
+    if (
+      v.fuel === "electricidad" &&
+      (v.batteryKwh < 0.1 || v.maxChargeKw < 0.1)
+    )
+      c.addIssue({
+        code: "custom",
+        message: "Un BEV necesita batería y potencia positivas.",
+      });
   });
 export const ChargerSchema = z.object({
   id: text,
   name: text,
   powerKw: positive.min(0.1).max(2000),
   price: n.max(100_000_000),
-  connector: z.enum(['unknown', 'AC2', 'CCS2', 'GBT']),
+  connector: z.enum(["unknown", "AC2", "CCS2", "GBT"]),
   evidence: z.record(z.string(), EvidenceSchema),
 });
 export const FinanceSchema = z.object({
   id: text,
   name: text,
-  kind: z.enum(['cash', 'credit', 'lease']),
+  kind: z.enum(["cash", "credit", "lease"]),
   annualRate: fraction,
   months: positive.int().max(360),
   downPayment: fraction,
@@ -61,14 +67,17 @@ export const SourceSchema = z.object({
   url: z
     .string()
     .url()
-    .refine((u) => /^https?:\/\//.test(u), 'Se permiten únicamente fuentes HTTP o HTTPS.'),
+    .refine(
+      (u) => /^https?:\/\//.test(u),
+      "Se permiten únicamente fuentes HTTP o HTTPS.",
+    ),
   date: text,
   scope: text,
   license: text,
   limitation: text,
 });
 export const CatalogSchema = z.object({
-  version: z.literal('1'),
+  version: z.literal("1"),
   date: text,
   vehicles: z.array(VehicleSchema).min(2).max(100),
   chargers: z.array(ChargerSchema).min(1).max(50),
@@ -77,8 +86,8 @@ export const CatalogSchema = z.object({
 });
 export const ScenarioSchema = z
   .object({
-    schemaVersion: z.literal('1'),
-    modelVersion: z.literal('1.0.0'),
+    schemaVersion: z.literal("1"),
+    modelVersion: z.literal("1.0.0"),
     name: text,
     route: z.object({
       id: text,
@@ -146,27 +155,30 @@ export const ScenarioSchema = z
   .superRefine((s, c) => {
     if (s.energy.socMin >= s.energy.socMax)
       c.addIssue({
-        code: 'custom',
-        path: ['energy', 'socMin'],
-        message: 'El SOC mínimo debe ser menor al máximo.',
+        code: "custom",
+        path: ["energy", "socMin"],
+        message: "El SOC mínimo debe ser menor al máximo.",
       });
-    if (s.ice.fuel === 'electricidad' || s.ev.fuel !== 'electricidad')
+    if (s.ice.fuel === "electricidad" || s.ev.fuel !== "electricidad")
       c.addIssue({
-        code: 'custom',
-        path: ['ice'],
-        message: 'Selecciona una referencia de combustión y una eléctrica.',
+        code: "custom",
+        path: ["ice"],
+        message: "Selecciona una referencia de combustión y una eléctrica.",
       });
     if (s.energy.chargeHours + s.operation.serviceHours > 24)
       c.addIssue({
-        code: 'custom',
-        path: ['energy', 'chargeHours'],
-        message: 'Servicio y carga no pueden ocupar más de 24 horas.',
+        code: "custom",
+        path: ["energy", "chargeHours"],
+        message: "Servicio y carga no pueden ocupar más de 24 horas.",
       });
-    if (s.economy.batteryReplacementMonth === 0 && s.economy.batteryReplacementCost > 0)
+    if (
+      s.economy.batteryReplacementMonth === 0 &&
+      s.economy.batteryReplacementCost > 0
+    )
       c.addIssue({
-        code: 'custom',
-        path: ['economy', 'batteryReplacementMonth'],
-        message: 'Indica el mes del reemplazo de batería.',
+        code: "custom",
+        path: ["economy", "batteryReplacementMonth"],
+        message: "Indica el mes del reemplazo de batería.",
       });
   });
 export type Evidence = z.infer<typeof EvidenceSchema>;
@@ -184,12 +196,12 @@ export interface RouteRecord {
   featureIds: string[];
   sourceId: string;
   internalDate: string;
-  technology: 'unknown';
+  technology: "unknown";
 }
 export interface Constraint {
   id: string;
   label: string;
-  status: 'pass' | 'fail' | 'pending';
+  status: "pass" | "fail" | "pending";
   detail: string;
 }
 export interface Month {
@@ -238,7 +250,7 @@ export interface ChargeResult {
   timeline: { hour: number; kw: number }[];
 }
 export interface Result {
-  modelVersion: '1.0.0';
+  modelVersion: "1.0.0";
   scenario: Scenario;
   dailyKm: number;
   serviceKm: number;

@@ -1,26 +1,40 @@
-import { ScenarioSchema, type Scenario, type SearchResult, type Alternative } from './schema';
-import { evaluateScenario } from './evaluate';
-import { financial } from './finance';
+import {
+  ScenarioSchema,
+  type Scenario,
+  type SearchResult,
+  type Alternative,
+} from "./schema";
+import { evaluateScenario } from "./evaluate";
+import { financial } from "./finance";
 export class SearchCancelled extends Error {
   constructor() {
-    super('Búsqueda cancelada');
+    super("Búsqueda cancelada");
   }
 }
 export async function findConditions(
   input: Scenario,
-  options: { cancelled?: () => boolean; progress?: (tested: number, total: number) => void } = {},
+  options: {
+    cancelled?: () => boolean;
+    progress?: (tested: number, total: number) => void;
+  } = {},
 ): Promise<SearchResult> {
   const s = ScenarioSchema.parse(input);
   const vehicles = s.catalog.vehicles
-    .filter((v) => v.fuel === 'electricidad')
+    .filter((v) => v.fuel === "electricidad")
     .map((v) => (v.id === s.ev.id ? s.ev : v));
-  const chargers = s.catalog.chargers.map((c) => (c.id === s.charger.id ? s.charger : c));
-  const finances = s.catalog.finances.map((f) => (f.id === s.finance.id ? s.finance : f));
-  const total = vehicles.length * chargers.length * finances.length * s.operation.fleet;
+  const chargers = s.catalog.chargers.map((c) =>
+    c.id === s.charger.id ? s.charger : c,
+  );
+  const finances = s.catalog.finances.map((f) =>
+    f.id === s.finance.id ? s.finance : f,
+  );
+  const total =
+    vehicles.length * chargers.length * finances.length * s.operation.fleet;
   const current = evaluateScenario(s);
   const thresholds = {
     maxBatteryConsumption: current.usableKwh / current.dailyKm,
-    minimumAverageSiteKw: (current.dailyGridKwh * s.operation.fleet) / s.energy.chargeHours,
+    minimumAverageSiteKw:
+      (current.dailyGridKwh * s.operation.fleet) / s.energy.chargeHours,
     monthlyOperatingGap: Math.max(
       0,
       current.ev.operatingMonth +
@@ -44,7 +58,11 @@ export async function findConditions(
   for (const ev of vehicles)
     for (const charger of chargers)
       for (const finance of finances)
-        for (let chargerCount = 1; chargerCount <= s.operation.fleet; chargerCount++) {
+        for (
+          let chargerCount = 1;
+          chargerCount <= s.operation.fleet;
+          chargerCount++
+        ) {
           if (options.cancelled?.()) throw new SearchCancelled();
           const candidate: Scenario = {
             ...s,
@@ -57,26 +75,34 @@ export async function findConditions(
           const baseline = evaluateScenario(candidate);
           result.tested++;
           const failures = baseline.constraints.filter(
-            (c) => c.status === 'fail' && !['initial', 'monthly'].includes(c.id),
+            (c) =>
+              c.status === "fail" && !["initial", "monthly"].includes(c.id),
           );
           if (failures.length) {
             for (const c of failures) reject(c.id);
           } else {
             const max = Math.ceil(
-              (baseline.ev.capex + s.economy.initialReserve * s.operation.fleet) * 100,
+              (baseline.ev.capex +
+                s.economy.initialReserve * s.operation.fleet) *
+                100,
             );
             const at = (cents: number) =>
               financial(
-                { ...candidate, economy: { ...candidate.economy, support: cents / 100 } },
+                {
+                  ...candidate,
+                  economy: { ...candidate.economy, support: cents / 100 },
+                },
                 ev,
                 baseline.ev.operatingMonth,
                 true,
               );
             const valid = (cents: number) => {
               const f = at(cents);
-              return f.ownRequired <= s.economy.ownCapital && f.minMonthlyCash >= 0;
+              return (
+                f.ownRequired <= s.economy.ownCapital && f.minMonthlyCash >= 0
+              );
             };
-            if (!valid(max)) reject('monthly');
+            if (!valid(max)) reject("monthly");
             else {
               let lo = 0,
                 hi = max;
@@ -85,11 +111,18 @@ export async function findConditions(
                 if (valid(mid)) hi = mid;
                 else lo = mid + 1;
               }
-              const funded = { ...candidate, economy: { ...candidate.economy, support: lo / 100 } };
+              const funded = {
+                ...candidate,
+                economy: { ...candidate.economy, support: lo / 100 },
+              };
               const evaluation = evaluateScenario(funded);
               if (evaluation.passes)
-                winners.push({ scenario: funded, result: evaluation, support: lo / 100 });
-              else reject('monthly');
+                winners.push({
+                  scenario: funded,
+                  result: evaluation,
+                  support: lo / 100,
+                });
+              else reject("monthly");
             }
           }
           if (result.tested % 10 === 0) {

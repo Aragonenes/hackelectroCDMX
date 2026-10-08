@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { ScenarioSchema, type Scenario } from '../domain/schema';
-import { defaultScenario } from '../data/defaults';
-export const STORAGE_KEY = 'hackelectro:scenario:v1';
+import { create } from "zustand";
+import { ScenarioSchema, type Scenario } from "../domain/schema";
+import { defaultScenario } from "../data/defaults";
+export const STORAGE_KEY = "hackelectro:scenario:v1";
 function load() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -18,15 +18,16 @@ interface State {
 }
 export const useScenario = create<State>((set) => ({
   scenario: load(),
-  storageError: '',
+  storageError: "",
   setScenario: (scenario) => {
-    let storageError = '';
+    let storageError = "";
     const valid = ScenarioSchema.safeParse(scenario);
     if (valid.success)
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(valid.data));
       } catch {
-        storageError = 'No se pudo guardar en este navegador. Puedes exportar el escenario.';
+        storageError =
+          "No se pudo guardar en este navegador. Puedes exportar el escenario.";
       }
     set({ scenario, storageError });
   },

@@ -1,13 +1,18 @@
-import { useEffect, useRef } from 'react';
-import { init, use, type EChartsCoreOption, type EChartsType } from 'echarts/core';
-import { LineChart, BarChart } from 'echarts/charts';
+import { useEffect, useRef } from "react";
+import {
+  init,
+  use,
+  type EChartsCoreOption,
+  type EChartsType,
+} from "echarts/core";
+import { LineChart, BarChart } from "echarts/charts";
 import {
   GridComponent,
   TooltipComponent,
   LegendComponent,
   MarkLineComponent,
-} from 'echarts/components';
-import { SVGRenderer } from 'echarts/renderers';
+} from "echarts/components";
+import { SVGRenderer } from "echarts/renderers";
 use([
   LineChart,
   BarChart,
@@ -17,7 +22,13 @@ use([
   MarkLineComponent,
   SVGRenderer,
 ]);
-export default function Chart({ option, label }: { option: EChartsCoreOption; label: string }) {
+export default function Chart({
+  option,
+  label,
+}: {
+  option: EChartsCoreOption;
+  label: string;
+}) {
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const element = container.current;
@@ -25,15 +36,15 @@ export default function Chart({ option, label }: { option: EChartsCoreOption; la
     let chart: EChartsType | null = null;
     const render = () => {
       if (!element.clientWidth || !element.clientHeight) {
-        chart?.dispatchAction({ type: 'hideTip' });
+        chart?.dispatchAction({ type: "hideTip" });
         return;
       }
       if (!chart) {
-        chart = init(element, undefined, { renderer: 'svg' });
+        chart = init(element, undefined, { renderer: "svg" });
         chart.setOption({
           ...option,
           animation: false,
-          textStyle: { fontFamily: 'Inter', color: '#55585A' },
+          textStyle: { fontFamily: "Inter", color: "#55585A" },
         });
       } else chart.resize();
     };
@@ -45,5 +56,7 @@ export default function Chart({ option, label }: { option: EChartsCoreOption; la
       chart?.dispose();
     };
   }, [option]);
-  return <div ref={container} className="chart" role="img" aria-label={label} />;
+  return (
+    <div ref={container} className="chart" role="img" aria-label={label} />
+  );
 }

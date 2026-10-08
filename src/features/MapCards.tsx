@@ -1,9 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { Battery, ChevronDown, Hospital as HospitalIcon, Target, X } from 'lucide-react';
-import type { Result } from '../domain/schema';
-import { batteryLimit, consumptionAt } from '../domain/geometry';
-import { num } from '../ui/format';
-import type { Hospital } from './MapSymbols';
+import { useEffect, useRef } from "react";
+import {
+  Battery,
+  ChevronDown,
+  Hospital as HospitalIcon,
+  Target,
+  X,
+} from "lucide-react";
+import type { Result } from "../domain/schema";
+import { batteryLimit, consumptionAt } from "../domain/geometry";
+import { num } from "../ui/format";
+import type { Hospital } from "./MapSymbols";
 
 export function PointCard({
   result,
@@ -29,15 +35,16 @@ export function PointCard({
       <div className="map-card-heading">
         <b>En este punto</b>
         <span className="map-simulation">
-          {stale ? 'Resultado anterior' : 'Escenario simulado'}
+          {stale ? "Resultado anterior" : "Escenario simulado"}
         </span>
       </div>
       <p>
-        Vuelta {cycle} de {cycles} · <strong>{point ? num(point.km, 1) : '—'} km</strong> del día
+        Vuelta {cycle} de {cycles} ·{" "}
+        <strong>{point ? num(point.km, 1) : "—"} km</strong> del día
       </p>
       <div className="map-point-energy">
         <Battery size={18} aria-hidden="true" />
-        <strong>{point ? `${num(soc, 1)}%` : '—'}</strong>
+        <strong>{point ? `${num(soc, 1)}%` : "—"}</strong>
         <span>batería restante</span>
       </div>
       <div
@@ -49,16 +56,21 @@ export function PointCard({
         aria-valuenow={soc}
       >
         <span style={{ width: `${soc}%` }} />
-        {result && <i style={{ left: `${result.scenario.energy.socMin * 100}%` }} />}
+        {result && (
+          <i style={{ left: `${result.scenario.energy.socMin * 100}%` }} />
+        )}
       </div>
       <div className="map-meter-labels">
         <span>0%</span>
-        <span>Reserva {result ? num(result.scenario.energy.socMin * 100, 0) : '—'}%</span>
+        <span>
+          Reserva {result ? num(result.scenario.energy.socMin * 100, 0) : "—"}%
+        </span>
         <span>100%</span>
       </div>
       <p className="map-consumed">
-        <strong>{point ? num(point.kwh, 2) : '—'} kWh</strong> consumidos en batería
-        {point && point.soc < 0 ? ' · energía agotada' : ''}
+        <strong>{point ? num(point.kwh, 2) : "—"} kWh</strong> consumidos en
+        batería
+        {point && point.soc < 0 ? " · energía agotada" : ""}
       </p>
       <button
         className="map-vehicle-toggle"
@@ -73,11 +85,11 @@ export function PointCard({
         <div className="map-vehicle-details">
           <b>{result.scenario.ev.name}</b>
           <p>
-            {result.scenario.ev.capacity} plazas · {num(result.scenario.ev.consumption, 2)} kWh/km
-            netos
+            {result.scenario.ev.capacity} plazas ·{" "}
+            {num(result.scenario.ev.consumption, 2)} kWh/km netos
           </p>
           <p>
-            {num(result.scenario.ev.batteryKwh, 1)} kWh nominales · salud{' '}
+            {num(result.scenario.ev.batteryKwh, 1)} kWh nominales · salud{" "}
             {num(result.scenario.energy.soh * 100, 0)}%
           </p>
         </div>
@@ -102,7 +114,7 @@ export function DayCard({
   const passes = margin >= -1e-9;
   return (
     <section
-      className={`map-day-card map-card ${result && !passes ? 'energy-deficit' : ''}`}
+      className={`map-day-card map-card ${result && !passes ? "energy-deficit" : ""}`}
       aria-label="Batería para el día"
     >
       <div className="map-card-heading">
@@ -119,12 +131,18 @@ export function DayCard({
           <p>
             {passes
               ? `${num(Math.max(0, margin), 2)} kWh de margen antes de invadir la reserva.`
-              : 'Para completar el servicio respetando la reserva.'}
+              : "Para completar el servicio respetando la reserva."}
           </p>
           {limit?.withinDay && (
-            <button className="text-button" disabled={stale || !canNavigate} onClick={onLimit}>
+            <button
+              className="text-button"
+              disabled={stale || !canNavigate}
+              onClick={onLimit}
+            >
               <Target size={14} aria-hidden="true" />
-              {passes ? 'Reserva alcanzada al finalizar' : 'Ver límite de batería'}
+              {passes
+                ? "Reserva alcanzada al finalizar"
+                : "Ver límite de batería"}
             </button>
           )}
         </>
@@ -175,7 +193,11 @@ export function HospitalCard({
       <p>{hospital.address}</p>
       <small>{hospital.limitation}</small>
       <div className="map-hospital-actions">
-        <button className="text-button" disabled={!canCenter} onClick={onCenter}>
+        <button
+          className="text-button"
+          disabled={!canCenter}
+          onClick={onCenter}
+        >
           Centrar hospital
         </button>
         <a href={hospital.officialUrl} target="_blank" rel="noreferrer">

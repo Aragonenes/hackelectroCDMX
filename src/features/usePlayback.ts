@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-type Stop = '' | 'reserve' | 'end';
+type Stop = "" | "reserve" | "end";
 /** Progreso visual: el tiempo no representa velocidad, despacho o duración de servicio. */
 export function advancePlayback(
   progress: number,
@@ -10,10 +10,19 @@ export function advancePlayback(
   limit: number | null,
   accepted: boolean,
 ) {
-  const next = Math.min(max, progress + ((Math.max(0, elapsedMs) * max) / 60_000) * speed);
-  if (!accepted && limit !== null && limit < max - 1e-9 && progress <= limit && next >= limit)
-    return { progress: limit, stop: 'reserve' as Stop };
-  return { progress: next, stop: (next >= max ? 'end' : '') as Stop };
+  const next = Math.min(
+    max,
+    progress + ((Math.max(0, elapsedMs) * max) / 60_000) * speed,
+  );
+  if (
+    !accepted &&
+    limit !== null &&
+    limit < max - 1e-9 &&
+    progress <= limit &&
+    next >= limit
+  )
+    return { progress: limit, stop: "reserve" as Stop };
+  return { progress: next, stop: (next >= max ? "end" : "") as Stop };
 }
 export function usePlayback({
   progress,
@@ -32,13 +41,20 @@ export function usePlayback({
 }) {
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
-  const [stop, setStop] = useState<Stop>('');
+  const [stop, setStop] = useState<Stop>("");
   const accepted = useRef(false);
-  const current = useRef({ progress, max, limit, enabled, pauseKey, onProgress });
+  const current = useRef({
+    progress,
+    max,
+    limit,
+    enabled,
+    pauseKey,
+    onProgress,
+  });
   current.current = { progress, max, limit, enabled, pauseKey, onProgress };
   const pause = () => {
     setPlaying(false);
-    setStop('');
+    setStop("");
   };
   const manual = () => {
     pause();
@@ -50,29 +66,34 @@ export function usePlayback({
   };
   const play = () => {
     if (!enabled || progress >= max) return;
-    if (limit !== null && limit < max - 1e-9 && progress >= limit && !accepted.current) {
-      setStop('reserve');
+    if (
+      limit !== null &&
+      limit < max - 1e-9 &&
+      progress >= limit &&
+      !accepted.current
+    ) {
+      setStop("reserve");
       return;
     }
-    setStop('');
+    setStop("");
     setPlaying(true);
   };
   const continueAfterReserve = () => {
     accepted.current = true;
-    setStop('');
+    setStop("");
     if (enabled && progress < max) setPlaying(true);
   };
   useEffect(() => {
     setPlaying(false);
-    setStop('');
+    setStop("");
     accepted.current = false;
   }, [enabled, pauseKey]);
   useEffect(() => {
     const hidden = () => {
       if (document.hidden) setPlaying(false);
     };
-    document.addEventListener('visibilitychange', hidden);
-    return () => document.removeEventListener('visibilitychange', hidden);
+    document.addEventListener("visibilitychange", hidden);
+    return () => document.removeEventListener("visibilitychange", hidden);
   }, []);
   useEffect(() => {
     if (!playing) return;
@@ -80,7 +101,7 @@ export function usePlayback({
     let last: number | null = null;
     let visual = current.current.progress;
     const key = current.current.pauseKey;
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const tick = (time: number) => {
       const value = current.current;
       if (!value.enabled || value.pauseKey !== key || document.hidden) {
@@ -112,5 +133,15 @@ export function usePlayback({
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
   }, [playing, speed]);
-  return { playing, speed, setSpeed, stop, pause, manual, reset, play, continueAfterReserve };
+  return {
+    playing,
+    speed,
+    setSpeed,
+    stop,
+    pause,
+    manual,
+    reset,
+    play,
+    continueAfterReserve,
+  };
 }

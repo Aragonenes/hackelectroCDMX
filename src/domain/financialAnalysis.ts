@@ -1,6 +1,6 @@
-import { evaluateScenario } from './evaluate';
-import { monthlyBudget } from './explore';
-import type { Month, Result, Scenario } from './schema';
+import { evaluateScenario } from "./evaluate";
+import { monthlyBudget } from "./explore";
+import type { Month, Result, Scenario } from "./schema";
 
 const cents = (value: number) => Math.round(value * 100);
 export interface CashSummary {
@@ -8,7 +8,9 @@ export interface CashSummary {
   month: number;
   deficitMonths: number;
 }
-export function cashSummary(months: Pick<Month, 'month' | 'freeCash'>[]): CashSummary {
+export function cashSummary(
+  months: Pick<Month, "month" | "freeCash">[],
+): CashSummary {
   const worst = months.reduce((a, b) => (b.freeCash < a.freeCash ? b : a));
   return {
     minimum: worst.freeCash,
@@ -27,25 +29,43 @@ export function paymentCapacity(m: Month): PaymentCapacity {
     available: (cents(m.freeCash) + cents(m.payment)) / 100,
     payment: m.payment,
     cash: m.freeCash,
-    revenueCushionPercent: m.freeCash > 0 && m.revenue > 0 ? (m.freeCash / m.revenue) * 100 : null,
+    revenueCushionPercent:
+      m.freeCash > 0 && m.revenue > 0 ? (m.freeCash / m.revenue) * 100 : null,
   };
 }
 export interface CashBridge {
   start: number;
   end: number;
-  contributions: { label: string; amount: number; before: number; after: number }[];
+  contributions: {
+    label: string;
+    amount: number;
+    before: number;
+    after: number;
+  }[];
 }
 /** Diferencias en centavos: ahorro positivo libera caja; gasto adicional la absorbe. */
 export function cashBridge(ice: Month, ev: Month): CashBridge {
   const a = monthlyBudget(ice),
     b = monthlyBudget(ev);
   const parts = [
-    ['Diferencia de operación', cents(a.operating) - cents(b.operating), true],
-    ['Diferencia de pagos del activo', cents(a.payment) - cents(b.payment), true],
-    ['Diferencia de reserva/reposición', cents(a.reserve) - cents(b.reserve), true],
-    ['Diferencia de recaudo', cents(b.revenue) - cents(a.revenue), false],
-    ['Diferencia de personal', cents(a.workers) - cents(b.workers), false],
-    ['Diferencia de ingreso del concesionario', cents(a.owner) - cents(b.owner), false],
+    ["Diferencia de operación", cents(a.operating) - cents(b.operating), true],
+    [
+      "Diferencia de pagos del activo",
+      cents(a.payment) - cents(b.payment),
+      true,
+    ],
+    [
+      "Diferencia de reserva/reposición",
+      cents(a.reserve) - cents(b.reserve),
+      true,
+    ],
+    ["Diferencia de recaudo", cents(b.revenue) - cents(a.revenue), false],
+    ["Diferencia de personal", cents(a.workers) - cents(b.workers), false],
+    [
+      "Diferencia de ingreso del concesionario",
+      cents(a.owner) - cents(b.owner),
+      false,
+    ],
   ] as const;
   let running = cents(ice.freeCash);
   const contributions = parts
@@ -53,7 +73,12 @@ export function cashBridge(ice: Month, ev: Month): CashBridge {
     .map(([label, value]) => {
       const before = running;
       running += value;
-      return { label, amount: value / 100, before: before / 100, after: running / 100 };
+      return {
+        label,
+        amount: value / 100,
+        before: before / 100,
+        after: running / 100,
+      };
     });
   return { start: ice.freeCash, end: running / 100, contributions };
 }
@@ -71,7 +96,8 @@ export interface MonthlyFinancialAnalysis {
   };
 }
 export function financialAnalysis(r: Result): MonthlyFinancialAnalysis[] {
-  const provision = cents(r.scenario.economy.monthlyReserve * r.scenario.operation.fleet) / 100;
+  const provision =
+    cents(r.scenario.economy.monthlyReserve * r.scenario.operation.fleet) / 100;
   return r.ev.months.map((m, index) => {
     const obligation = monthlyBudget(m).reserve;
     const shortfall = (cents(obligation) - cents(provision)) / 100;
@@ -96,12 +122,18 @@ export interface RevenueStressPoint {
   ev: { months: { month: number; freeCash: number }[]; summary: CashSummary };
 }
 /** Prueba temporal: únicamente reduce ascensos, sin redondearlos a pasajeros enteros. */
-export function revenueStressScenario(s: Scenario, dropPercent: number): Scenario {
+export function revenueStressScenario(
+  s: Scenario,
+  dropPercent: number,
+): Scenario {
   if (!Number.isInteger(dropPercent) || dropPercent < 0 || dropPercent > 30)
-    throw new Error('Caída fuera del rango de prueba 0–30%.');
+    throw new Error("Caída fuera del rango de prueba 0–30%.");
   return {
     ...s,
-    operation: { ...s.operation, boardings: s.operation.boardings * (1 - dropPercent / 100) },
+    operation: {
+      ...s.operation,
+      boardings: s.operation.boardings * (1 - dropPercent / 100),
+    },
   };
 }
 export async function revenueStress(
@@ -116,8 +148,13 @@ export async function revenueStress(
       months: months.map(({ month, freeCash }) => ({ month, freeCash })),
       summary: cashSummary(months),
     });
-    points.push({ dropPercent, ice: view(r.ice.months), ev: view(r.ev.months) });
-    if (dropPercent % 4 === 3) await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    points.push({
+      dropPercent,
+      ice: view(r.ice.months),
+      ev: view(r.ev.months),
+    });
+    if (dropPercent % 4 === 3)
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
   }
   return cancelled() ? null : points;
 }

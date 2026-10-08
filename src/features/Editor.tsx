@@ -1,14 +1,14 @@
-import type { Scenario } from '../domain/schema';
-import { getValue, withValue, evidenceOf } from './values';
-import { sections, type Field } from './fields';
+import type { Scenario } from "../domain/schema";
+import { getValue, withValue, evidenceOf } from "./values";
+import { sections, type Field } from "./fields";
 export const essentialPaths = [
-  'route.cycleKm',
-  'operation.cycles',
-  'operation.fleet',
-  'ice.consumption',
-  'ev.consumption',
-  'chargerCount',
-  'energy.chargeHours',
+  "route.cycleKm",
+  "operation.cycles",
+  "operation.fleet",
+  "ice.consumption",
+  "ev.consumption",
+  "chargerCount",
+  "energy.chargeHours",
 ];
 export function NumberField({
   field,
@@ -21,23 +21,29 @@ export function NumberField({
 }) {
   const raw = getValue(s, field.path) as number;
   const evidence = evidenceOf(s, field.path);
-  const id = `field-${field.path.replaceAll('.', '-')}`;
+  const id = `field-${field.path.replaceAll(".", "-")}`;
   return (
     <div className="field">
       <label htmlFor={id}>
         <span>{field.label}</span>
         <span
-          className={`evidence-tag ${evidence.level === 'F' ? 'assumption' : ''}`}
+          className={`evidence-tag ${evidence.level === "F" ? "assumption" : ""}`}
           title={`${evidence.nature} · ${evidence.sourceId} · ${evidence.date} · ${evidence.limitation}`}
         >
-          {evidence.level === 'F' ? 'Supuesto editable' : `${evidence.level} · ${evidence.nature}`}
+          {evidence.level === "F"
+            ? "Supuesto editable"
+            : `${evidence.level} · ${evidence.nature}`}
         </span>
       </label>
       <div className="number-wrap">
         <input
           id={id}
           type="number"
-          value={Number.isFinite(raw) ? Number((raw * (field.percent ? 100 : 1)).toFixed(6)) : ''}
+          value={
+            Number.isFinite(raw)
+              ? Number((raw * (field.percent ? 100 : 1)).toFixed(6))
+              : ""
+          }
           step={field.step ?? 1}
           min="0"
           onChange={(e) =>
@@ -45,7 +51,9 @@ export function NumberField({
               withValue(
                 s,
                 field.path,
-                e.target.value === '' ? NaN : Number(e.target.value) / (field.percent ? 100 : 1),
+                e.target.value === ""
+                  ? NaN
+                  : Number(e.target.value) / (field.percent ? 100 : 1),
               ),
             )
           }
@@ -66,18 +74,22 @@ export default function Editor({
 }) {
   const chooseFinance = (id: string) => {
     const next = structuredClone(s);
-    next.finance = structuredClone(next.catalog.finances.find((f) => f.id === id)!);
+    next.finance = structuredClone(
+      next.catalog.finances.find((f) => f.id === id)!,
+    );
     onChange(next);
   };
-  const connector = (group: 'ev' | 'charger') => (
+  const connector = (group: "ev" | "charger") => (
     <div className="field">
       <label htmlFor={`${group}-connector`}>
-        Conector {group === 'ev' ? 'del vehículo' : 'del cargador'}
+        Conector {group === "ev" ? "del vehículo" : "del cargador"}
       </label>
       <select
         id={`${group}-connector`}
         value={s[group].connector}
-        onChange={(e) => onChange(withValue(s, `${group}.connector`, e.target.value))}
+        onChange={(e) =>
+          onChange(withValue(s, `${group}.connector`, e.target.value))
+        }
       >
         <option value="unknown">No comprobado · compatibilidad supuesta</option>
         <option value="AC2">AC tipo 2</option>
@@ -90,7 +102,11 @@ export default function Editor({
     <div className="editor advanced-editor">
       <h3>Parámetros avanzados</h3>
       {sections.map((section) => (
-        <details id={`advanced-${section.id}`} key={section.id} className="advanced-group">
+        <details
+          id={`advanced-${section.id}`}
+          key={section.id}
+          className="advanced-group"
+        >
           <summary>{section.title}</summary>
           <div className="editor-content">
             <div className="section-heading">
@@ -98,16 +114,18 @@ export default function Editor({
               <p>{section.description}</p>
             </div>
             <div className="fields-grid">
-              {section.id === 'energy' && (
+              {section.id === "energy" && (
                 <>
-                  {connector('ev')}
-                  {connector('charger')}
+                  {connector("ev")}
+                  {connector("charger")}
                 </>
               )}
-              {section.id === 'finance' && (
+              {section.id === "finance" && (
                 <>
                   <div className="field wide">
-                    <label htmlFor="finance-choice">Mecanismo de adquisición</label>
+                    <label htmlFor="finance-choice">
+                      Mecanismo de adquisición
+                    </label>
                     <select
                       id="finance-choice"
                       value={s.finance.id}
@@ -125,7 +143,13 @@ export default function Editor({
                       type="checkbox"
                       checked={s.finance.financeInfrastructure}
                       onChange={(e) =>
-                        onChange(withValue(s, 'finance.financeInfrastructure', e.target.checked))
+                        onChange(
+                          withValue(
+                            s,
+                            "finance.financeInfrastructure",
+                            e.target.checked,
+                          ),
+                        )
                       }
                     />
                     Crédito incluye infraestructura (hipótesis)
@@ -135,7 +159,13 @@ export default function Editor({
                       type="checkbox"
                       checked={s.finance.maintenanceIncluded}
                       onChange={(e) =>
-                        onChange(withValue(s, 'finance.maintenanceIncluded', e.target.checked))
+                        onChange(
+                          withValue(
+                            s,
+                            "finance.maintenanceIncluded",
+                            e.target.checked,
+                          ),
+                        )
                       }
                     />
                     Renta incluye mantenimiento
@@ -145,7 +175,12 @@ export default function Editor({
               {section.fields
                 .filter((field) => !essentialPaths.includes(field.path))
                 .map((field) => (
-                  <NumberField key={field.path} field={field} s={s} onChange={onChange} />
+                  <NumberField
+                    key={field.path}
+                    field={field}
+                    s={s}
+                    onChange={onChange}
+                  />
                 ))}
             </div>
           </div>

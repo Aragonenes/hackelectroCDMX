@@ -1,16 +1,16 @@
-import { ScenarioSchema, type Scenario } from '../domain/schema';
-import { catalog, assumed } from './catalog';
+import { ScenarioSchema, type Scenario } from "../domain/schema";
+import { catalog, assumed } from "./catalog";
 export function defaultScenario(): Scenario {
   const base = {
-    schemaVersion: '1',
-    modelVersion: '1.0.0',
-    name: 'Ruta 1 · transición justa exploratoria',
+    schemaVersion: "1",
+    modelVersion: "1.0.0",
+    name: "Ruta 1 · transición justa exploratoria",
     route: {
-      id: 'M09-514',
-      name: 'METRO CU - SAN FERNANDO HUIPULCO',
+      id: "M09-514",
+      name: "METRO CU - SAN FERNANDO HUIPULCO",
       cycleKm: 20.340012617007122,
-      sourceId: 'M09',
-      internalDate: '2022-09-02',
+      sourceId: "M09",
+      internalDate: "2022-09-02",
     },
     operation: {
       fleet: 3,
@@ -69,58 +69,64 @@ export function defaultScenario(): Scenario {
     catalog,
   };
   const s = ScenarioSchema.parse(base);
-  for (const group of ['operation', 'energy', 'economy'] as const)
-    for (const key of Object.keys(s[group])) s.evidence[`${group}.${key}`] = assumed();
-  s.evidence['route.cycleKm'] = {
-    sourceId: 'M09',
-    nature: 'derivado',
-    level: 'A',
-    date: '2022-09-02; consulta 2026-10-06',
-    scope: 'Ramal histórico',
+  for (const group of ["operation", "energy", "economy"] as const)
+    for (const key of Object.keys(s[group]))
+      s.evidence[`${group}.${key}`] = assumed();
+  s.evidence["route.cycleKm"] = {
+    sourceId: "M09",
+    nature: "derivado",
+    level: "A",
+    date: "2022-09-02; consulta 2026-10-06",
+    scope: "Ramal histórico",
     limitation:
-      'Suma de dos trazos cartográficos; no ciclo operativo actual. Sin Z ni cierre artificial.',
+      "Suma de dos trazos cartográficos; no ciclo operativo actual. Sin Z ni cierre artificial.",
   };
-  s.evidence['energy.fuelPrice'] = {
-    sourceId: 'M23',
-    nature: 'oficial',
-    level: 'D',
-    date: '2026-08-27',
-    scope: 'México nacional',
-    limitation: 'Referencia PROFECO; no comprobante del ramal.',
+  s.evidence["energy.fuelPrice"] = {
+    sourceId: "M23",
+    nature: "oficial",
+    level: "D",
+    date: "2026-08-27",
+    scope: "México nacional",
+    limitation: "Referencia PROFECO; no comprobante del ramal.",
   };
-  s.evidence['energy.gridFactor'] = {
-    sourceId: 'M15',
-    nature: 'oficial',
-    level: 'D',
-    date: '2024; aviso 2026-05-29',
-    scope: 'SEN México',
-    limitation: 'Factor histórico 2024, no red medida 2026 ni ciclo de vida.',
+  s.evidence["energy.gridFactor"] = {
+    sourceId: "M15",
+    nature: "oficial",
+    level: "D",
+    date: "2024; aviso 2026-05-29",
+    scope: "SEN México",
+    limitation: "Factor histórico 2024, no red medida 2026 ni ciclo de vida.",
   };
   return s;
 }
-export function preset(s: Scenario, category: 'van' | 'minibus' | 'urban'): Scenario {
+export function preset(
+  s: Scenario,
+  category: "van" | "minibus" | "urban",
+): Scenario {
   const next = structuredClone(s);
   const ice = next.catalog.vehicles.find(
-    (v) => v.category === category && v.fuel !== 'electricidad',
+    (v) => v.category === category && v.fuel !== "electricidad",
   );
   const ev = next.catalog.vehicles.find(
-    (v) => v.category === category && v.fuel === 'electricidad',
+    (v) => v.category === category && v.fuel === "electricidad",
   );
   if (!ice || !ev) return next;
   next.ice = ice;
   next.ev = ev;
   next.operation.requiredCapacity = Math.min(ice.capacity, ev.capacity);
-  next.energy.fuelPrice = ice.fuel === 'diesel' ? 27 : 23.68;
-  next.evidence['energy.fuelPrice'] = {
-    sourceId: ice.fuel === 'diesel' ? 'M24' : 'M23',
-    nature: 'oficial',
-    level: 'D',
-    date: ice.fuel === 'diesel' ? '2026-09-25' : '2026-08-27',
-    scope: 'México nacional',
-    limitation: 'Promedio nacional; no precio local.',
+  next.energy.fuelPrice = ice.fuel === "diesel" ? 27 : 23.68;
+  next.evidence["energy.fuelPrice"] = {
+    sourceId: ice.fuel === "diesel" ? "M24" : "M23",
+    nature: "oficial",
+    level: "D",
+    date: ice.fuel === "diesel" ? "2026-09-25" : "2026-08-27",
+    scope: "México nacional",
+    limitation: "Promedio nacional; no precio local.",
   };
-  next.charger = next.catalog.chargers.find((c) => c.id === (category === 'van' ? 'ac7' : 'dc60'))!;
-  next.chargerCount = category === 'van' ? 3 : 1;
-  next.energy.siteKw = category === 'van' ? 30 : 70;
+  next.charger = next.catalog.chargers.find(
+    (c) => c.id === (category === "van" ? "ac7" : "dc60"),
+  )!;
+  next.chargerCount = category === "van" ? 3 : 1;
+  next.energy.siteKw = category === "van" ? 30 : 70;
   return ScenarioSchema.parse(next);
 }

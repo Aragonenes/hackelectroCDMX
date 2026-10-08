@@ -1,16 +1,22 @@
-import { Sparkles, ArrowRight, CheckCircle2, AlertCircle, X } from 'lucide-react';
-import type { Scenario, SearchResult } from '../domain/schema';
-import { num, mxn } from '../ui/format';
+import {
+  Sparkles,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  X,
+} from "lucide-react";
+import type { Scenario, SearchResult } from "../domain/schema";
+import { num, mxn } from "../ui/format";
 const reasons: Record<string, string> = {
-  capacity: 'Capacidad insuficiente',
-  battery: 'Energía y reserva insuficientes',
-  charging: 'Recarga fuera de ventana',
-  schedule: 'Servicio o jornada no cubiertos',
-  frequency: 'Frecuencia insuficiente',
-  connector: 'Conector incompatible',
-  income: 'Presupuesto laboral menor al objetivo',
-  monthly: 'Déficit mensual persistente',
-  initial: 'Capital inicial insuficiente',
+  capacity: "Capacidad insuficiente",
+  battery: "Energía y reserva insuficientes",
+  charging: "Recarga fuera de ventana",
+  schedule: "Servicio o jornada no cubiertos",
+  frequency: "Frecuencia insuficiente",
+  connector: "Conector incompatible",
+  income: "Presupuesto laboral menor al objetivo",
+  monthly: "Déficit mensual persistente",
+  initial: "Capital inicial insuficiente",
 };
 export default function Optimizer({
   search,
@@ -39,11 +45,16 @@ export default function Optimizer({
           <span className="eyebrow">COMPARAR OPCIONES DEL CATÁLOGO</span>
           <h2>Alternativas de electrificación</h2>
           <p>
-            Evaluamos vehículos, cargadores y financiamiento para minimizar la aportación inicial.
-            Conservamos servicio, flota, personal, tarifa e ingresos objetivo.
+            Evaluamos vehículos, cargadores y financiamiento para minimizar la
+            aportación inicial. Conservamos servicio, flota, personal, tarifa e
+            ingresos objetivo.
           </p>
         </div>
-        <button className="primary" onClick={searching ? onCancel : onSearch} disabled={disabled}>
+        <button
+          className="primary"
+          onClick={searching ? onCancel : onSearch}
+          disabled={disabled}
+        >
           {searching ? (
             <>
               <X size={17} />
@@ -60,29 +71,31 @@ export default function Optimizer({
       {searching && (
         <div className="search-progress" role="status">
           <progress max={progress.total || 1} value={progress.tested} />
-          Evaluadas {progress.tested} de {progress.total || '…'} combinaciones
+          Evaluadas {progress.tested} de {progress.total || "…"} combinaciones
         </div>
       )}
       {search && (
         <div className="search-results" aria-live="polite">
           {search.limitExceeded ? (
             <p>
-              La selección supera 10,000 combinaciones. Reduce vehículos, cargadores,
-              financiamientos o tamaño de flota antes de buscar.
+              La selección supera 10,000 combinaciones. Reduce vehículos,
+              cargadores, financiamientos o tamaño de flota antes de buscar.
             </p>
           ) : (
             <>
-              <div className={`search-summary ${search.alternatives.length ? 'found' : 'empty'}`}>
+              <div
+                className={`search-summary ${search.alternatives.length ? "found" : "empty"}`}
+              >
                 {search.alternatives.length ? (
                   <CheckCircle2 size={18} />
                 ) : (
                   <AlertCircle size={18} />
                 )}
                 <span>
-                  {search.tested} combinaciones evaluadas ·{' '}
+                  {search.tested} combinaciones evaluadas ·{" "}
                   {search.alternatives.length
-                    ? 'mejores opciones condicionadas'
-                    : 'ninguna cumple todas las restricciones'}
+                    ? "mejores opciones condicionadas"
+                    : "ninguna cumple todas las restricciones"}
                 </span>
               </div>
               <div className="alternatives">
@@ -116,7 +129,10 @@ export default function Optimizer({
                         <dd>{num(a.result.charge.hours, 2)} h</dd>
                       </div>
                     </dl>
-                    <button className="secondary" onClick={() => onApply(a.scenario)}>
+                    <button
+                      className="secondary"
+                      onClick={() => onApply(a.scenario)}
+                    >
                       Explorar esta combinación <ArrowRight size={16} />
                     </button>
                   </article>
@@ -128,10 +144,12 @@ export default function Optimizer({
                     <strong>Umbrales orientativos del escenario actual</strong>
                   </p>
                   <p>
-                    Consumo máximo entre cargas: {num(search.thresholds.maxBatteryConsumption, 3)}{' '}
-                    kWh/km. Potencia media mínima de carga para la flota:{' '}
-                    {num(search.thresholds.minimumAverageSiteKw, 1)} kW, antes de curva y turnos.
-                    Brecha operativa mensual: {mxn(search.thresholds.monthlyOperatingGap)}.
+                    Consumo máximo entre cargas:{" "}
+                    {num(search.thresholds.maxBatteryConsumption, 3)} kWh/km.
+                    Potencia media mínima de carga para la flota:{" "}
+                    {num(search.thresholds.minimumAverageSiteKw, 1)} kW, antes
+                    de curva y turnos. Brecha operativa mensual:{" "}
+                    {mxn(search.thresholds.monthlyOperatingGap)}.
                   </p>
                 </div>
               )}
@@ -145,13 +163,16 @@ export default function Optimizer({
                       </li>
                     ))}
                   </ul>
-                  <small>Una combinación puede incumplir varias condiciones.</small>
+                  <small>
+                    Una combinación puede incumplir varias condiciones.
+                  </small>
                 </details>
               )}
               <p className="muted">
-                La mejor opción pertenece al catálogo y supuestos evaluados. Patio, compatibilidad
-                no documentada, autorización, entrega y financiamiento siguen pendientes. La
-                aportación es hipotética; no asigna un subsidio existente.
+                La mejor opción pertenece al catálogo y supuestos evaluados.
+                Patio, compatibilidad no documentada, autorización, entrega y
+                financiamiento siguen pendientes. La aportación es hipotética;
+                no asigna un subsidio existente.
               </p>
             </>
           )}
