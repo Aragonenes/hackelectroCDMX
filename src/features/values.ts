@@ -37,6 +37,9 @@ export function withValue(s: Scenario, path: string, value: unknown): Scenario {
     copy.evidence[path] = assumed(
       "Modificado por la persona usuaria; no medición del ramal.",
     );
+  if (copy.schemaVersion === "2" && path === "ev.price")
+    copy.journey.purchasePrice =
+      typeof value === "number" && Number.isFinite(value) ? value : null;
   return copy;
 }
 export function evidenceOf(s: Scenario, path: string): Evidence {

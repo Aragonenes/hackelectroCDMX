@@ -16,10 +16,29 @@ export function environmentalView(
   const scale = units * days;
   const energy = energyBudget(r);
   const factor = r.scenario.energy.gridFactor;
+  const dynamicMonth = r.dynamic && period !== "day" ? r.dynamic.monthly : null;
+  const monthScale = units * (period === "year" ? 12 : 1);
   const parts = [
-    { label: "Energía para servicio", kwh: energy.service },
-    { label: "Recorridos adicionales", kwh: energy.additional },
-    { label: "Pérdidas de carga", kwh: r.dailyGridKwh - r.dailyBatteryKwh },
+    {
+      label: "Energía para servicio",
+      kwh: dynamicMonth
+        ? ((dynamicMonth.batteryKwh - dynamicMonth.additionalKwh) / days) *
+          (period === "year" ? 12 : 1)
+        : energy.service,
+    },
+    {
+      label: "Recorridos adicionales",
+      kwh: dynamicMonth
+        ? (dynamicMonth.additionalKwh / days) * (period === "year" ? 12 : 1)
+        : energy.additional,
+    },
+    {
+      label: "Pérdidas de carga",
+      kwh: dynamicMonth
+        ? ((dynamicMonth.gridKwh - dynamicMonth.batteryKwh) / days) *
+          (period === "year" ? 12 : 1)
+        : r.dailyGridKwh - r.dailyBatteryKwh,
+    },
   ].map((part) => ({
     ...part,
     kwh: part.kwh * scale,
@@ -30,10 +49,20 @@ export function environmentalView(
     days,
     scale,
     parts,
-    liters: r.dailyLiters * scale,
-    tailpipeCO2Kg: r.emissions.iceCO2KgDay * scale,
+    liters: dynamicMonth
+      ? dynamicMonth.liters * monthScale
+      : r.dailyLiters * scale,
+    tailpipeCO2Kg: dynamicMonth
+      ? dynamicMonth.liters *
+        monthScale *
+        ((r.scenario.ice.fuel === "diesel" ? 10.18 : 8.887) / 3.785411784)
+      : r.emissions.iceCO2KgDay * scale,
     electricTailpipeCO2Kg: 0,
-    electricityCO2eKg: r.emissions.evCO2eKgDay * scale,
-    gridKwh: r.dailyGridKwh * scale,
+    electricityCO2eKg: dynamicMonth
+      ? dynamicMonth.gridKwh * monthScale * factor
+      : r.emissions.evCO2eKgDay * scale,
+    gridKwh: dynamicMonth
+      ? dynamicMonth.gridKwh * monthScale
+      : r.dailyGridKwh * scale,
   };
 }

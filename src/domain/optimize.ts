@@ -1,3 +1,4 @@
+import { selectJourneyVehicle } from "../data/journey";
 import {
   ScenarioSchema,
   type Scenario,
@@ -19,7 +20,11 @@ export async function findConditions(
   } = {},
 ): Promise<SearchResult> {
   const s = ScenarioSchema.parse(input);
-  const vehicles = s.catalog.vehicles
+  const catalogVehicles =
+    s.schemaVersion === "2" && !s.catalog.vehicles.some((v) => v.id === s.ev.id)
+      ? [...s.catalog.vehicles, s.ev]
+      : s.catalog.vehicles;
+  const vehicles = catalogVehicles
     .filter((v) => v.fuel === "electricidad")
     .map((v) => (v.id === s.ev.id ? s.ev : v));
   const chargers = s.catalog.chargers.map((c) =>
@@ -64,8 +69,14 @@ export async function findConditions(
           chargerCount++
         ) {
           if (options.cancelled?.()) throw new SearchCancelled();
+          const vehicleScenario =
+            s.schemaVersion === "2"
+              ? ev.id === s.ev.id
+                ? s
+                : selectJourneyVehicle(s, ev.id)
+              : s;
           const candidate: Scenario = {
-            ...s,
+            ...vehicleScenario,
             ev,
             charger,
             finance,
@@ -78,7 +89,9 @@ export async function findConditions(
             (c) =>
               c.status === "fail" && !["initial", "monthly"].includes(c.id),
           );
-          if (failures.length) {
+          if (baseline.dynamic?.economicComplete === false) {
+            reject("economic-data");
+          } else if (failures.length) {
             for (const c of failures) reject(c.id);
           } else {
             const max = Math.ceil(
@@ -90,11 +103,20 @@ export async function findConditions(
               financial(
                 {
                   ...candidate,
+                  operation: baseline.dynamic
+                    ? {
+                        ...candidate.operation,
+                        boardings:
+                          baseline.dynamic.monthly.boardings /
+                          candidate.operation.days,
+                      }
+                    : candidate.operation,
                   economy: { ...candidate.economy, support: cents / 100 },
                 },
                 ev,
                 baseline.ev.operatingMonth,
                 true,
+                baseline.dynamic?.monthly.km,
               );
             const valid = (cents: number) => {
               const f = at(cents);

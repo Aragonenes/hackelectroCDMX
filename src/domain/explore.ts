@@ -82,9 +82,13 @@ export function explorationRange(
 export async function sensitivity(
   s: Scenario,
   cancelled: () => boolean = () => false,
+  progress: (tested: number, total: number) => void = () => {},
 ): Promise<SensitivitySeries[] | null> {
   const series: SensitivitySeries[] = [];
   let count = 0;
+  const total = (
+    Object.keys(sensitivityVariables) as SensitivityVariable[]
+  ).reduce((sum, v) => sum + explorationRange(s, v).length, 0);
   for (const variable of Object.keys(
     sensitivityVariables,
   ) as SensitivityVariable[]) {
@@ -99,7 +103,8 @@ export async function sensitivity(
         usableKwh: r.usableKwh,
         gridKwh: r.dailyGridKwh,
         chargeHours: r.charge.hours,
-        chargeWindow: s.energy.chargeHours,
+        chargeWindow:
+          r.dynamic?.selected.chargeWindowHours ?? s.energy.chargeHours,
         iceMargin: r.ice.minMonthlyCash,
         evMargin: r.ev.minMonthlyCash,
         constraints: r.constraints,
@@ -107,6 +112,7 @@ export async function sensitivity(
           .filter((c) => c.status === "fail")
           .map((c) => c.id),
       });
+      progress(count + 1, total);
       if (++count % 4 === 0)
         await new Promise<void>((resolve) => setTimeout(resolve, 0));
     }
@@ -115,6 +121,17 @@ export async function sensitivity(
   return cancelled() ? null : series;
 }
 export function energyBudget(r: Result) {
+  if (r.dynamic)
+    return {
+      service: r.dailyBatteryKwh - r.dynamic.selected.additionalKwh,
+      additional: r.dynamic.selected.additionalKwh,
+      available: r.usableKwh,
+      margin: r.usableKwh - r.dailyBatteryKwh,
+      reserve:
+        r.scenario.ev.batteryKwh *
+        r.scenario.energy.soh *
+        r.scenario.energy.socMin,
+    };
   return {
     service: r.serviceKm * r.scenario.ev.consumption,
     additional: (r.dailyKm - r.serviceKm) * r.scenario.ev.consumption,

@@ -9,6 +9,8 @@ const Chart = lazy(() => import("../ui/Chart"));
 export function EnergyPanel({ result: r }: { result: Result }) {
   const s = r.scenario;
   const energy = energyBudget(r);
+  const chargeWindow =
+    r.dynamic?.selected.chargeWindowHours ?? s.energy.chargeHours;
   const socOption = useMemo(
     () => ({
       color: ["#9D2148", "#266CB4", "#B28E5C"],
@@ -59,7 +61,7 @@ export function EnergyPanel({ result: r }: { result: Result }) {
         <BatteryCharging size={19} />
       </div>
       <p className="result-conclusion">
-        {energy.margin >= -1e-9
+        {energy.margin >= -1e-9 && !r.dynamic?.selected.firstReserve
           ? "La energía disponible alcanza"
           : `Faltan ${num(-energy.margin, 2)} kWh para completar el día`}
       </p>
@@ -89,18 +91,18 @@ export function EnergyPanel({ result: r }: { result: Result }) {
         </span>
       </div>
       <p className="result-conclusion">
-        {r.charge.hours <= s.energy.chargeHours + 1e-9
+        {r.charge.hours <= chargeWindow + 1e-9
           ? "La recarga cabe en la ventana nocturna."
           : "La recarga no cabe en la ventana nocturna."}{" "}
         Batería suficiente y recuperación nocturna son condiciones separadas.
       </p>
       <div className="charge-comparison">
         <span>Recarga nocturna de la flota</span>
-        <b className={r.charge.hours > s.energy.chargeHours ? "negative" : ""}>
+        <b className={r.charge.hours > chargeWindow ? "negative" : ""}>
           {Number.isFinite(r.charge.hours)
             ? `${num(r.charge.hours, 2)} h`
             : "Sin potencia"}{" "}
-          / {num(s.energy.chargeHours)} h disponibles
+          / {num(chargeWindow)} h disponibles
         </b>
       </div>
       <small>

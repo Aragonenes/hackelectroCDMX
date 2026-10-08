@@ -8,6 +8,8 @@ import {
 import { num, mxn } from "../ui/format";
 const Chart = lazy(() => import("../ui/Chart"));
 export default function Sensitivity({
+  progress,
+  onCancel,
   result: r,
   points: series,
   error,
@@ -16,6 +18,8 @@ export default function Sensitivity({
   variables = ["cycles", "consumption", "electricityPrice"],
   id = "sensibilidad",
 }: {
+  progress?: { tested: number; total: number };
+  onCancel?: () => void;
   variables?: readonly SensitivityVariable[];
   id?: string;
   result: Result;
@@ -177,6 +181,17 @@ export default function Sensitivity({
       id={id}
       aria-busy={!series && !error}
     >
+      {!series && progress && (
+        <div role="status">
+          Calculando pruebas {progress.tested} / {progress.total || "…"}
+          {onCancel && (
+            <button className="text-button" onClick={onCancel}>
+              Cancelar pruebas
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="panel-title">
         <h2>Explora las condiciones del escenario</h2>
         <span className="pill neutral">Mismo recaudo · misma flota</span>

@@ -75,7 +75,10 @@ export function download(text: string, filename: string, type: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 export function csvCell(value: string | number) {
-  const text = String(value);
+  const text =
+    typeof value === "number" && !Number.isFinite(value)
+      ? "desconocido"
+      : String(value);
   const safe =
     /^[=+\-@\t\r]/.test(text) && typeof value === "string" ? `'${text}` : text;
   return `"${safe.replaceAll('"', '""')}"`;
@@ -146,7 +149,13 @@ export function resultsCsv(r: Result) {
       const evidence = evidenceOf(r.scenario, field.path);
       rows.push([
         field.path,
-        Number(getValue(r.scenario, field.path)) * (field.percent ? 100 : 1),
+        r.dynamic &&
+        r.scenario.schemaVersion === "2" &&
+        field.path === "ev.price" &&
+        r.scenario.journey.purchasePrice === null
+          ? "desconocido"
+          : Number(getValue(r.scenario, field.path)) *
+            (field.percent ? 100 : 1),
         field.unit,
         evidence.level,
         evidence.nature,
@@ -155,6 +164,118 @@ export function resultsCsv(r: Result) {
         evidence.limitation,
       ]);
     }
+  if (r.dynamic && r.scenario.schemaVersion === "2") {
+    const j = r.scenario.journey;
+    rows.push(
+      [],
+      ["jornada_seleccionada", r.dynamic.selected.name],
+      ["economia_completa", r.dynamic.economicComplete ? "sí" : "no"],
+      ["precio_variante_MXN", j.purchasePrice ?? "desconocido"],
+      ["faltantes", r.dynamic.missing.join("; ")],
+      ["ambito_mensual", "mezcla ponderada por unidad"],
+      ["terreno", j.prepared.terrain],
+      ["sha256_terreno", j.prepared.terrainSha256],
+      ["estacion_clima", j.climate.station],
+      ["cobertura_clima", j.climate.coverage],
+    );
+    for (const [key, value] of Object.entries(r.dynamic.monthly))
+      rows.push(["mezcla_mensual_" + key, value]);
+    rows.push(
+      [],
+      [
+        "dia",
+        "dias_mes",
+        "km",
+        "kWh_netos",
+        "h_jornada",
+        "abordajes",
+        "reserva_km",
+        "agotamiento_km",
+        "h_recarga",
+        "h_ventana",
+      ],
+    );
+    for (const d of r.dynamic.days)
+      rows.push([
+        d.name,
+        j.days[d.day]!.mixDays,
+        d.km,
+        d.netKwh,
+        d.workHours,
+        d.boardings,
+        d.firstReserve?.km ?? "sin cruce",
+        d.firstExhaustion?.km ?? "sin agotamiento",
+        d.charge.hours,
+        d.chargeWindowHours,
+      ]);
+    rows.push([], ["parametro_tecnico_F", "valor"]);
+    for (const [key, value] of Object.entries(j.technical))
+      rows.push([key, value]);
+    rows.push(
+      [],
+      [
+        "dia",
+        "franja_minuto",
+        "peso_abordajes_F",
+        "ocupacion_fraccion_F",
+        "tiempo_relativo_F",
+      ],
+    );
+    j.days.forEach((d) =>
+      d.slots.forEach((slot, i) =>
+        rows.push([
+          d.name,
+          i * 15,
+          slot.weight,
+          slot.occupancy,
+          slot.durationFactor,
+        ]),
+      ),
+    );
+    rows.push(
+      [],
+      [
+        "jornada_seleccionada",
+        "minuto",
+        "evento",
+        "vuelta",
+        "trazo",
+        "sector",
+        "km",
+        "pendiente_fraccion",
+        "elevacion_m",
+        "ocupacion",
+        "temperatura_C",
+        "demanda_kWh",
+        "regen_kWh",
+        "neto_kWh",
+        "SOC",
+        "abordajes_acumulados",
+        "energia_no_cubierta_kWh",
+      ],
+    );
+    r.dynamic.selected.frames.forEach((f) =>
+      rows.push([
+        r.dynamic!.selected.name,
+        f.endMinute,
+        f.kind,
+        f.cycle,
+        f.trace,
+        f.sector,
+        f.endKm,
+        f.slope,
+        f.kind === "service" ? f.elevationM : "desconocido",
+        f.occupancy,
+        f.temperatureC,
+        f.requiredKwh,
+        f.regenKwh,
+        f.netKwh,
+        f.socEnd,
+        f.boardings,
+        f.unmetKwh,
+      ]),
+    );
+  }
   rows.push([], ["condicion", "estado", "detalle"]);
   for (const c of r.constraints) rows.push([c.label, c.status, c.detail]);
   rows.push([], ["fuente", "titulo", "URL", "fecha", "limite"]);

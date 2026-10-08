@@ -25,7 +25,71 @@ export default function Report({ result: r }: { result: Result }) {
         Carga: {r.scenario.chargerCount} × {r.scenario.charger.name}.
         Financiamiento: {r.scenario.finance.name}.
       </p>
-      <ComparisonTable r={r} />
+      {r.dynamic?.economicComplete === false ? (
+        <p>Precio de variante desconocido; comparación financiera pendiente.</p>
+      ) : (
+        <ComparisonTable r={r} />
+      )}
+      {r.dynamic && r.scenario.schemaVersion === "2" && (
+        <section>
+          <h2>Jornada seleccionada y mezcla mensual</h2>
+          <p>
+            {r.dynamic.selected.name} · {r.scenario.journey.season} ·{" "}
+            {num(r.dynamic.selected.netKwh, 2)} kWh netos ·{" "}
+            {num(r.dynamic.selected.boardings, 0)} abordajes. Recorrido
+            previsto; primer cruce de reserva{" "}
+            {r.dynamic.selected.firstReserve
+              ? `${num(r.dynamic.selected.firstReserve.km, 2)} km`
+              : "sin cruce"}
+            ; energía no cubierta {num(r.dynamic.selected.unmetKwh, 2)} kWh.
+          </p>
+          <p>
+            Mezcla:{" "}
+            {r.scenario.journey.days
+              .map((d) => `${d.name} ${d.mixDays}`)
+              .join("; ")}
+            . {num(r.dynamic.monthly.km, 2)} km/unidad/mes,{" "}
+            {num(r.dynamic.monthly.gridKwh, 2)} kWh comprados,{" "}
+            {num(r.dynamic.monthly.boardings, 0)} abordajes. Economía y ambiente
+            mensual usan esa mezcla.
+          </p>
+          <p>
+            Faltantes:{" "}
+            {r.dynamic.missing.join("; ") ||
+              "sin faltantes estructurales; supuestos y comprobaciones externas pendientes"}
+            .
+          </p>
+          <p>
+            {r.scenario.journey.prepared.terrain} ·{" "}
+            {r.scenario.journey.prepared.smoothing} ·{" "}
+            {r.scenario.journey.climate.station} ·{" "}
+            {r.scenario.journey.climate.coverage}
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Parámetro técnico F</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(r.scenario.journey.technical).map(
+                ([key, value]) => (
+                  <tr key={key}>
+                    <th>{key}</th>
+                    <td>{num(value, 5)}</td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+          <p>
+            JSON v2 conserva las 96 franjas de cada día, sectores, clima y
+            elevación para reproducción. Las franjas son supuestos F, no
+            mediciones de demanda.
+          </p>
+        </section>
+      )}
       <h2>Restricciones</h2>
       <ul>
         {presentedConditions(r).map((c) => (
@@ -57,11 +121,15 @@ export default function Report({ result: r }: { result: Result }) {
                   <tr key={f.path}>
                     <th scope="row">{f.label}</th>
                     <td>
-                      {num(
-                        Number(getValue(r.scenario, f.path)) *
-                          (f.percent ? 100 : 1),
-                        6,
-                      )}
+                      {r.scenario.schemaVersion === "2" &&
+                      f.path === "ev.price" &&
+                      r.scenario.journey.purchasePrice === null
+                        ? "desconocido"
+                        : num(
+                            Number(getValue(r.scenario, f.path)) *
+                              (f.percent ? 100 : 1),
+                            6,
+                          )}
                     </td>
                     <td>{f.unit}</td>
                     <td>
@@ -83,7 +151,7 @@ export default function Report({ result: r }: { result: Result }) {
         mantenimiento: {r.scenario.finance.maintenanceIncluded ? "sí" : "no"}.
       </p>
       <h2>Flujo de caja</h2>
-      <CashTable f={r.ev} />
+      {r.dynamic?.economicComplete !== false && <CashTable f={r.ev} />}
       <h2>Alcance ambiental</h2>
       <p>
         Escape: {num(r.emissions.iceCO2KgDay, 2)} kg CO₂/unidad/día.

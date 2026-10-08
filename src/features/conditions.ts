@@ -38,6 +38,6 @@ export function presentedConditions(r: Result): Constraint[] {
       (s.ev.connector === "unknown" || s.charger.connector === "unknown")
         ? "pending"
         : c.status,
-    detail: details[c.id] ?? c.detail,
+    detail: r.dynamic ? c.detail : (details[c.id] ?? c.detail),
   }));
 }
