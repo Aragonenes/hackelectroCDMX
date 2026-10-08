@@ -2484,10 +2484,9 @@ footer > small {
 }
 .journey-toolbar {
   display: grid;
-  grid-template-columns: minmax(230px, 1.25fr) minmax(
-      148px,
-      0.75fr
-    ) max-content minmax(138px, 0.7fr);
+  grid-template-columns:
+    minmax(230px, 1.25fr) minmax(148px, 0.75fr)
+    max-content minmax(138px, 0.7fr);
   align-items: end;
   gap: 18px 22px;
   min-width: 0;

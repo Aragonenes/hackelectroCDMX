@@ -138,13 +138,11 @@ test("exporta, importa, guarda copias y recalcula", async ({ page }) => {
   expect(bundle.checksum).toHaveLength(64);
   await page.getByRole("button", { name: "Restaurar ejemplo" }).click();
   await ready(page);
-  await page
-    .locator("input[type=file]")
-    .setInputFiles({
-      name: "scenario.json",
-      mimeType: "application/json",
-      buffer: bytes,
-    });
+  await page.locator("input[type=file]").setInputFiles({
+    name: "scenario.json",
+    mimeType: "application/json",
+    buffer: bytes,
+  });
   await ready(page);
   await expect(page.getByLabel("Nombre del escenario")).toHaveValue(
     "Piloto hospitalario",
