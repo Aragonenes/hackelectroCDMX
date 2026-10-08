@@ -74,15 +74,15 @@ GitHub y Vercel son alojamiento administrado. El código y las bibliotecas son a
 
 ## Publicación
 
-URL pública: **https://hackelectro-cdmx.vercel.app**. Publicada y comprobada en navegador: cálculo completo, trazo histórico, búsqueda y avisos jurídicos disponibles.
+URL pública del proyecto vinculado actualmente: **https://electrohackaragonenes.vercel.app**. La URL `hackelectro-cdmx.vercel.app` corresponde al proyecto anterior y a las verificaciones históricas registradas.
 
-El proyecto Vercel se llama `hackelectro-cdmx`, bajo el equipo `hello-world-9171`. Node 22.x, `npm run build`, directorio `dist`, sin funciones de servidor. Para publicar una versión verificada mediante CLI:
+El proyecto Vercel se llama `electrohack_aragonenes`, bajo el equipo `hello-world-9171`, comprobado mediante CLI el 8 de octubre de 2026. El paquete declara Node 22.x, `npm run build`, directorio `dist`, sin funciones de servidor. El enlace local en `.vercel/project.json` identifica el proyecto; ese archivo permanece ignorado. Para publicar mediante CLI:
 
 ```bash
-vercel deploy --prod --yes --scope hello-world-9171
+vercel deploy --prod --yes --scope hello-world-9171 --project electrohack_aragonenes
 ```
 
-La cuenta Vercel autenticada permite publicar por CLI, pero rechazó el enlace automático del repositorio por falta de **Login Connection de GitHub**. Para habilitar despliegues al hacer push y previews de ramas, el titular debe conectar GitHub en su cuenta Vercel y vincular `itsebasvz/hackelectroCDMX` desde Project Settings → Git. No se afirma que esa integración esté activa. La compilación es portable e independiente de esta conexión.
+La cuenta Vercel autenticada permite publicar por CLI. El rechazo de la conexión GitHub documentado en la entrega anterior corresponde al proyecto histórico; no se verificó una integración automática para el proyecto actual. El repositorio actual es `Aragonenes/hackelectroCDMX`. Un push no sustituye la publicación por CLI aquí descrita. La compilación es portable e independiente de esa conexión.
 
 `.vercelignore` excluye seguimiento local, credenciales y fuentes de terceros conservadas localmente. Vercel CLI generó configuración/credenciales locales ignoradas; no deben incorporarse a Git ni al sitio.
 
