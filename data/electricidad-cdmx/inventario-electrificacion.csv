@@ -1,0 +1,10 @@
+id,operador,servicio,estado,unidades_electricas_reportadas,fecha_reporte,fuente_id,puede_excluirse_como_candidato,limitacion
+MB-L3,Metrobús,Línea 3,electrificación documentada,60,2023-02,MB-01,solo servicio ya electrificado,Cifra histórica; comprobar composición actual antes de declarar totalidad
+MB-L4,Metrobús,Línea 4,parcial/no totalidad comprobada,55,2024-02-22,MB-02,no,55 unidades incorporadas; no demuestra 100%
+MB-L4-Q,Metrobús,Quetzalcóatl Amajac-Aeropuerto,servicio eléctrico documentado,19,2026-02-05,MB-03,solo servicio eléctrico documentado,No extrapolar a todo L4; evitar doble contabilización con total agregado
+RTP-BSF,RTP,Balderas-Santa Fe,vehículos eléctricos documentados,,2024-10-04,RTP-01,no,50 unidades agregadas entre dos rutas; no se conoce reparto ni flota total
+RTP-CC,RTP,Cuatro Caminos-Constitución de 1917,vehículos eléctricos documentados,,2024-10-04,RTP-01,no,No consta reparto de 50 unidades por ruta
+M09-514,Ruta 1,Metro CU-San Fernando-Huipulco,sin verificar,,2026-10-06,ICCT-01,no,Su geometría histórica no confirma tecnología actual; confirmar SEMOVI
+RTP-CENTROBUS-HERO,RTP,Centrobús Ruta de las Heroínas Indígenas,servicio eléctrico documentado,12,2026-07-14,RTP-03,solo las unidades eléctricas documentadas,Dos circuitos; no corresponde automáticamente a M09
+STE-L14,STE,Trolebús Línea 14 Universidad-Huipulco,tracción eléctrica documentada,,2026-10-08,STE-01,"sí, para sustitución de combustión de este servicio",Tecnología de trolebús distinta de carga BEV en patio; no equiparar con M09-514
+STE-RED,STE,Red de trolebuses,tracción eléctrica documentada,,2026-10-08,STE-01,solo líneas verificadas por separado,Registro de red; no contar como una ruta individual ni suponer mismo esquema de carga

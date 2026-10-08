@@ -1,0 +1,3 @@
+id,objeto,valor_mxn,unidad,anio,tipo,incluye,fuente_id,utilizar_como_tarifa_kwh
+INV-MB-L4Q,Autobuses eléctricos Quetzalcóatl,112000000,MXN inversión flota,2026,inversión de capital,19 autobuses; sin factura eléctrica,MB-03,no
+INV-RTP,Programa 50 buses RTP y patio,470000000,MXN inversión paquete,2024,inversión de capital,50 autobuses; 25 estaciones; patio y capacitación,RTP-01,no

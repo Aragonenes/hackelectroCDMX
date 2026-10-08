@@ -1,0 +1,5 @@
+tarifa,tension,umbral,horaria,fuente_id,aplicabilidad_verificada_patio
+PDBT,baja,hasta 25 kW,no,CFE-01,no
+GDBT,baja,más de 25 kW,no,CFE-04,no
+GDMTO,media,menos de 100 kW,no,CFE-03,no
+GDMTH,media,desde 100 kW,sí,CFE-02,no
