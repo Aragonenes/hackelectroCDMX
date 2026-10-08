@@ -97,7 +97,8 @@ export default function Optimizer({
             </b>
             <p>
               Precios y potencias F para el pitch. Las opciones usan la misma
-              jornada, pasajeros, tarifa y personal.
+              jornada, pasajeros, tarifa y personal. Evaluar propone opciones;
+              pulsa «Aplicar al simulador» para cambiar el vehículo del mapa.
             </p>
           </div>
           <details className="pitch-catalog">

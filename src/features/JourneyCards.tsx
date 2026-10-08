@@ -19,6 +19,7 @@ export default function JourneyCards({
     j = r.scenario.journey,
     p = journeyAt(d, minute),
     soc = p.soc * 100,
+    pitch = isPitchScenario(r.scenario),
     slope = p.kind === "service" ? Math.round(p.slope * 1000) / 10 || 0 : null,
     SlopeIcon =
       slope !== null && slope > 0
@@ -34,9 +35,13 @@ export default function JourneyCards({
       >
         <div className="map-card-heading">
           <b>Batería</b>
-          {(stale || isPitchScenario(r.scenario)) && (
+          {(stale || pitch) && (
             <span className="map-simulation">
-              {stale ? "Resultado anterior" : "Demo del pitch"}
+              {stale
+                ? "Resultado anterior"
+                : r.scenario.ev.id === "kingo-ev"
+                  ? "Pitch · referencia inicial"
+                  : "Pitch · vehículo elegido"}
             </span>
           )}
         </div>
@@ -80,7 +85,10 @@ export default function JourneyCards({
           {num(p.kwh, 2)} kWh consumidos · {r.scenario.ev.capacity} plazas de
           prueba
         </p>
-        <a href="#/operacion/energia">Energía y recarga</a>
+        <div className="journey-card-links">
+          <a href="#/operacion/energia">Energía y recarga</a>
+          {pitch && <a href="#/economia/alternativas">Comparar vehículos</a>}
+        </div>
       </section>
       <section
         className="map-card journey-detail-card"

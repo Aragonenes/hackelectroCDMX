@@ -1402,6 +1402,14 @@
   color: var(--primary);
   align-self: center;
 }
+.dynamic-cards .journey-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+}
+.dynamic-cards .journey-card-links a {
+  font-size: 12px;
+}
 .dynamic-cards .journey-vehicle {
   display: flex;
   align-items: flex-start;
