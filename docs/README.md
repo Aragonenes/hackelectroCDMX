@@ -18,6 +18,8 @@ Actualizado el **6 de octubre de 2026**. Originales locales: **4 PDF, 221 págin
 | `investigacion/ruta1/` | Evaluación, notas iniciales, parámetros, matrices, fuentes, fichas, método, búsquedas y transparencia | [Índice de Ruta 1](investigacion/ruta1/README.md) |
 | `investigacion/latinoamerica/` | Análisis histórico y registro de sus referencias | [Índice de casos latinoamericanos](investigacion/latinoamerica/README.md) |
 | `investigacion/ruta1/recursos-abiertos/` | Geografías oficiales, diccionarios, metadatos y derivación con CC BY 4.0 | [Procedencia y método](investigacion/ruta1/recursos-abiertos/README.md) |
+| `investigacion/modelos/` | Catálogo de vehículos (eléctricos, combustión y gasolina) | [Índice de modelos](investigacion/modelos/README.md) |
+| `investigacion/Variables_Factores/` | Impacto de temperatura, clima, pasajeros, lluvia y pendientes en baterías | [Índice de variables y factores](investigacion/Variables_Factores/README.md) |
 | `originales/` | Cuatro PDF originales, sin modificaciones | [Inventario y hashes](inventario.json) |
 | `fuentes/` | Cuatro extracciones paginadas de los PDF locales | [Tabla de PDF y extracciones](#pdf-locales) |
 | `transcripciones-visuales/` (sólo local) | Revisiones manuales por documento y página | [Referencia local](contexto/fuentes-locales.md#materiales-derivados) |

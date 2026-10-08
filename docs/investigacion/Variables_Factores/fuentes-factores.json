@@ -1,0 +1,122 @@
+[
+  {
+    "id": "SRC-VF-01",
+    "clave": "NREL-FLEET-2022",
+    "titulo": "Financial and Operational Evaluation of Battery Electric Transit Buses: Lessons from Real-World In-Service Testing",
+    "autor": "Eudy, L., Jeffers, M., & Kelly, K.",
+    "institucion": "National Renewable Energy Laboratory (NREL), U.S. Department of Energy",
+    "anio": 2022,
+    "url": "https://www.nrel.gov/docs/fy22osti/81423.pdf",
+    "tipo": "Reporte Técnico Oficial",
+    "nivel_evidencia": "B",
+    "alcance": "Monitoreo con telemetría en vivo de flotas de autobuses eléctricos en Estados Unidos; desglose de impacto por climatización HVAC (20% a 40% del consumo), gradiente de pendiente y masa por pasajero."
+  },
+  {
+    "id": "SRC-VF-02",
+    "clave": "UITP-ESORT-2021",
+    "titulo": "Standardised On-Road Test Cycles (SORT and E-SORT): Protocol for Comparative Energy Consumption Evaluation in Urban Buses",
+    "autor": "International Association of Public Transport (UITP)",
+    "institucion": "UITP Bus Committee",
+    "anio": 2021,
+    "url": "https://www.uitp.org/publications/sort-standardised-on-road-test-cycles/",
+    "tipo": "Estándar Internacional de la Industria",
+    "nivel_evidencia": "B",
+    "alcance": "Metodología oficial de pruebas comparativas en ciclo urbano (SORT 1, 2 y 3); definición de perfiles de velocidad comercial (12, 18 y 25 km/h), masas normalizadas de lastre por pasaje y límites de medición de auxiliares."
+  },
+  {
+    "id": "SRC-VF-03",
+    "clave": "ALTOONA-FTA-2023",
+    "titulo": "Bus Testing Program: Comprehensive Energy Economy and Range Testing on Heavy-Duty Electric Transit Buses",
+    "autor": "Larson Transportation Institute (LTI)",
+    "institucion": "Penn State University / Federal Transit Administration (FTA)",
+    "anio": 2023,
+    "url": "https://www.altoonabustest.psu.edu/",
+    "tipo": "Reporte de Ensayos Dinamométricos y Pista",
+    "nivel_evidencia": "B",
+    "alcance": "Resultados de pruebas estandarizadas sobre dinamómetro de chasis de gran rodillo; mediciones de kWh/km bajo carga nula (tara), media carga (SLW) y carga bruta máxima (GVW) con y sin sistemas de climatización HVAC operando a máxima capacidad."
+  },
+  {
+    "id": "SRC-VF-04",
+    "clave": "SAE-J1634-2021",
+    "titulo": "Battery Electric Vehicle Energy Consumption and Range Test Procedure",
+    "autor": "Society of Automotive Engineers (SAE International)",
+    "institucion": "SAE Hybrid-Electric and Electric Vehicle Committee",
+    "anio": 2021,
+    "url": "https://www.sae.org/standards/content/j1634_202107/",
+    "tipo": "Norma Técnica de Ingeniería Automotriz",
+    "nivel_evidencia": "B",
+    "alcance": "Procedimiento de medición de ventana útil de descarga de baterías, pérdidas por resistencia interna de celdas a distintas temperaturas de prueba y eficiencia de recuperación regenerativa."
+  },
+  {
+    "id": "SRC-VF-05",
+    "clave": "MDPI-ENERGIES-TEMP-2022",
+    "titulo": "Impact of Ambient Temperature and Driving Dynamics on the Energy Consumption of Battery Electric Buses in Real-World Public Transport",
+    "autor": "Gao, Z., Lin, Z., Franzese, O., & Stelling, P.",
+    "institucion": "Energies / Oak Ridge National Laboratory",
+    "anio": 2022,
+    "url": "https://doi.org/10.3390/en15145120",
+    "tipo": "Artículo Científico Indexado",
+    "nivel_evidencia": "B",
+    "alcance": "Modelado de curva en 'U' del consumo energético respecto a la temperatura ambiente: aumento del consumo en frío extremo (hasta +70% por calefacción y resistencia interna) y en calor extremo (+25% a +35% por aire acondicionado)."
+  },
+  {
+    "id": "SRC-VF-06",
+    "clave": "CATL-LFP-TECH-2023",
+    "titulo": "Lithium Iron Phosphate (LFP) Battery Cell Specification and Thermal Management Operational Envelope",
+    "autor": "Contemporary Amperex Technology Co., Limited (CATL)",
+    "institucion": "CATL Commercial Vehicle Powertrain Division",
+    "anio": 2023,
+    "url": "https://www.catl.com/en/commercial/bus/",
+    "tipo": "Ficha de Ingeniería OEM",
+    "nivel_evidencia": "D",
+    "alcance": "Comportamiento electroquímico de celdas LFP: curvas de impedancia interna en función de la temperatura (-20°C a +55°C), límites de tasa C de carga regenerativa y algoritmos térmicos de preacondicionamiento por líquido refrigerante."
+  },
+  {
+    "id": "SRC-VF-07",
+    "clave": "BYD-K9-FIELD-2023",
+    "titulo": "BYD Commercial Electric Bus Operational Field Guidelines: Topography, Regenerative Braking and Altitude Considerations",
+    "autor": "BYD Auto Industry Company Limited",
+    "institucion": "BYD Commercial Vehicle Solutions",
+    "anio": 2023,
+    "url": "https://byd.com/en/commercial-vehicles",
+    "tipo": "Manual de Ingeniería y Operación de Flotas",
+    "nivel_evidencia": "D",
+    "alcance": "Directrices de operación de midibuses y autobuses urbanos (chasis K7 y K9); eficiencia de recuperación de energía en descensos (máximo 65-72%), protección de sobretensión en SOC > 90% y adaptación del tren motriz a altitudes superiores a 2,000 msnm."
+  },
+  {
+    "id": "SRC-VF-08",
+    "clave": "SEVILLA-TOPOGRAPHY-2023",
+    "titulo": "Quantifying the Influence of Road Grade and Vehicle Payload on Electric Bus Energy Consumption in Urban Networks",
+    "autor": "Sánchez-Sánchez, M., & Morales-García, A.",
+    "institucion": "Universidad de Sevilla / Transport Research Part D",
+    "anio": 2023,
+    "url": "https://doi.org/10.1016/j.trd.2023.103681",
+    "tipo": "Artículo Científico Indexado",
+    "nivel_evidencia": "B",
+    "alcance": "Estimación del gradiente de pendiente: cada incremento del 1% de pendiente ascendente incrementa el consumo específico entre 0.35 y 0.42 kWh/km en buses pesados; impacto del factor de sobrecupo de pasajeros en horas pico (+28% de masa neta)."
+  },
+  {
+    "id": "SRC-VF-09",
+    "clave": "TIRE-ROLLING-RAIN-2021",
+    "titulo": "Effects of Road Surface Wetness, Water Film Thickness and Weather Conditions on Tire Rolling Resistance and EV Energy Efficiency",
+    "autor": "Ejsmont, J., Ronowski, G., & Taryma, S.",
+    "institucion": "Measurement / Gdansk University of Technology",
+    "anio": 2021,
+    "url": "https://doi.org/10.1016/j.measurement.2021.109812",
+    "tipo": "Artículo Científico Experimental",
+    "nivel_evidencia": "B",
+    "alcance": "Medición empírica del aumento del coeficiente de resistencia a la rodadura (Crr) sobre pavimento mojado: incremento base de entre 5% y 11% en rodadura por desplazamiento hidrodinámico de película de agua, aunado al incremento de consumo por auxiliares."
+  },
+  {
+    "id": "SRC-VF-10",
+    "clave": "INECC-CDMX-CLIMA-2023",
+    "titulo": "Comportamiento Meteorológico y Perfil Térmico de la Zona Metropolitana del Valle de México para el Transporte Urbano",
+    "autor": "Instituto Nacional de Ecología y Cambio Climático (INECC) / SEDEMA CDMX",
+    "institucion": "Gobierno de la Ciudad de México",
+    "anio": 2023,
+    "url": "https://www.aire.cdmx.gob.mx/",
+    "tipo": "Registro Oficial Meteorológico",
+    "nivel_evidencia": "C",
+    "alcance": "Perfiles térmicos reales de CDMX: temperaturas promedio de 12°C a 26°C, picos vespertinos de radiación e islas de calor urbano (hasta 32°C en mayo), temporada de lluvias intensas (junio a octubre) y altitud media de 2,240 a 2,650 msnm."
+  }
+]
