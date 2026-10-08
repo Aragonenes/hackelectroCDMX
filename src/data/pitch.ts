@@ -25,7 +25,6 @@ export function createPitchScenario() {
   const evidence = pitchEvidence(
     "Entrada ilustrativa para la demo; editable y sin validación del ramal.",
   );
-  s.name = "Ruta 1 · demo del pitch";
   s.operation = {
     ...s.operation,
     cycleMinutes: 75,

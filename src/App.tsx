@@ -2,6 +2,7 @@ import JourneyProfiles from "./features/JourneyProfiles";
 import VehicleEnergyComparison from "./features/VehicleEnergyComparison";
 import { selectJourneyVehicle } from "./data/journey";
 import { createPitchScenario, isPitchScenario } from "./data/pitch";
+import { DEFAULT_SCENARIO_NAME } from "./data/defaults";
 import { lazy, Suspense, useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -118,6 +119,10 @@ export default function App() {
         a.name.localeCompare(b.name, "es"),
     );
   const valid = engine.status === "ready" && engine.result !== null;
+  const scenarioTitle =
+    isPitchScenario(scenario) && scenario.name === "Ruta 1 · demo del pitch"
+      ? DEFAULT_SCENARIO_NAME
+      : scenario.name;
   const save = () => {
     const parsed = ScenarioSchema.safeParse({
       ...scenario,
@@ -356,7 +361,7 @@ export default function App() {
               </span>
             </a>
             <div className="scenario-context">
-              <h1 title={scenario.name}>{scenario.name}</h1>
+              <h1 title={scenarioTitle}>{scenarioTitle}</h1>
               <button
                 className="route-switch"
                 onClick={() => setRouteDialog(true)}

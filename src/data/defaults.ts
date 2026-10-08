@@ -1,11 +1,12 @@
 import { selectJourneyVehicle } from "./journey";
 import { ScenarioSchema, type Scenario } from "../domain/schema";
 import { catalog, assumed } from "./catalog";
+export const DEFAULT_SCENARIO_NAME = "Ruta 1 · transición justa exploratoria";
 export function defaultScenario(): Scenario {
   const base = {
     schemaVersion: "1",
     modelVersion: "1.0.0",
-    name: "Ruta 1 · transición justa exploratoria",
+    name: DEFAULT_SCENARIO_NAME,
     route: {
       id: "M09-514",
       name: "METRO CU - SAN FERNANDO HUIPULCO",

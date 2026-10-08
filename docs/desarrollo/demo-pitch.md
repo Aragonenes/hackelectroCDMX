@@ -1,6 +1,6 @@
 # Demo de Ruta 1 para el pitch
 
-El botón **Activar jornada dinámica** del mapa carga el caso preparado para la presentación. Si ya hay una jornada activa, usar **Cargar demo para el pitch** o **Reiniciar demo del pitch**, al final de Configurar después de todos los parámetros. La conversión ordinaria de un escenario v1 continúa disponible en Configurar; el JSON v1 conserva su cálculo original.
+El botón **Activar jornada dinámica** del mapa carga el caso preparado para la presentación y conserva el encabezado por defecto: **Ruta 1 · transición justa exploratoria**. Si ya hay una jornada activa, usar **Cargar demo para el pitch** o **Reiniciar demo del pitch**, al final de Configurar después de todos los parámetros. La conversión ordinaria de un escenario v1 continúa disponible en Configurar; el JSON v1 conserva su cálculo original.
 
 La demo utiliza la geometría histórica Metro CU–San Fernando–Huipulco, el terreno preparado y el clima horario existentes. Sus entradas operativas y económicas son F: tres unidades, ocho vueltas de 75 minutos de referencia, pausas de cinco minutos, jornada disponible de 14 horas, 420 abordajes diarios de referencia por unidad, dos operadores por unidad y capital propio de $1,500,000 para la flota. La carga de patio comienza a las 20:00, con diez horas presupuestadas, cargadores de 22 kW, sitio de 90 kW y admisión de 30 kW supuesta para la referencia KINGO. Abordajes y recaudo no aumentan al cambiar vueltas.
 
