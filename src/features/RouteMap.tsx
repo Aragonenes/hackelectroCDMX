@@ -727,7 +727,7 @@ export default function RouteMap({
       ? `Progreso del día · vuelta ${activeCycle} de ${cycleCount}`
       : `Posición en la vuelta ${activeCycle}${position && geometry ? ` · trazo ${position.trace} de ${geometry.features.length}` : ""}`;
   const rangeValueText = result
-    ? `Vuelta ${activeCycle} de ${cycleCount}, ${num(fraction * 100, 0)} por ciento de la vuelta, ${num(currentPosition?.km ?? 0, 2)} kilómetros acumulados en el día`
+    ? `${day ? `${day.name}, ${clockTime(simulatedMinute)}, ` : ""}Vuelta ${activeCycle} de ${cycleCount}, ${num(fraction * 100, 0)} por ciento de la vuelta, ${num(currentPosition?.km ?? 0, 2)} kilómetros acumulados en el día`
     : "Posición del recorrido";
   const traceRanges = Array.from(
     { length: geometry?.features.length ?? 0 },
@@ -767,8 +767,26 @@ export default function RouteMap({
           active: i === (position?.trace ?? 1) - 1,
           size: trace.size,
         }));
-  const rangeTicks =
-    scope === "day"
+  const rangeTicks = day
+    ? scope === "day"
+      ? day.frames
+          .filter(
+            (f, i, all) =>
+              f.kind === "service" &&
+              f.cycle > 1 &&
+              (i === 0 || all[i - 1]?.cycle !== f.cycle),
+          )
+          .map((f) => ({
+            position: ((f.minute - scopeStart) / (scopeEnd - scopeStart)) * 100,
+            kind: "cycle",
+          }))
+      : (cycleFrames ?? [])
+          .filter((f, i, all) => i > 0 && f.trace !== all[i - 1]?.trace)
+          .map((f) => ({
+            position: ((f.minute - scopeStart) / (scopeEnd - scopeStart)) * 100,
+            kind: "trace",
+          }))
+    : scope === "day"
       ? Array.from({ length: Math.max(0, cycleCount - 1) }, (_, i) => ({
           position: ((i + 1) / cycleCount) * 100,
           kind: "cycle",

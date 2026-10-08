@@ -28,6 +28,10 @@ export default function JourneyProfiles({
         values: frames.map((f) => ({ x: f.minute, y: f.occupancy })),
       },
       {
+        label: "Abordajes acumulados del escenario",
+        values: frames.map((f) => ({ x: f.endMinute, y: f.boardings })),
+      },
+      {
         label: "Elevación del terreno (m)",
         values: frames
           .filter((f) => f.kind === "service")

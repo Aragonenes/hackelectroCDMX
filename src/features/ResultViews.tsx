@@ -63,8 +63,21 @@ export function EnergyPanel({ result: r }: { result: Result }) {
       <p className="result-conclusion">
         {energy.margin >= -1e-9 && !r.dynamic?.selected.firstReserve
           ? "La energía disponible alcanza"
-          : `Faltan ${num(-energy.margin, 2)} kWh para completar el día`}
+          : energy.margin < 0
+            ? `Faltan ${num(-energy.margin, 2)} kWh para completar el día`
+            : "La jornada cruza la reserva antes de recuperar energía"}
       </p>
+      {r.dynamic?.selected.firstReserve && (
+        <p>
+          El servicio previsto es {num(r.dailyKm, 1)} km. Puede cubrir{" "}
+          {num(r.dynamic.selected.firstReserve.km, 1)} km antes del primer cruce
+          de reserva.
+          {r.dynamic.selected.firstExhaustion
+            ? ` Agota energía a los ${num(r.dynamic.selected.firstExhaustion.km, 1)} km; ${num(r.dynamic.selected.unmetKwh, 2)} kWh de demanda quedan sin cubrir.`
+            : ""}{" "}
+          Recuperar energía después no borra esa incidencia.
+        </p>
+      )}
       <Suspense fallback={<div className="chart" />}>
         <Chart
           option={socOption}
@@ -79,7 +92,11 @@ export function EnergyPanel({ result: r }: { result: Result }) {
           <b className={energy.margin < 0 ? "negative" : ""}>
             {num(energy.margin, 2)} kWh
           </b>{" "}
-          {energy.margin < 0 ? "déficit energético" : "margen sin usar reserva"}
+          {energy.margin < 0
+            ? "déficit energético"
+            : r.dynamic?.selected.firstReserve
+              ? "margen final; hubo cruce de reserva"
+              : "margen sin usar reserva"}
         </span>
         <span>
           <b>

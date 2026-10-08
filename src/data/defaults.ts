@@ -1,3 +1,4 @@
+import { selectJourneyVehicle } from "./journey";
 import { ScenarioSchema, type Scenario } from "../domain/schema";
 import { catalog, assumed } from "./catalog";
 export function defaultScenario(): Scenario {
@@ -128,5 +129,7 @@ export function preset(
   )!;
   next.chargerCount = category === "van" ? 3 : 1;
   next.energy.siteKw = category === "van" ? 30 : 70;
-  return ScenarioSchema.parse(next);
+  return ScenarioSchema.parse(
+    next.schemaVersion === "2" ? selectJourneyVehicle(next, next.ev.id) : next,
+  );
 }
