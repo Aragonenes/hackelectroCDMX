@@ -41,20 +41,37 @@ export default function Environment({ result: r }: { result: Result }) {
     return [
       {
         ...base,
-        xAxis: { ...base.xAxis, name: "kg CO₂ · sólo escape" },
+        grid: { ...base.grid, right: 90 },
+        tooltip: {
+          ...base.tooltip,
+          trigger: "item",
+          formatter: (p: { dataIndex: number; value: number }) =>
+            p.dataIndex === 0
+              ? `Combustión · escape<br/>${num(p.value, 1)} kg CO₂`
+              : `Eléctrico · electricidad de recarga<br/>${num(p.value, 1)} kg CO₂e`,
+        },
+        xAxis: { ...base.xAxis, name: "kg · escape / recarga" },
+        yAxis: {
+          ...base.yAxis,
+          data: ["Combustión\nCO₂ · escape", "Eléctrico\nCO₂e · recarga"],
+          axisLabel: { fontSize: 11, lineHeight: 16 },
+        },
         series: [
           {
             type: "bar",
             data: [
               { value: view.tailpipeCO2Kg, itemStyle: { color: "#55585A" } },
-              { value: 0, itemStyle: { color: "#9D2148" } },
+              {
+                value: view.electricityCO2eKg,
+                itemStyle: { color: "#9D2148" },
+              },
             ],
             label: {
               show: true,
-              position: "insideLeft",
-              color: "#FFFFFF",
-              formatter: (p: { value: number }) =>
-                p.value > 0 ? num(p.value, 1) : "",
+              position: "right",
+              color: "#55585A",
+              fontSize: 11,
+              formatter: (p: { value: number }) => num(p.value, 1),
             },
           },
         ],
@@ -84,7 +101,8 @@ export default function Environment({ result: r }: { result: Result }) {
       </div>
       <p>
         Sustituir las unidades evita su escape en el recorrido supuesto. La
-        recarga tiene emisiones indirectas que se muestran por separado.
+        electricidad para recargar genera emisiones indirectas; el gráfico
+        identifica ambos alcances y el desglose explica la recarga.
       </p>
       <div className="environment-controls">
         <div className="field">
@@ -142,14 +160,16 @@ export default function Environment({ result: r }: { result: Result }) {
       </div>
       <div className="chart-grid environmental-charts">
         <div>
-          <h3>Emisiones de CO₂ por el escape</h3>
+          <h3>Emisiones del escape y de la recarga</h3>
           <p>
-            {scopeLabel} · {periodLabel} · eléctrico: 0 kg CO₂ por escape
+            {scopeLabel} · {periodLabel}. Combustión: CO₂ por escape; eléctrico:
+            CO₂e asociado a la electricidad de recarga, incluidas sus pérdidas.
+            El escape eléctrico permanece en 0 kg CO₂.
           </p>
           <Suspense fallback={<div className="chart" />}>
             <Chart
               option={options[0]!}
-              label={`CO₂ sólo por escape: combustión ${num(view.tailpipeCO2Kg, 2)} kg y eléctrico cero. ${scopeLabel}, ${periodLabel}.`}
+              label={`Emisiones por alcances: combustión ${num(view.tailpipeCO2Kg, 2)} kg CO₂ por escape; eléctrico ${num(view.electricityCO2eKg, 2)} kg CO₂e asociados a la electricidad de recarga, incluidas pérdidas. Escape eléctrico: 0 kg CO₂. ${scopeLabel}, ${periodLabel}. Sin reducción neta ni ciclo de vida.`}
             />
           </Suspense>
         </div>

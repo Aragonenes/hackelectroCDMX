@@ -100,6 +100,8 @@ Combustión: litros × factor EPA (8.887 gasolina / 10.180 diésel kg CO₂ por 
 
 Electricidad: kWh comprados × 0.444 kg CO₂e/kWh, factor SEN 2024 referido por aviso SEMARNAT de 2026. No es una medición de 2026 ni ciclo de vida. Mostrar ambas magnitudes por separado, sin porcentaje neto de reducción por alcances incompatibles.
 
+El gráfico principal de Ambiente presenta una barra de CO₂ por escape de combustión y otra de CO₂e asociado a la electricidad de recarga, incluidas pérdidas. Cada barra identifica su alcance y unidad; ambas responden al ámbito y período seleccionados. El escape eléctrico sigue siendo cero. El segundo gráfico desglosa la recarga entre servicio, recorridos adicionales y pérdidas, sin sumar los dos alcances ni calcular una reducción neta.
+
 El BEV carece de escape; no se calculan NOx/PM, beneficios sanitarios causales, ahorro de tiempo o baja de tarifa. Conservar servicio, ingreso y trabajo son condiciones explícitas del modelo, no efectos garantizados por la electrificación.
 
 ## Reproducción y validación
