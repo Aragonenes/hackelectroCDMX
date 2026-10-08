@@ -1,0 +1,2378 @@
+[
+  {
+    "id": "VAN-01",
+    "name": "JAC E Sunray",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 77.28,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2800.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 17,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.27,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-02",
+    "name": "Foton e-View (CS2 EV)",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 50.23,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2250.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 16,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.22,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-03",
+    "name": "Maxus eDeliver 9",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 88.5,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2850.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 15,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.3,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-04",
+    "name": "Ford E-Transit",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 89.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2900.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 15,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.31,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-05",
+    "name": "Renault Master E-Tech",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 52.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2500.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 15,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.26,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-06",
+    "name": "Mercedes-Benz eSprinter",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 113.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 3050.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 15,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.28,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "Bomba de Calor con Recuperacion",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-07",
+    "name": "Peugeot e-Traveller",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 75.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2100.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 11,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.23,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-08",
+    "name": "Joylong E6",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 86.1,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 2950.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 20,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.285,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-09",
+    "name": "Jinbei Haise EV",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 50.2,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 1980.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 15,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.2,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-10",
+    "name": "Wuling EV50 / Rongguang",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 43.2,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 1380.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 11,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.17,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "VAN-11",
+    "name": "DFSK EC35",
+    "category": "van",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 38.7,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 1350.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 11,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.16,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-01",
+    "name": "Volare (Marcopolo) Access-E",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 150.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 8300.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 26,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.6,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-02",
+    "name": "BYD K7 / B8",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 174.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 8200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 26,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.69,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-03",
+    "name": "Yutong E8",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 115.9,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 7400.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 28,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.46,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-04",
+    "name": "Zhongtong Midibús 8m",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 130.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 7800.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 25,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.5,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-05",
+    "name": "Skywell Midibús NJGD",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 140.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 8000.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 25,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.56,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-06",
+    "name": "King Long XMQ6850",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 160.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 8100.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 26,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.61,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-07",
+    "name": "Hyundai County Electric",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 128.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 5200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 33,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.51,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-08",
+    "name": "Hino (Toyota) Poncho Z EV",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 105.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 5600.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 30,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.7,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-09",
+    "name": "Isuzu Novociti Volt",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 211.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 8200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 52,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.7,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "MIDI-10",
+    "name": "Karsan e-ATAK",
+    "category": "minibus",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 220.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 7600.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 52,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.73,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "Bomba de Calor con Recuperacion",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-01",
+    "name": "DINA Linner E",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 314.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.25,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-02",
+    "name": "Yutong E12",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 352.1,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 12800.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.1,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-03",
+    "name": "BYD K9",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 324.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13500.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.29,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-04",
+    "name": "Volvo Buses Luminus",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 330.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13000.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.32,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "Bomba de Calor con Recuperacion",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-05",
+    "name": "Scania Citywide Volt",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 330.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.32,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "Bomba de Calor con Recuperacion",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-06",
+    "name": "Mercedes-Benz eO500U",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 384.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13600.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.5,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "Bomba de Calor con Recuperacion",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-07",
+    "name": "Marcopolo Attivi Integral",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 396.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13800.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.4,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-08",
+    "name": "Irizar ie tram",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 350.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 14000.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 80,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.4,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-09",
+    "name": "Hyundai Elec City",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 256.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 11800.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 0.88,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-10",
+    "name": "Tata Motors Starbus EV",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 250.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13000.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.25,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Convencional + Calefaccion PTC",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-11",
+    "name": "Higer KLQ6125GEV",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 300.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13200.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.2,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  },
+  {
+    "id": "URB-12",
+    "name": "CRRC C12",
+    "category": "urban",
+    "variant": "Por confirmar; no equivale a una configuración mexicana homologada",
+    "parameters": {
+      "batteryKwh": {
+        "value": 315.0,
+        "unit": "kWh nominales",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "massKg": {
+        "value": 13400.0,
+        "unit": "kg sin pasajeros",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "capacity": {
+        "value": 85,
+        "unit": "plazas supuestas",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "consumption": {
+        "value": 1.21,
+        "unit": "kWh/km netos de referencia",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "hvac": {
+        "value": "A/C Inverter con BTMS Integrado",
+        "unit": "configuración propuesta",
+        "status": "supuesto",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "price": {
+        "value": null,
+        "unit": "MXN",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "maxChargeKw": {
+        "value": null,
+        "unit": "kW",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      },
+      "connector": {
+        "value": null,
+        "unit": "tipo",
+        "status": "desconocido",
+        "sourceId": "J-AUDIT",
+        "level": "F",
+        "limitation": "Propuesta del expediente; variante y condiciones de prueba no acreditadas."
+      }
+    }
+  }
+]
