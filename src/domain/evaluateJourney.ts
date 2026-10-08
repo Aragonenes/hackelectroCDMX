@@ -1,8 +1,22 @@
 import { evaluateLegacy } from "./evaluate";
-import { prepareJourneys, type JourneyResults } from "./journey";
+import {
+  prepareJourneys,
+  type JourneyResults,
+  type DayJourney,
+} from "./journey";
+import { charging } from "./charging";
 import type { DynamicScenario, Result } from "./schema";
-export function evaluateDynamic(s: DynamicScenario): Result {
-  const days = prepareJourneys(s),
+export function evaluateDynamic(
+  s: DynamicScenario,
+  trajectory?: DayJourney[],
+): Result {
+  // La búsqueda cambia carga y finanzas; conserva la trayectoria de este vehículo.
+  const days = trajectory
+      ? trajectory.map((d) => ({
+          ...d,
+          charge: charging(s, Math.max(0, d.netKwh)),
+        }))
+      : prepareJourneys(s),
     selected = days[s.journey.selectedDay]!;
   const monthly: JourneyResults["monthly"] = {
     km: 0,

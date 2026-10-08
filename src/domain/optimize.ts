@@ -6,6 +6,8 @@ import {
   type Alternative,
 } from "./schema";
 import { evaluateScenario } from "./evaluate";
+import { evaluateDynamic } from "./evaluateJourney";
+import { prepareJourneys } from "./journey";
 import { financial } from "./finance";
 export class SearchCancelled extends Error {
   constructor() {
@@ -20,12 +22,18 @@ export async function findConditions(
   } = {},
 ): Promise<SearchResult> {
   const s = ScenarioSchema.parse(input);
+  const pitch =
+    s.schemaVersion === "2" && s.journey.evidence.pitch?.sourceId === "F-PITCH";
   const catalogVehicles =
     s.schemaVersion === "2" && !s.catalog.vehicles.some((v) => v.id === s.ev.id)
       ? [...s.catalog.vehicles, s.ev]
       : s.catalog.vehicles;
   const vehicles = catalogVehicles
-    .filter((v) => v.fuel === "electricidad")
+    .filter(
+      (v) =>
+        v.fuel === "electricidad" &&
+        (!pitch || v.evidence.price?.sourceId === "F-PITCH"),
+    )
     .map((v) => (v.id === s.ev.id ? s.ev : v));
   const chargers = s.catalog.chargers.map((c) =>
     c.id === s.charger.id ? s.charger : c,
@@ -40,15 +48,20 @@ export async function findConditions(
     maxBatteryConsumption: current.usableKwh / current.dailyKm,
     minimumAverageSiteKw:
       (current.dailyGridKwh * s.operation.fleet) / s.energy.chargeHours,
-    monthlyOperatingGap: Math.max(
-      0,
-      current.ev.operatingMonth +
-        current.ev.protectedMonth +
-        s.economy.monthlyReserve * s.operation.fleet -
-        current.ev.months[0]!.revenue,
-    ),
+    monthlyOperatingGap:
+      current.dynamic?.economicComplete === false
+        ? NaN
+        : Math.max(
+            0,
+            current.ev.operatingMonth +
+              current.ev.protectedMonth +
+              s.economy.monthlyReserve * s.operation.fleet -
+              current.ev.months[0]!.revenue,
+          ),
   };
   const result: SearchResult = {
+    vehicleCount: vehicles.length,
+    feasibleVehicleCount: 0,
     alternatives: [],
     tested: 0,
     rejected: {},
@@ -56,11 +69,29 @@ export async function findConditions(
     thresholds,
   };
   if (result.limitExceeded) return result;
-  const winners: Alternative[] = [];
+  // Conservar resúmenes financieros; las trayectorias completas sólo se calculan
+  // para las opciones finales, evitando retener miles de jornadas en memoria.
+  const winners: (Pick<Alternative, "scenario" | "support"> & {
+    economicCost: number;
+    ownRequired: number;
+  })[] = [];
+  const vehicleScenarios = new Map(
+    vehicles.map((ev) => [
+      ev.id,
+      s.schemaVersion === "2" && ev.id !== s.ev.id
+        ? selectJourneyVehicle(s, ev.id)
+        : s,
+    ]),
+  );
   const reject = (id: string) => {
     result.rejected[id] = (result.rejected[id] ?? 0) + 1;
   };
-  for (const ev of vehicles)
+  for (const ev of vehicles) {
+    const vehicleScenario = vehicleScenarios.get(ev.id)!;
+    const trajectory =
+      vehicleScenario.schemaVersion === "2"
+        ? prepareJourneys(vehicleScenario)
+        : undefined;
     for (const charger of chargers)
       for (const finance of finances)
         for (
@@ -69,12 +100,6 @@ export async function findConditions(
           chargerCount++
         ) {
           if (options.cancelled?.()) throw new SearchCancelled();
-          const vehicleScenario =
-            s.schemaVersion === "2"
-              ? ev.id === s.ev.id
-                ? s
-                : selectJourneyVehicle(s, ev.id)
-              : s;
           const candidate: Scenario = {
             ...vehicleScenario,
             ev,
@@ -83,7 +108,10 @@ export async function findConditions(
             chargerCount,
             economy: { ...s.economy, support: 0 },
           };
-          const baseline = evaluateScenario(candidate);
+          const baseline =
+            candidate.schemaVersion === "2"
+              ? evaluateDynamic(candidate, trajectory)
+              : evaluateScenario(candidate);
           result.tested++;
           const failures = baseline.constraints.filter(
             (c) =>
@@ -137,14 +165,13 @@ export async function findConditions(
                 ...candidate,
                 economy: { ...candidate.economy, support: lo / 100 },
               };
-              const evaluation = evaluateScenario(funded);
-              if (evaluation.passes)
-                winners.push({
-                  scenario: funded,
-                  result: evaluation,
-                  support: lo / 100,
-                });
-              else reject("monthly");
+              const evaluation = at(lo);
+              winners.push({
+                scenario: funded,
+                support: lo / 100,
+                economicCost: evaluation.economicCost,
+                ownRequired: evaluation.ownRequired,
+              });
             }
           }
           if (result.tested % 10 === 0) {
@@ -152,16 +179,36 @@ export async function findConditions(
             await new Promise<void>((resolve) => setTimeout(resolve, 0));
           }
         }
+  }
   winners.sort(
     (a, b) =>
       a.support - b.support ||
-      a.result.ev.economicCost - b.result.ev.economicCost ||
-      a.result.ev.ownRequired - b.result.ev.ownRequired ||
+      a.economicCost - b.economicCost ||
+      a.ownRequired - b.ownRequired ||
       `${a.scenario.ev.id}-${a.scenario.charger.id}-${a.scenario.finance.id}-${a.scenario.chargerCount}`.localeCompare(
         `${b.scenario.ev.id}-${b.scenario.charger.id}-${b.scenario.finance.id}-${b.scenario.chargerCount}`,
       ),
   );
-  result.alternatives = winners.slice(0, 3);
+  result.feasibleVehicleCount = new Set(
+    winners.map((w) => w.scenario.ev.id),
+  ).size;
+  const shown = new Set<string>();
+  for (const winner of winners) {
+    if (pitch && shown.has(winner.scenario.ev.id)) continue;
+    if (options.cancelled?.()) throw new SearchCancelled();
+    const evaluation = evaluateScenario(winner.scenario);
+    if (!evaluation.passes) {
+      reject("monthly");
+      continue;
+    }
+    result.alternatives.push({
+      scenario: winner.scenario,
+      result: evaluation,
+      support: winner.support,
+    });
+    shown.add(winner.scenario.ev.id);
+    if (result.alternatives.length === 3) break;
+  }
   options.progress?.(result.tested, total);
   return result;
 }

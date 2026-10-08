@@ -316,6 +316,8 @@ export interface Alternative {
   support: number;
 }
 export interface SearchResult {
+  vehicleCount?: number;
+  feasibleVehicleCount?: number;
   alternatives: Alternative[];
   tested: number;
   rejected: Record<string, number>;
