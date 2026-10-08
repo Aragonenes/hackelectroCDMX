@@ -2,8 +2,9 @@
 
 **Expediente de investigación técnica · Reto 2: «Electrifica tu flota»**  
 Fecha de consolidación: Octubre de 2026.  
-Ubicación del dataset tabular: [`catalogo-vehiculos-electricos-combustion.csv`](catalogo-vehiculos-electricos-combustion.csv).  
-Fuentes citadas y fichas técnicas: [Fichas técnicas y catálogo](../../contexto/fichas-tecnicas-vehiculos.md).
+Ubicación del dataset tabular (Eléctricos vs. Combustión): [`catalogo-vehiculos-electricos-combustion.csv`](catalogo-vehiculos-electricos-combustion.csv).  
+Ubicación del dataset tabular (Equivalentes Gasolina): [`catalogo-vehiculos-gasolina.csv`](catalogo-vehiculos-gasolina.csv).  
+Fuentes citadas y fichas técnicas: [Fichas técnicas de vehículos eléctricos](../../contexto/fichas-tecnicas-vehiculos.md) · [Fichas técnicas de vehículos de gasolina (ICE)](../../contexto/fichas-tecnicas-vehiculos-gasolina.md).
 
 ---
 
@@ -115,7 +116,9 @@ Unidades de alta capacidad para corredores troncales, equivalentes a los servici
 
 ## 5. Vinculación con los Expedientes del Proyecto
 
-* **Dataset CSV editable:** [`catalogo-vehiculos-electricos-combustion.csv`](catalogo-vehiculos-electricos-combustion.csv).
-* **Fuentes bibliográficas en APA y créditos:** [`docs/contexto/fichas-tecnicas-vehiculos.md`](../../contexto/fichas-tecnicas-vehiculos.md).
+* **Dataset CSV editable (Eléctricos vs. Combustión general):** [`catalogo-vehiculos-electricos-combustion.csv`](catalogo-vehiculos-electricos-combustion.csv).
+* **Dataset CSV editable (Equivalentes dedicados de Gasolina):** [`catalogo-vehiculos-gasolina.csv`](catalogo-vehiculos-gasolina.csv).
+* **Fuentes bibliográficas en APA y créditos (Eléctricos):** [`docs/contexto/fichas-tecnicas-vehiculos.md`](../../contexto/fichas-tecnicas-vehiculos.md).
+* **Fuentes bibliográficas en APA y fichas (Gasolina):** [`docs/contexto/fichas-tecnicas-vehiculos-gasolina.md`](../../contexto/fichas-tecnicas-vehiculos-gasolina.md).
 * **Parámetros de motor y simulación:** [`docs/desarrollo/metodologia-motor.md`](../../desarrollo/metodologia-motor.md).
 * **Expediente de viabilidad Ruta 1:** [`docs/investigacion/ruta1/evaluacion-viabilidad-ruta1.md`](../ruta1/evaluacion-viabilidad-ruta1.md).

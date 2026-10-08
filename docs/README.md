@@ -14,7 +14,7 @@ Actualizado el **6 de octubre de 2026**. Originales locales: **4 PDF, 221 págin
 
 | Ubicación | Contenido | Punto de entrada |
 | --- | --- | --- |
-| `contexto/` | Síntesis del reto, guía de capacitación y revisión de licencia | [Síntesis](contexto/sintesis.md) y [licencias](contexto/licencia-proyecto.md) |
+| `contexto/` | Síntesis del reto, fichas técnicas (eléctricos y gasolina) y licencias | [Síntesis](contexto/sintesis.md), [fichas eléctricas](contexto/fichas-tecnicas-vehiculos.md) y [fichas gasolina](contexto/fichas-tecnicas-vehiculos-gasolina.md) |
 | `investigacion/ruta1/` | Evaluación, notas iniciales, parámetros, matrices, fuentes, fichas, método, búsquedas y transparencia | [Índice de Ruta 1](investigacion/ruta1/README.md) |
 | `investigacion/latinoamerica/` | Análisis histórico y registro de sus referencias | [Índice de casos latinoamericanos](investigacion/latinoamerica/README.md) |
 | `investigacion/ruta1/recursos-abiertos/` | Geografías oficiales, diccionarios, metadatos y derivación con CC BY 4.0 | [Procedencia y método](investigacion/ruta1/recursos-abiertos/README.md) |
@@ -78,7 +78,7 @@ El [inventario JSON](inventario.json) registra rutas, hashes SHA-256, páginas y
 | Tema | Presentación completa (página PDF) | Otras fuentes |
 | --- | --- | --- |
 | Requisitos del reto 2 y protección del ingreso | Antecedente técnico | Problemáticas 4–5 |
-| Mercado y opciones de vehículos | 7–9, 13–20 | PIM 54 y 56 |
+| Mercado y opciones de vehículos | 7–9, 13–20 | [Fichas eléctricas](contexto/fichas-tecnicas-vehiculos.md), [fichas gasolina](contexto/fichas-tecnicas-vehiculos-gasolina.md), PIM 54 y 56 |
 | Costo energético | [18](contexto/fuentes-locales.md#introduccion-electromovilidad) | Reglamento, artículos 93 y 96–99 |
 | Emisiones operativas y ciclo de vida | [22–24](contexto/fuentes-locales.md#introduccion-electromovilidad), 33 | PIM 24, 54 y 60 |
 | MHEV/HEV/PHEV/REEV/BEV/FCEV | [28–36](contexto/fuentes-locales.md#introduccion-electromovilidad) | Tecnología según operación de la flota |

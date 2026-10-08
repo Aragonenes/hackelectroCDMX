@@ -3,7 +3,8 @@
 **Expediente de procedencia documental, citas en formato APA (7.ª edición) y atribución de derechos.**  
 Fecha de consulta y recopilación: Octubre de 2026.  
 Dataset técnico asociado: [`docs/investigacion/modelos/catalogo-vehiculos-electricos-combustion.csv`](../investigacion/modelos/catalogo-vehiculos-electricos-combustion.csv).  
-Análisis de ingeniería y equivalencias: [`docs/investigacion/modelos/README.md`](../investigacion/modelos/README.md).
+Análisis de ingeniería y equivalencias: [`docs/investigacion/modelos/README.md`](../investigacion/modelos/README.md).  
+Fichas técnicas de vehículos de gasolina (ICE): [`fichas-tecnicas-vehiculos-gasolina.md`](fichas-tecnicas-vehiculos-gasolina.md).
 
 ---
 
@@ -169,3 +170,7 @@ Conforme a la política de propiedad intelectual del proyecto (véase [`licencia
 En concordancia con la escala **A–F** definida en [`docs/investigacion/ruta1/metodologia-ruta1.md`](../investigacion/ruta1/metodologia-ruta1.md):
 * **Nivel D (Oficial / Comercial Nacional e Internacional):** Todas las especificaciones de batería, potencia, torque, longitud y química corresponden a fichas técnicas y catálogos directos de los fabricantes (Nivel D).
 * **Nivel F (Derivado / Supuesto Exploratorio):** Las equivalencias de consumo de combustible en ciclo urbano de CDMX (km/L) y el rendimiento en pendientes o tráfico pesado son valores derivados representativos basados en la cilindrada y peso bruto vehicular, requeridos para calibrar el simulador de TCO y emisiones. No constituyen mediciones con telemetría en vivo del ramal.
+
+Para consultar el expediente monográfico de los modelos de combustión interna que operan en las rutas de CDMX, véase:  
+* [Fichas Técnicas de Vehículos Equivalentes de Gasolina (ICE CDMX)](fichas-tecnicas-vehiculos-gasolina.md)
+
