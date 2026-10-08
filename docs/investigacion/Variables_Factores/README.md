@@ -1,3 +1,5 @@
+> **Revisión 2026-10-08:** este expediente contiene propuestas sin validación por variante. Sus porcentajes y tablas críticas no alimentan el motor. Consultar [auditoría y correcciones](auditoria-jornada.md) antes de reutilizar cifras. La escala es A ramal oficial / B zona oficial / C CDMX comparable / D México / E externo / F supuesto; naturaleza y escala son independientes.
+
 # Expediente de Variables y Factores que Modulan la Descarga de Baterías
 
 **Investigación técnica y paramétrica · Reto 2: «Electrifica tu flota»**  

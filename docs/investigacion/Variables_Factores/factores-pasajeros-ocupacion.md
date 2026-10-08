@@ -1,3 +1,5 @@
+> **Revisión 2026-10-08:** este expediente contiene propuestas sin validación por variante. Sus porcentajes y tablas críticas no alimentan el motor. Consultar [auditoría y correcciones](auditoria-jornada.md) antes de reutilizar cifras. La escala es A ramal oficial / B zona oficial / C CDMX comparable / D México / E externo / F supuesto; naturaleza y escala son independientes.
+
 # Factores de Ocupación: Carga de Pasajeros y Horas Pico en la Descarga de Baterías
 
 **Expediente de investigación técnica · Reto 2: «Electrifica tu flota»**  

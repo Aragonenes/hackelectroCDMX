@@ -8,8 +8,10 @@
     "anio": 2022,
     "url": "https://www.nrel.gov/docs/fy22osti/81423.pdf",
     "tipo": "Reporte Técnico Oficial",
-    "nivel_evidencia": "B",
-    "alcance": "Monitoreo con telemetría en vivo de flotas de autobuses eléctricos en Estados Unidos; desglose de impacto por climatización HVAC (20% a 40% del consumo), gradiente de pendiente y masa por pasajero."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Monitoreo con telemetría en vivo de flotas de autobuses eléctricos en Estados Unidos; desglose de impacto por climatización HVAC (20% a 40% del consumo), gradiente de pendiente y masa por pasajero.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-02",
@@ -20,8 +22,10 @@
     "anio": 2021,
     "url": "https://www.uitp.org/publications/sort-standardised-on-road-test-cycles/",
     "tipo": "Estándar Internacional de la Industria",
-    "nivel_evidencia": "B",
-    "alcance": "Metodología oficial de pruebas comparativas en ciclo urbano (SORT 1, 2 y 3); definición de perfiles de velocidad comercial (12, 18 y 25 km/h), masas normalizadas de lastre por pasaje y límites de medición de auxiliares."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Metodología oficial de pruebas comparativas en ciclo urbano (SORT 1, 2 y 3); definición de perfiles de velocidad comercial (12, 18 y 25 km/h), masas normalizadas de lastre por pasaje y límites de medición de auxiliares.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-03",
@@ -32,8 +36,10 @@
     "anio": 2023,
     "url": "https://www.altoonabustest.psu.edu/",
     "tipo": "Reporte de Ensayos Dinamométricos y Pista",
-    "nivel_evidencia": "B",
-    "alcance": "Resultados de pruebas estandarizadas sobre dinamómetro de chasis de gran rodillo; mediciones de kWh/km bajo carga nula (tara), media carga (SLW) y carga bruta máxima (GVW) con y sin sistemas de climatización HVAC operando a máxima capacidad."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Resultados de pruebas estandarizadas sobre dinamómetro de chasis de gran rodillo; mediciones de kWh/km bajo carga nula (tara), media carga (SLW) y carga bruta máxima (GVW) con y sin sistemas de climatización HVAC operando a máxima capacidad.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-04",
@@ -44,8 +50,10 @@
     "anio": 2021,
     "url": "https://www.sae.org/standards/content/j1634_202107/",
     "tipo": "Norma Técnica de Ingeniería Automotriz",
-    "nivel_evidencia": "B",
-    "alcance": "Procedimiento de medición de ventana útil de descarga de baterías, pérdidas por resistencia interna de celdas a distintas temperaturas de prueba y eficiencia de recuperación regenerativa."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Procedimiento de medición de ventana útil de descarga de baterías, pérdidas por resistencia interna de celdas a distintas temperaturas de prueba y eficiencia de recuperación regenerativa.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-05",
@@ -56,8 +64,13 @@
     "anio": 2022,
     "url": "https://doi.org/10.3390/en15145120",
     "tipo": "Artículo Científico Indexado",
-    "nivel_evidencia": "B",
-    "alcance": "Modelado de curva en 'U' del consumo energético respecto a la temperatura ambiente: aumento del consumo en frío extremo (hasta +70% por calefacción y resistencia interna) y en calor extremo (+25% a +35% por aire acondicionado)."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Modelado de curva en 'U' del consumo energético respecto a la temperatura ambiente: aumento del consumo en frío extremo (hasta +70% por calefacción y resistencia interna) y en calor extremo (+25% a +35% por aire acondicionado).",
+    "estado": "descartada_por_doi_incorrecto",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1.",
+    "titulo_real": "A Modified Geometry-Based MIMO Channel Model for Tunnel Scattering Communication Environments",
+    "autores_reales": "Denghong Tang; Xiaoli Xi; Qianying Fan",
+    "incidencia": "Crossref consultado 2026-10-08: comunicaciones inalámbricas; no electromovilidad ni temperatura."
   },
   {
     "id": "SRC-VF-06",
@@ -68,8 +81,10 @@
     "anio": 2023,
     "url": "https://www.catl.com/en/commercial/bus/",
     "tipo": "Ficha de Ingeniería OEM",
-    "nivel_evidencia": "D",
-    "alcance": "Comportamiento electroquímico de celdas LFP: curvas de impedancia interna en función de la temperatura (-20°C a +55°C), límites de tasa C de carga regenerativa y algoritmos térmicos de preacondicionamiento por líquido refrigerante."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Comportamiento electroquímico de celdas LFP: curvas de impedancia interna en función de la temperatura (-20°C a +55°C), límites de tasa C de carga regenerativa y algoritmos térmicos de preacondicionamiento por líquido refrigerante.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-07",
@@ -80,8 +95,10 @@
     "anio": 2023,
     "url": "https://byd.com/en/commercial-vehicles",
     "tipo": "Manual de Ingeniería y Operación de Flotas",
-    "nivel_evidencia": "D",
-    "alcance": "Directrices de operación de midibuses y autobuses urbanos (chasis K7 y K9); eficiencia de recuperación de energía en descensos (máximo 65-72%), protección de sobretensión en SOC > 90% y adaptación del tren motriz a altitudes superiores a 2,000 msnm."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Directrices de operación de midibuses y autobuses urbanos (chasis K7 y K9); eficiencia de recuperación de energía en descensos (máximo 65-72%), protección de sobretensión en SOC > 90% y adaptación del tren motriz a altitudes superiores a 2,000 msnm.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-08",
@@ -92,8 +109,10 @@
     "anio": 2023,
     "url": "https://doi.org/10.1016/j.trd.2023.103681",
     "tipo": "Artículo Científico Indexado",
-    "nivel_evidencia": "B",
-    "alcance": "Estimación del gradiente de pendiente: cada incremento del 1% de pendiente ascendente incrementa el consumo específico entre 0.35 y 0.42 kWh/km en buses pesados; impacto del factor de sobrecupo de pasajeros en horas pico (+28% de masa neta)."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Estimación del gradiente de pendiente: cada incremento del 1% de pendiente ascendente incrementa el consumo específico entre 0.35 y 0.42 kWh/km en buses pesados; impacto del factor de sobrecupo de pasajeros en horas pico (+28% de masa neta).",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-09",
@@ -104,8 +123,10 @@
     "anio": 2021,
     "url": "https://doi.org/10.1016/j.measurement.2021.109812",
     "tipo": "Artículo Científico Experimental",
-    "nivel_evidencia": "B",
-    "alcance": "Medición empírica del aumento del coeficiente de resistencia a la rodadura (Crr) sobre pavimento mojado: incremento base de entre 5% y 11% en rodadura por desplazamiento hidrodinámico de película de agua, aunado al incremento de consumo por auxiliares."
+    "nivel_evidencia": "E",
+    "afirmacion_original_no_validada": "Medición empírica del aumento del coeficiente de resistencia a la rodadura (Crr) sobre pavimento mojado: incremento base de entre 5% y 11% en rodadura por desplazamiento hidrodinámico de película de agua, aunado al incremento de consumo por auxiliares.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   },
   {
     "id": "SRC-VF-10",
@@ -117,6 +138,8 @@
     "url": "https://www.aire.cdmx.gob.mx/",
     "tipo": "Registro Oficial Meteorológico",
     "nivel_evidencia": "C",
-    "alcance": "Perfiles térmicos reales de CDMX: temperaturas promedio de 12°C a 26°C, picos vespertinos de radiación e islas de calor urbano (hasta 32°C en mayo), temporada de lluvias intensas (junio a octubre) y altitud media de 2,240 a 2,650 msnm."
+    "afirmacion_original_no_validada": "Perfiles térmicos reales de CDMX: temperaturas promedio de 12°C a 26°C, picos vespertinos de radiación e islas de calor urbano (hasta 32°C en mayo), temporada de lluvias intensas (junio a octubre) y altitud media de 2,240 a 2,650 msnm.",
+    "estado": "referencia_pendiente_de_verificar",
+    "alcance": "Contexto externo; no calibra consumo de los modelos ni de Ruta 1."
   }
 ]
