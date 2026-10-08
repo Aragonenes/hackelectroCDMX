@@ -193,9 +193,13 @@ export default function Optimizer({
                       {a.scenario.finance.name}
                     </p>
                     <span className="small-label">
-                      Aportación inicial mínima hipotética · flota
+                      {pitch
+                        ? "Capital propio inicial · flota"
+                        : "Apoyo adicional mínimo hipotético · flota"}
                     </span>
-                    <strong className="support-value">{mxn(a.support)}</strong>
+                    <strong className="support-value">
+                      {mxn(pitch ? a.result.ev.ownRequired : a.support)}
+                    </strong>
                     <dl>
                       {pitch && (
                         <div>
@@ -211,9 +215,25 @@ export default function Optimizer({
                         </div>
                       )}
                       <div>
-                        <dt>Capital propio</dt>
-                        <dd>{mxn(a.result.ev.ownRequired)}</dd>
+                        <dt>
+                          {pitch
+                            ? "Apoyo adicional requerido"
+                            : "Capital propio"}
+                        </dt>
+                        <dd>
+                          {mxn(pitch ? a.support : a.result.ev.ownRequired)}
+                        </dd>
                       </div>
+                      {pitch && a.scenario.finance.kind !== "cash" && (
+                        <div>
+                          <dt>
+                            {a.scenario.finance.kind === "lease"
+                              ? "Renta mensual de la flota"
+                              : "Pago mensual del crédito"}
+                          </dt>
+                          <dd>{mxn(a.result.ev.payment)}</dd>
+                        </div>
+                      )}
                       <div>
                         <dt>Menor margen mensual</dt>
                         <dd>{mxn(a.result.ev.minMonthlyCash)}</dd>
