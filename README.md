@@ -1,72 +1,105 @@
-# hackelectroCDMX — Electrifica tu flota
+# hackelectroCDMX · Electrifica tu flota
 
-Espacio de trabajo del equipo para el **reto 2**: electrificar flotas de transporte y servicios de CDMX de manera económicamente viable, ambientalmente efectiva y socialmente justa, protegiendo el ingreso y las condiciones de trabajo de sus operadores.
+Simulador para explorar la electrificación del transporte por ramal en CDMX. Sigue una jornada sobre el mapa y conecta **batería, pasajeros, pendiente, recarga, costos y emisiones** para comparar opciones que mantengan el servicio y los ingresos presupuestados.
 
-La plataforma permite comparar combustión y electricidad por ramal, explorar carga y financiamiento y buscar la aportación inicial mínima manteniendo servicio e ingresos objetivo. Ruta 1 Universidad–San Fernando–Huipulco es el ejemplo documentado; la flota real y la decisión de inversión siguen por validar.
+Prototipo del equipo **Aragonenes** para el **Reto 2 del Electro Hackathon CDMX**.
 
-El rediseño del dashboard se trabaja en `feat/redisenio-mapa`: mapa protagonista, navegación flotante y paneles de Configurar, Economía, Ambiente y Operación. [Experiencia y herramientas conservadas](docs/desarrollo/redisenio-mapa.md). La rama se entrega localmente para revisión; la URL pública corresponde a la versión publicada.
+**[Probar el simulador](https://electrohackaragonenes.vercel.app)** · [Guía de la demo](docs/desarrollo/demo-pitch.md) · [Documentación](docs/README.md)
 
-**[Abrir la plataforma](https://electrohackaragonenes.vercel.app)** · [Repositorio](https://github.com/Aragonenes/hackelectroCDMX)
+## Qué puedes explorar
 
-## Ejecutar la plataforma
+El caso de partida es **Ruta 1 · Metro CU–San Fernando–Huipulco**, sobre geometría histórica oficial. Cambiar el día, el vehículo o las condiciones actualiza una misma jornada calculada y sus resultados técnicos, económicos y ambientales.
 
-Requiere Node 22.12+ compatible y npm.
+| Área           | Qué permite hacer                                                                                                                           |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Configurar** | Editar vehículos, jornada, perfiles de pasajeros, congestión, temporada, carga y supuestos económicos.                                      |
+| **Operación**  | Reproducir el recorrido, seguir el SOC, encontrar el primer cruce de reserva y revisar recarga, pendientes y condiciones del servicio.      |
+| **Economía**   | Comparar costos y combinaciones de vehículos, cargadores y financiamiento, distinguiendo capital propio, apoyo adicional y pagos mensuales. |
+| **Ambiente**   | Consultar combustible, CO₂ de escape y CO₂e asociado a la electricidad de recarga por unidad o flota y por día, mes o año.                  |
+
+La comparación energética incluye **33 modelos eléctricos** del catálogo documental. La búsqueda de alternativas muestra progreso, admite cancelación y permite aplicar una opción al mapa. Archivos y Fuentes reúnen guardado local, exportaciones y evidencia; los escenarios pueden conservarse como JSON con checksum, CSV e informe imprimible.
+
+## Probar la demo
+
+1. [Abrir el prototipo](https://electrohackaragonenes.vercel.app) y pulsar **Activar jornada dinámica**. Si ya hay un escenario activo, cargar o reiniciar la demo desde el final de **Configurar**.
+2. Reproducir la jornada y observar batería, ocupación y pendiente. El KINGO es la referencia inicial: el caso preparado deja una condición calculada por resolver, **Energía y reserva**.
+3. Abrir **Economía → Alternativas → Evaluar combinaciones**. La demo compara 1,980 combinaciones de 33 vehículos, cuatro cargadores, cinco esquemas financieros y tres cantidades de cargadores.
+4. Pulsar **Aplicar al simulador** en una alternativa y revisar el vehículo elegido, la reserva al cierre y sus costos. Cambiar parámetros permite explorar otros resultados.
+
+La [guía del pitch](docs/desarrollo/demo-pitch.md) explica las entradas y el recorrido completo. El caso preparado utiliza **supuestos editables** para presentar el prototipo; los resultados se calculan con el mismo motor que evalúa los demás escenarios.
+
+## Evidencia y alcance
+
+El proyecto combina investigación pública, datos preparados, cálculos derivados y supuestos identificados. La geometría de Ruta 1 tiene fecha interna de 2022; la elevación procede de terreno INEGI y los perfiles de temperatura utilizan registros históricos de Pedregal. Los perfiles de demanda y los datos económicos de la demo son exploratorios.
+
+La herramienta ayuda a identificar condiciones y comparar escenarios. Una inversión real requiere validar demanda, configuración del vehículo, patio, carga, financiamiento y acuerdos de operación. El consumo no está calibrado con mediciones actuales del ramal. CO₂ de escape y CO₂e de recarga conservan alcances distintos; el prototipo no calcula una reducción neta ni emisiones de ciclo de vida.
+
+| Referencia                                                                                                      | Contenido                                                                      |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Guía del evaluador](docs/desarrollo/README.md)                                                                 | Uso, arquitectura y publicación.                                               |
+| [Metodología del motor](docs/desarrollo/metodologia-motor.md) y [jornada v2](docs/desarrollo/modelo-jornada.md) | Balances, restricciones, mezcla mensual y compatibilidad con escenarios v1.    |
+| [Datos preparados](docs/desarrollo/datos-jornada.md)                                                            | Terreno, clima, cobertura y preparación reproducible.                          |
+| [Documento maestro de Ruta 1](docs/documento-maestro-ruta1.md)                                                  | Evidencia y propuesta de transición con protección del servicio y del ingreso. |
+| [Catálogo de vehículos](docs/investigacion/modelos/README.md)                                                   | Modelos, parámetros y referencias documentales.                                |
+| [Índice documental](docs/README.md)                                                                             | Expedientes de Ruta 1 y Latinoamérica, fuentes, inventarios y licencias.       |
+
+## Ejecutar en local
+
+Requiere **Node.js 22.12 o posterior de la rama 22.x** y npm.
 
 ```bash
+git clone https://github.com/Aragonenes/hackelectroCDMX.git
+cd hackelectroCDMX
 npm ci
 npm run dev
 ```
 
-Para la demostración local: `npm run build` y `npm run preview -- --port 4173`. Abrir `http://localhost:4173`. El motor, los catálogos, fuentes tipográficas y geometrías funcionan localmente; el mapa base detallado requiere internet.
+Abrir la dirección que muestra Vite, normalmente `http://localhost:5173`.
 
-[Guía de uso, arquitectura, pruebas y despliegue](docs/desarrollo/README.md) · [Metodología del motor](docs/desarrollo/metodologia-motor.md) · [Diseño visual](DESIGN.md).
-
-Verificar con `npm run check` y `npm run test:e2e` (Chromium: `npx playwright install chromium`).
-
-## Empezar
-
-- [Documento maestro de Ruta 1](docs/documento-maestro-ruta1.md): síntesis para orientar el producto futuro, con valor humano, evidencia, dos vías de inversión, adaptación jurídica a CDMX y condiciones para proteger servicio e ingreso. La investigación pública es suficiente para un prototipo exploratorio; la decisión de inversión real queda por validar.
-- [Bases de decisión](docs/investigacion/ruta1/bases-decision-ruta1.csv): 55 entradas con fuentes, estados y condiciones de aceptación; [geometría oficial histórica y método reproducible](docs/investigacion/ruta1/recursos-abiertos/README.md).
-- [Índice documental](docs/README.md): organización, guías generales, expedientes de investigación y cuatro fuentes PDF, con 221 páginas en total.
-- [Síntesis de estudio](docs/contexto/sintesis.md): requisitos y antecedentes del reto.
-- [Guía de la presentación completa](docs/contexto/presentacion.md): lectura del PDF original de EMA, con referencias por página.
-- [Evaluación documental de Ruta 1](docs/investigacion/ruta1/evaluacion-viabilidad-ruta1.md): Universidad–San Fernando–Huipulco, evidencia favorable/contraria y criterios de viabilidad. Incluye 58 referencias, parámetros y matrices; la viabilidad del ramal sigue sin demostrarse. Baseline, demanda, carga e ingreso/financiamiento permanecen pendientes. La segunda revisión recuperó geometría histórica oficial y seis originales abiertos con hashes; los pendientes operativos y financieros siguen registrados.
-- [Transición eléctrica en CDMX y América Latina](docs/investigacion/latinoamerica/analisis-transicion-electrica-latinoamerica.md): historia de cinco países, mecanismos de inversión y organización y propuesta condicionada de piloto por ramal con protección del ingreso. Registro complementario de fuentes y licencias.
-
-Cada investigación tiene un índice propio: [Ruta 1](docs/investigacion/ruta1/README.md) y [Latinoamérica](docs/investigacion/latinoamerica/README.md).
-
-## Licencia y colaboración
-
-La [revisión de licencia](docs/contexto/licencia-proyecto.md) no encontró una licencia obligatoria en el documento disponible del hackatón. El equipo acordó [PolyForm Noncommercial 1.0.0 para código propio](LICENSE) y [CC BY-NC 4.0 para documentación original](docs/LICENSE.md). No se autoriza el uso comercial fuera de los permisos de las licencias sin autorización adicional de los titulares. Los materiales de terceros conservan sus propios derechos y condiciones. Las versiones publicadas anteriormente bajo MIT y CC BY 4.0 conservan los permisos ya otorgados.
-
-Los textos de licencia vigentes se obtienen de [PolyForm Project](https://polyformproject.org/licenses/noncommercial/1.0.0) y [Creative Commons](https://creativecommons.org/licenses/by-nc/4.0/). La documentación de procedencia anterior corresponde a la versión histórica de las licencias.
-
-Los commits usarán Conventional Commits con descripciones y cuerpos en español, según [AGENTS.md](AGENTS.md). El nombre acordado del repositorio remoto es `hackelectroCDMX`.
-
-## Estructura
-
-```text
-hackelectro/
-├── AGENTS.md                 Contexto para retomar el trabajo
-├── README.md
-├── LICENSE                   PolyForm Noncommercial 1.0.0 para código propio
-├── .gitignore
-├── .gitattributes
-├── docs/                     PDF originales, transcripciones y notas de estudio
-├── scripts/                  Extracción, derivación geográfica y avisos de licencias
-├── src/                      Motor, worker, interfaz y catálogo del escenario
-├── public/data/              Geometrías y registro de procedencia
-└── tests/                    Verificación de navegador
-```
-
-La aplicación React/TypeScript/Vite vive en `src/`, con motor puro en Web Worker, mapa MapLibre y gráficas ECharts. `public/data/` contiene geometrías abiertas derivadas; `tests/` contiene recorridos de navegador. No hay backend ni cuentas.
-
-Los materiales publicables incluyen análisis propios, referencias, parámetros, inventarios, la herramienta de extracción y recursos geográficos con CC BY 4.0 explícita, atribución y hashes. Los recursos nuevos aún no se han enviado al remoto en esta tarea. Los cuatro PDF y sus reproducciones se conservan localmente y están excluidos de Git por licencia de redistribución no verificada; sus [rutas, páginas y condiciones](docs/contexto/fuentes-locales.md) siguen documentadas. Las capturas retiradas no son fuente activa ni parte de la publicación.
-
-## Regenerar la documentación
+Para compilar y servir la versión de producción:
 
 ```bash
-python scripts/extraer_documentos.py
+npm run build
+npm run preview -- --port 4173
 ```
 
-Requiere Python 3 y Poppler (`pdfinfo`, `pdftotext`), además de los cuatro PDF y las transcripciones visuales locales. Esos insumos no están incluidos en un clon de GitHub. Las guías y transcripciones visuales se revisan manualmente si cambia un PDF.
+Abrir `http://localhost:4173`. El motor, catálogos, geometrías y tipografía están incluidos localmente. Las teselas del mapa base de OpenStreetMap requieren internet.
+
+## Arquitectura
+
+**React + TypeScript + Vite**, con **MapLibre** para el mapa y **ECharts** para las gráficas. El motor puro se ejecuta en un **Web Worker**; la reproducción utiliza trayectorias precalculadas. La aplicación guarda escenarios en el navegador y funciona sin backend, cuentas ni base de datos.
+
+```text
+.
+├── src/domain/       Motor, contratos y cálculos técnicos y financieros
+├── src/data/         Catálogos, escenarios y perfiles preparados
+├── src/worker/       Evaluación, búsqueda, progreso y cancelación
+├── src/features/     Mapa, editor, resultados y exportaciones
+├── src/ui/           Componentes compartidos y formato
+├── public/data/      Geometrías y procedencia publicables
+├── data/             Tablas de investigación
+├── docs/             Metodología, guías, fuentes y expedientes
+├── scripts/          Preparación de datos, extracción y avisos de licencias
+└── tests/            Recorridos de navegador
+```
+
+El [diseño](DESIGN.md) y la [guía del mapa](docs/desarrollo/redisenio-mapa.md) documentan composición, accesibilidad y navegación. La [metodología](docs/desarrollo/metodologia-motor.md) explica las ecuaciones y sus límites.
+
+## Verificación y colaboración
+
+```bash
+npm run check
+npx playwright install chromium
+npm run test:e2e
+npm run format:check
+```
+
+Estos comandos comprueban tipos, pruebas, compilación, recorridos de navegador y formato. Los cambios se organizan en commits modulares con **Conventional Commits en español**. Consultar [AGENTS.md](AGENTS.md) para las instrucciones del proyecto.
+
+La documentación histórica puede regenerarse con `python scripts/extraer_documentos.py`. Requiere Python 3, Poppler y los cuatro PDF originales conservados localmente; esos insumos no vienen incluidos en un clon de GitHub. [Fuentes locales y condiciones](docs/contexto/fuentes-locales.md).
+
+## Licencias
+
+**[PolyForm Noncommercial 1.0.0](LICENSE)** para código propio y **[CC BY-NC 4.0](docs/LICENSE.md)** para documentación original del equipo. Los avisos describen los usos permitidos y el tratamiento de las versiones anteriores publicadas bajo MIT y CC BY 4.0. Los materiales de terceros conservan sus licencias y atribuciones.
+
+Los cuatro PDF históricos, sus reproducciones y otros materiales sin permiso de redistribución verificado permanecen excluidos de Git. El [inventario](docs/inventario.json), las referencias y los registros de procedencia permiten identificar las fuentes conservadas. [Alcance de las licencias](docs/contexto/licencia-proyecto.md).
