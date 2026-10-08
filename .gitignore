@@ -1,0 +1,32 @@
+# Dependencias
+node_modules/
+
+# Compilación
+dist/
+
+# Pruebas y cobertura
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+coverage/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+
+# Material de terceros NO redistribuible: se conserva solo en local
+# (referencias publicadas: docs/contexto/fuentes-locales.md y docs/inventario.json)
+docs/originales/
+docs/fuentes/
+docs/transcripciones-visuales/
+docs/assets/
+docs/archivo/
+
+# Archivos de seguimiento local del rediseño
+PLAN_REDISENIO.md
+PROGRESO_REDISENIO.md
