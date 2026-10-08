@@ -1141,9 +1141,6 @@
   align-items: center;
   cursor: pointer;
 }
-.journey-field span {
-  font-size: 13px;
-}
 .playback-day select {
   width: 110px;
   min-height: 44px;
@@ -1152,14 +1149,86 @@
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+.journey-settings > h3 {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.journey-model-label {
+  font: 600 10px var(--font-ui);
+  letter-spacing: 0;
+  color: var(--primary);
+  background: #f8e8ed;
+  border-radius: 5px;
+  padding: 4px 6px;
+  white-space: nowrap;
+}
+.journey-settings p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0 0 16px;
+  overflow-wrap: anywhere;
+}
+.journey-settings .journey-intro {
+  padding: 10px 12px;
+  background: #fbf7f9;
+  border-left: 2px solid var(--primary);
+  border-radius: 6px;
+}
+.journey-settings .field {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 16px;
+}
+.journey-settings .field > span {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--ink);
+}
+.journey-settings .field input,
+.journey-settings .field select {
+  min-width: 0;
+  min-height: 44px;
+  font-variant-numeric: tabular-nums;
+}
+.journey-settings .check-field {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 4px 0;
+}
+.journey-settings .primary,
+.journey-settings .secondary {
+  width: 100%;
+  min-height: 44px;
+  font-size: 12px;
+}
 .journey-settings details {
-  margin: 12px 0;
+  margin: 16px 0 0;
+  border-top: 1px solid var(--border);
 }
 .journey-settings summary {
   cursor: pointer;
   min-height: 44px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 10px 0;
+  line-height: 1.5;
+  padding: 12px 0;
+  color: var(--primary);
+}
+.journey-settings details[open] > summary {
+  margin-bottom: 8px;
+}
+.journey-sector {
+  padding: 0 0 8px;
+  margin: 0 0 16px;
+  border-bottom: 1px solid var(--border);
+}
+.journey-sector > b {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 12px;
 }
 @media (max-width: 1023px) {
   .dynamic-cards {

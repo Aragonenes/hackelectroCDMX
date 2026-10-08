@@ -45,9 +45,9 @@ export default function JourneyControls({
   const [slot, setSlot] = useState(32);
   if (s.schemaVersion === "1")
     return (
-      <section className="control-group">
+      <section className="control-group journey-settings">
         <h3>Jornada por hora y tramo</h3>
-        <p>
+        <p className="journey-intro">
           El escenario original conserva su cálculo uniforme v1. La conversión
           añade perfiles exploratorios, terreno y clima histórico.
         </p>
@@ -87,8 +87,11 @@ export default function JourneyControls({
   };
   return (
     <section className="control-group journey-settings">
-      <h3>Perfiles de jornada · modelo 2</h3>
-      <p>
+      <h3>
+        Perfiles de jornada{" "}
+        <span className="journey-model-label">Modelo 2</span>
+      </h3>
+      <p className="journey-intro">
         Unidad representativa; entradas F editables. Horario de línea
         secundario: 05:00–22:50 laborables, 06:00–21:45 fin de semana. La
         jornada propia se configura por día.
@@ -273,7 +276,7 @@ export default function JourneyControls({
           verificadas.
         </p>
         {j.sectors.map((sector, i) => (
-          <div key={i}>
+          <div className="journey-sector" key={i}>
             <b>
               Trazo {Math.floor(i / 3) + 1} · sector {(i % 3) + 1}
             </b>
