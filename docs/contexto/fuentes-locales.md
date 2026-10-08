@@ -1,6 +1,6 @@
 # Fuentes conservadas localmente
 
-Los cuatro PDF suministrados al equipo y sus reproducciones se conservan en la carpeta de trabajo, pero **no se incluyen en GitHub**: su licencia de redistribución no está verificada (UNKNOWN). El repositorio publica análisis propios, referencias, tablas e inventarios; MIT y CC BY 4.0 no relicencian las fuentes.
+Los cuatro PDF suministrados al equipo y sus reproducciones se conservan en la carpeta de trabajo, pero **no se incluyen en GitHub**: su licencia de redistribución no está verificada (UNKNOWN). El repositorio publica análisis propios, referencias, tablas e inventarios; Las licencias del proyecto (PolyForm Noncommercial 1.0.0 y CC BY-NC 4.0) no relicencian las fuentes de terceros.
 
 El [inventario original](../inventario.json) conserva los nombres Unicode exactos, hashes SHA-256, páginas y rutas locales. La [colección de fuentes de Ruta 1](../investigacion/ruta1/fuentes-ruta1.json) y el [registro de Latinoamérica](../investigacion/latinoamerica/fuentes-transicion-electrica-latinoamerica.json) conservan los localizadores y las condiciones de cada referencia. Un archivo marcado como conservado localmente no implica que esté publicado.
 
@@ -47,4 +47,4 @@ Las citas «PDF n» señalan la página del archivo, contando portada. Los enlac
 
 `docs/transcripciones-visuales/` contiene revisiones manuales de los PDF y `docs/assets/` contiene imágenes extraídas o renderizadas. Se conservan localmente y están excluidas de Git junto con los originales y las extracciones completas.
 
-El [script de extracción](../../scripts/extraer_documentos.py) es código propio bajo MIT y sí se publica. Sirve para regenerar los textos y el inventario **cuando se dispone de los cuatro PDF locales**; un clon de GitHub no incluye esos insumos ni las transcripciones visuales. Las revisiones manuales deben recuperarse o realizarse antes de considerar equivalentes las extracciones regeneradas.
+El [script de extracción](../../scripts/extraer_documentos.py) es código propio bajo PolyForm Noncommercial 1.0.0 y sí se publica. Sirve para regenerar los textos y el inventario **cuando se dispone de los cuatro PDF locales**; un clon de GitHub no incluye esos insumos ni las transcripciones visuales. Las revisiones manuales deben recuperarse o realizarse antes de considerar equivalentes las extracciones regeneradas.

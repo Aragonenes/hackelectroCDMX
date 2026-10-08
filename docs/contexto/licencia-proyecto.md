@@ -1,5 +1,8 @@
 # Licencias de hackelectroCDMX
 
+> **Actualización de licenciamiento, 2026-10-08:** Por acuerdo de todos los colaboradores, el código propio del proyecto se ofrece de aquí en adelante bajo [PolyForm Noncommercial 1.0.0](../../LICENSE) y la documentación original bajo [CC BY-NC 4.0](../LICENSE.md). Este archivo conserva el análisis histórico de la decisión inicial MIT/CC BY 4.0, que ya no describe las licencias vigentes. La nueva concesión no revoca los permisos previamente otorgados y no cambia los derechos de terceros.
+
+
 Revisión: **2026-10-06**. **Decisión confirmada por el usuario: MIT para código propio y CC BY 4.0 para documentación propia.** Se incorporaron [LICENSE](../../LICENSE) y el [aviso de documentación](../LICENSE.md), con exclusiones para materiales de terceros.
 
 ## Qué dicen los documentos del hackatón

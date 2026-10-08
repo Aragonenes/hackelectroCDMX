@@ -1,29 +1,27 @@
-# Licencia de la documentación propia
+# Licencia de la documentación original del equipo
 
 Copyright © 2026 Colaboradores de hackelectroCDMX.
 
-Salvo indicación distinta y con las exclusiones siguientes, los análisis y documentos originales del equipo se ofrecen bajo **Creative Commons Atribución 4.0 Internacional (CC BY 4.0)**.
+Salvo aviso individual diferente y las exclusiones indicadas abajo, la documentación, los análisis y las investigaciones **originales del equipo** se ofrecen bajo **Creative Commons Atribución-NoComercial 4.0 Internacional (CC BY-NC 4.0)**.
 
-- [Descripción de la licencia](https://creativecommons.org/licenses/by/4.0/).
-- [Texto jurídico](https://creativecommons.org/licenses/by/4.0/legalcode.es).
-- [Texto jurídico completo conservado](CC-BY-4.0.txt), descargado sin modificaciones de Creative Commons.
+- [Resumen oficial](https://creativecommons.org/licenses/by-nc/4.0/).
+- [Texto jurídico oficial](https://creativecommons.org/licenses/by-nc/4.0/legalcode.es).
+- [Copia íntegra del texto jurídico](CC-BY-NC-4.0.txt).
 
-Este archivo es un aviso de aplicación y alcance, no un texto de licencia elaborado por el equipo. Los términos son los del texto oficial conservado; su [procedencia y hashes](contexto/procedencia-licencias.json) permiten verificar la recuperación.
+La licencia permite compartir y adaptar esos materiales para fines no comerciales, sujeto a atribución, enlace a la licencia y señalamiento de cambios. Los permisos de uso comercial requieren autorización de los titulares correspondientes, excepto cuando una excepción legal u otros derechos previos lo permitan.
 
-Puede compartir y adaptar el material, incluso comercialmente, cumpliendo las condiciones de atribución, enlace a la licencia e indicación de modificaciones. El texto jurídico enlazado establece los términos completos.
+## Alcance y exclusiones
 
-## Alcance
+Este aviso se aplica exclusivamente a los aportes originales y licenciables del equipo en los documentos del repositorio, incluidas las investigaciones de `docs/investigacion/` y el contenido documental propio de `docs/contexto/` y `README.md`. El código propio de `src/` y `scripts/` se ofrece bajo [PolyForm Noncommercial 1.0.0](../LICENSE), salvo aviso distinto.
 
-La licencia cubre el aporte original del equipo en `docs/contexto/`, los análisis, fichas y aportes propios a las tablas y registros de `docs/investigacion/`, y la documentación original de la raíz del proyecto, como `README.md` y `AGENTS.md`. El código propio de `scripts/` y el código propio que se añada posteriormente se rigen por [MIT](../LICENSE), salvo aviso específico distinto.
-
-## Exclusiones
-
-Esta licencia no cubre documentos, datos, imágenes, citas, logotipos ni otros materiales de terceros. En particular, no relicencia los PDF de `docs/originales/`, sus extracciones en `docs/fuentes/`, sus transcripciones visuales ni imágenes de `docs/assets/`. Estos recursos mantienen los derechos y condiciones de sus titulares.
-
-Las referencias y registros identifican los permisos de cada recurso. Un estado UNKNOWN no concede permiso de redistribución; los recursos de terceros con licencia abierta deben cumplir su propia atribución y condiciones. Las fichas y los inventarios pueden describir archivos conservados localmente que no se incluyan en la versión publicada del repositorio.
+**No se relicencian** los PDF, fotografías, mapas, datos, citas, figuras, logotipos ni otros materiales de terceros. Estos conservan los derechos de sus autores y las condiciones de las fuentes de origen. Una licencia abierta en un dato no se sustituye automáticamente por CC BY-NC. Los materiales con derechos no comprobados NO quedan autorizados por este aviso.
 
 ## Atribución sugerida
 
-«Colaboradores de hackelectroCDMX, [título del documento], 2026, [URL del documento], CC BY 4.0. [Indicar modificaciones, si existen]».
+«Colaboradores de hackelectroCDMX, [título], 2026, [URL], CC BY-NC 4.0, [modificaciones si las hay]».
 
-Conservar también la atribución de autores individuales que figure en cada documento y las referencias de terceros. La atribución no implica respaldo del equipo, del hackatón o de las instituciones citadas.
+Conservar también los créditos individuales, las referencias a las fuentes y los demás avisos exigidos. La atribución no implica respaldo institucional.
+
+## Sobre versiones previas
+
+Las versiones anteriores del código y la documentación publicadas bajo MIT y CC BY 4.0 pueden seguir estando amparadas por esos permisos. Esta actualización no pretende revocarlos retroactivamente.

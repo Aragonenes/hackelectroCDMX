@@ -39,7 +39,7 @@ Para discutir el producto futuro, comenzar por el [documento maestro](documento-
 6. [Reglamento de transporte de 2003](contexto/fuentes-locales.md#reglamento-transporte-2003): 106 artículos con índice; antecedente normativo histórico.
 7. [Expediente de Ruta 1](investigacion/ruta1/README.md): evaluación actual, evidencia y condiciones pendientes.
 8. [Casos de CDMX y América Latina](investigacion/latinoamerica/README.md): mecanismos de transición y propuesta condicionada para el ramal.
-9. [Licencias del proyecto](contexto/licencia-proyecto.md): revisión de reglas del hackatón y decisión confirmada, MIT para código propio y CC BY 4.0 para documentación propia. [Aviso y exclusiones](LICENSE.md).
+9. [Licencias del proyecto](contexto/licencia-proyecto.md): revisión de reglas del hackatón y decisión vigente del equipo: PolyForm Noncommercial 1.0.0 para código propio y CC BY-NC 4.0 para documentación original propia. [Aviso y exclusiones](LICENSE.md).
 
 ## Inventario de fuentes activas
 

@@ -64,11 +64,11 @@ La búsqueda considera el catálogo incluido en cada escenario, con la configura
 
 La transformación `npm run data:routes` requiere 7-Zip, verifica el hash del RAR conservado y deriva 995 registros / 2102 trazos. El original no se modifica. [Procedencia geográfica](../investigacion/ruta1/recursos-abiertos/README.md) y `public/data/routes-manifest.json` conservan método, fecha, institución y límites.
 
-`node scripts/preparar-hospitales.mjs` reproduce cinco referencias de contexto desde la respuesta OSM conservada y la selección documentada. [Original, consulta y límites](recursos-hospitales/README.md). La capa OSM conserva ODbL 1.0 y su atribución; no se relicencia con MIT ni CC BY. El icono de GitHub procede de Primer Octicons con [procedencia y MIT original](recursos-interfaz/procedencia.json), incluidos en la distribución.
+`node scripts/preparar-hospitales.mjs` reproduce cinco referencias de contexto desde la respuesta OSM conservada y la selección documentada. [Original, consulta y límites](recursos-hospitales/README.md). La capa OSM conserva ODbL 1.0 y su atribución; no se relicencia con las licencias del proyecto. El icono de GitHub procede de Primer Octicons con [procedencia y MIT original](recursos-interfaz/procedencia.json), incluidos en la distribución.
 
 El catálogo cita hechos comerciales de KINGO, Gree y Yutong, referencias PROFECO y factores SEMARNAT/EPA. No distribuye sus páginas o fichas completas sin permiso. Los vehículos diésel representativos y precios faltantes son F; no ofertas del mercado. La versión eléctrica KINGO es modelo 2027 consultado en 2026.
 
-Código propio MIT, documentación propia CC BY 4.0. Los [textos originales de las dependencias](dependencias.json) se copian de sus paquetes, con checksums; no fueron redactados por el equipo. `npm run licenses` actualiza el registro después de cambiar dependencias. La compilación incluye esos avisos en `/third-party/licenses.json` y conserva las licencias OFL de las fuentes tipográficas.
+Código propio bajo PolyForm Noncommercial 1.0.0 y documentación original propia bajo CC BY-NC 4.0. Los [textos originales de las dependencias](dependencias.json) se copian de sus paquetes, con checksums; no fueron redactados por el equipo. `npm run licenses` actualiza el registro después de cambiar dependencias. La compilación incluye esos avisos en `/third-party/licenses.json` y conserva las licencias OFL de las fuentes tipográficas.
 
 GitHub y Vercel son alojamiento administrado. El código y las bibliotecas son abiertos; `dist/` puede publicarse en otro servidor estático. `dist/`, `.vercel/`, `PLAN_REDISENIO.md` y `PROGRESO_REDISENIO.md` no se incorporan a Git.
 

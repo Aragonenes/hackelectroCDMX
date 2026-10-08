@@ -37,9 +37,9 @@ Cada investigación tiene un índice propio: [Ruta 1](docs/investigacion/ruta1/R
 
 ## Licencia y colaboración
 
-La [revisión de licencia](docs/contexto/licencia-proyecto.md) no encontró una licencia obligatoria en el documento disponible del hackatón. El usuario confirmó [MIT para código propio](LICENSE) y [CC BY 4.0 para documentación propia](docs/LICENSE.md). Las fuentes de terceros conservan sus condiciones y quedan fuera de estas licencias.
+La [revisión de licencia](docs/contexto/licencia-proyecto.md) no encontró una licencia obligatoria en el documento disponible del hackatón. El equipo acordó [PolyForm Noncommercial 1.0.0 para código propio](LICENSE) y [CC BY-NC 4.0 para documentación original](docs/LICENSE.md). No se autoriza el uso comercial fuera de los permisos de las licencias sin autorización adicional de los titulares. Los materiales de terceros conservan sus propios derechos y condiciones. Las versiones publicadas anteriormente bajo MIT y CC BY 4.0 conservan los permisos ya otorgados.
 
-Los textos se recuperaron de fuentes oficiales: MIT mediante GitHub y el [texto completo de CC BY 4.0](docs/CC-BY-4.0.txt) mediante Creative Commons. Se registraron [procedencia y hashes](docs/contexto/procedencia-licencias.json).
+Los textos de licencia vigentes se obtienen de [PolyForm Project](https://polyformproject.org/licenses/noncommercial/1.0.0) y [Creative Commons](https://creativecommons.org/licenses/by-nc/4.0/). La documentación de procedencia anterior corresponde a la versión histórica de las licencias.
 
 Los commits usarán Conventional Commits con descripciones y cuerpos en español, según [AGENTS.md](AGENTS.md). El nombre acordado del repositorio remoto es `hackelectroCDMX`.
 
@@ -49,7 +49,7 @@ Los commits usarán Conventional Commits con descripciones y cuerpos en español
 hackelectro/
 ├── AGENTS.md                 Contexto para retomar el trabajo
 ├── README.md
-├── LICENSE                   MIT para código propio
+├── LICENSE                   PolyForm Noncommercial 1.0.0 para código propio
 ├── .gitignore
 ├── .gitattributes
 ├── docs/                     PDF originales, transcripciones y notas de estudio

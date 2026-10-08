@@ -24,10 +24,10 @@ El equipo eligió el **reto 2, «Electrifica tu flota»**, del Electro Hackathon
 
 ## Licencias y publicación
 
-- El usuario eligió **MIT para código propio y CC BY 4.0 para documentación propia** el 6 de octubre de 2026. Los avisos están en `LICENSE` y `docs/LICENSE.md`; la revisión y el alcance están en `docs/contexto/licencia-proyecto.md`. El PDF del hackatón disponible no establece una licencia del proyecto ni cesión de derechos; no asumir que se han revisado bases o términos de inscripción adicionales.
+- El equipo acordó el 8 de octubre de 2026 **PolyForm Noncommercial 1.0.0 para código propio y CC BY-NC 4.0 para documentación original propia**. Los avisos vigentes están en `LICENSE` y `docs/LICENSE.md`; el historial y el alcance están en `docs/contexto/licencia-proyecto.md`. Las versiones previamente publicadas bajo MIT y CC BY 4.0 conservan los permisos ya concedidos. El PDF del hackatón disponible no establece una licencia del proyecto ni cesión de derechos; no asumir que se han revisado bases o términos de inscripción adicionales.
 - `scripts/extraer_documentos.py` es una herramienta documental que regenera las cuatro extracciones y su inventario; sigue siendo relevante para trazabilidad. El usuario pidió eliminar scripts si no fueran relevantes, no eliminar esta herramienta de extracción necesaria.
 - La licencia del trabajo propio no relicencia PDF, extracciones, imágenes, transcripciones o datasets de terceros. Conservar sus metadatos y derechos; las fuentes UNKNOWN se citan y no se redistribuyen automáticamente, conforme al método de investigación.
-- Los textos jurídicos se recuperaron de la API oficial de licencias de GitHub (MIT, completando sólo año y titular) y Creative Commons (`docs/CC-BY-4.0.txt`, copia íntegra). Su procedencia y hashes están en `docs/contexto/procedencia-licencias.json`; `docs/LICENSE.md` define el alcance, no sustituye el texto oficial.
+- Los textos vigentes se encuentran en `LICENSE` (PolyForm Noncommercial 1.0.0) y `docs/CC-BY-NC-4.0.txt` (Creative Commons BY-NC 4.0). Los textos históricos de MIT y CC BY 4.0 y sus registros de procedencia se conservan para auditoría; `docs/LICENSE.md` define el alcance documental, sin sustituir el texto jurídico oficial.
 - `.gitignore` excluye `docs/originales/`, `docs/fuentes/`, `docs/transcripciones-visuales/` y `docs/assets/`. Los archivos se conservan localmente; las referencias publicadas apuntan a `docs/contexto/fuentes-locales.md` y el inventario. No añadirlos con `git add -f` sin permiso de redistribución verificado.
 
 ## Aplicación y verificación

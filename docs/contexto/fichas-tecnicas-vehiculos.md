@@ -15,7 +15,7 @@ Los datos técnicos, dimensiones, capacidades de batería, potencias, rendimient
 Conforme a la política de propiedad intelectual del proyecto (véase [`licencia-proyecto.md`](licencia-proyecto.md) y [`fuentes-locales.md`](fuentes-locales.md)):
 * Las marcas registradas, logotipos y especificaciones comerciales son propiedad exclusiva de sus respectivos fabricantes.
 * Su incorporación en este repositorio se realiza con fines estrictamente académicos, de investigación abierta y evaluación comparativa de políticas públicas para el *Electro Hackathon CDMX 2026*.
-* La licencia CC BY 4.0 de la documentación propia de este proyecto **no relicencia ni transfiere derechos** sobre los catálogos de terceros aquí citados.
+* La licencia CC BY-NC 4.0 de la documentación original propia de este proyecto **no relicencia ni transfiere derechos** sobre los catálogos de terceros aquí citados.
 
 ---
 
