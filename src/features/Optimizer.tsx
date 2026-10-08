@@ -54,10 +54,10 @@ export default function Optimizer({
   return (
     <section className="optimizer" id="condiciones">
       <div className="optimizer-intro">
-        <div className="optimizer-icon">
+        <div className="optimizer-icon" aria-hidden="true">
           <Sparkles size={24} />
         </div>
-        <div>
+        <div className="optimizer-copy">
           <span className="eyebrow">COMPARAR OPCIONES DEL CATÁLOGO</span>
           <h2>Alternativas de electrificación</h2>
           <p>
@@ -67,19 +67,19 @@ export default function Optimizer({
           </p>
         </div>
         <button
-          className="primary"
+          className="primary optimizer-action"
           onClick={searching ? onCancel : onSearch}
           disabled={disabled}
         >
           {searching ? (
             <>
-              <X size={17} />
+              <X size={17} aria-hidden="true" />
               Cancelar búsqueda
             </>
           ) : (
             <>
-              <Sparkles size={17} />
               Evaluar combinaciones
+              <ArrowRight size={17} aria-hidden="true" />
             </>
           )}
         </button>
